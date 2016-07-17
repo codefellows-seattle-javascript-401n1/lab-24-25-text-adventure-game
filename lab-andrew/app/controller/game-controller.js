@@ -15,6 +15,8 @@ function GameController() {
     name: 'The Chosen',
     hp: 100,
     damage: 5,
+    //Myst is magic
+    myst: 0,
     xp: 0,
     currentLocation: Room.roomB
   };
