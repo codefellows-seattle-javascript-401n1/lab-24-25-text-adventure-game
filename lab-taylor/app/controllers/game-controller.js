@@ -27,3 +27,42 @@ function GameController() {
 
   this.moveCount = 1;
 }
+
+GameController.prototype.moveDirection = function (direction) {
+  this.moveCount++;
+  const oldLocation = this.player.location;
+  const newLocation = this.map[oldLocation][direction];
+
+  if (newLocation && newLocation !== 'hull') {
+    this.updateLocation(newLocation);
+    return;
+  }
+
+  this.holdLocation();
+  return;
+};
+
+GameController.prototype.updateLocation = function(location) {
+  this.player.location = location;
+  this.stationModule.name = location;
+
+  if (Math.random() < this.map[location].monsterChance) {
+    //monster stuffhere
+  }
+
+  if (Math.random() < this.map[location].itemChance) {
+    //item stuff here
+  }
+
+  this.stationModule.monster = null;
+  this.stationModule.item = null;
+  this.updateHistory(`is now in ${this.player.location}.`);
+};
+
+GameController.prototype.holdLocation = function () {
+  this.updateHistory('ran into the hull.');
+};
+
+GameController.prototype.updateHistory = function(message) {
+  this.history.push(`MOVE ${this.moveCount}: ${this.player.name} ${message}`);
+};
