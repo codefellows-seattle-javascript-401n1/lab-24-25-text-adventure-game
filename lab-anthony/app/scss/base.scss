@@ -13,6 +13,10 @@ pre, p {
   color: white;
 }
 
+ol li {
+  color: $app-greenflare;
+}
+
 .warning {
   color: $app-tomato;
 }

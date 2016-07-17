@@ -1,17 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="monsterMash">
   <head>
     <meta charset="utf-8">
     <title>MONSTER MASH</title>
     <link rel="stylesheet" type="text/css" href="bundle.css">
+    <script src="bundle.js"></script>
   </head>
   <body>
     <h1>Welcome to Monster Mash!</h1>
-    <p>
-      Hello world.
-    </p>
-    <p class="warning">
-      oh snaps
-    </p>
+    <main ng-controller="MonsterController as monCtr">
+      <form nonvalidate name="gameForm">
+        <select ng-model="monCtr.gameForm.direction">
+            <option value="east">east</option>
+            <option value="west">west</option>
+          </select>
+          <input type="button" ng-click="monCtr.moveDirection(monCtr.gameForm.direction)" value="Move">
+          <input type="button" ng-disabled="!monCtr.room.monster" ng-click="monCtr.hurtMonster()" value="Hurt Monster">
+      </form>
+      <section>
+        <h2>Game History: </h2>
+        <ol>
+          <li ng-repeat="move in monCtr.history"> {{move}} </li>
+        </ol>
+      </section>
+    </main>
   </body>
 </html>
