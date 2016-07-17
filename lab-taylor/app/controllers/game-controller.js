@@ -1,6 +1,7 @@
 'use strict';
 
 const angular = require('angular');
+const Monster = require('../model/monster');
 
 angular.module('adventureGame').controller('GameController', [GameController]);
 
@@ -10,7 +11,7 @@ function GameController() {
   this.map = require('../model/map');
   this.player = {
     name: 'Reptar',
-    hp: 1000,
+    hp: 100,
     damage: 5,
     xp: 0,
     location: 'moduleA1',
@@ -47,7 +48,10 @@ GameController.prototype.updateLocation = function(location) {
   this.stationModule.name = location;
 
   if (Math.random() < this.map[location].monsterChance) {
-    //monster stuffhere
+    this.stationModule.monster = new Monster();
+    this.player.hp -= this.stationModule.monster.damage;
+    this.updateHistory(`ran into ${this.stationModule.monster.name} and lost ${this.stationModule.monster.damage} hp`);
+    return;
   }
 
   if (Math.random() < this.map[location].itemChance) {
@@ -57,6 +61,28 @@ GameController.prototype.updateLocation = function(location) {
   this.stationModule.monster = null;
   this.stationModule.item = null;
   this.updateHistory(`is now in ${this.player.location}.`);
+};
+
+GameController.prototype.attackMonster = function() {
+  if (this.stationModule.monster) {
+    this.moveCount++;
+    let message = '';
+
+    this.stationModule.monster.hp -= this.player.damage;
+    this.updateHistory(`did ${this.player.damage} damage to the monster.`);
+    if (Math.random() > 0.5) {
+      this.player.hp -= this.stationModule.monster.damage;
+      message += ` -- the monster hurt you! You lost ${this.stationModule.monster.damage} hp.`;
+      this.updateHistory(message);
+    }
+
+    if(this.stationModule.monster.hp < 0) {
+      this.updateHistory(`killed ${this.stationModule.monster.name}!`);
+      this.player.xp += Math.floor(Math.random() * 50);
+      this.stationModule.monster = null;
+      return;
+    }
+  }
 };
 
 GameController.prototype.holdLocation = function () {
