@@ -1,8 +1,12 @@
 @import "vendor/normalize.css";
-@import "_theme.scss"
+@import "_theme.scss";
 
 body {
   background-color: #ffffff;
   color: $app_grey;
-  h1, h2: $app_darkMagenta;
+}
+
+h1, h2 {
+  color: $app_grey;
+  text-align: center;
 }
