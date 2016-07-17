@@ -1,0 +1,12 @@
+{
+  "name": "lab-anthony",
+  "version": "0.0.1",
+  "description": "cf401 lab 24-25",
+  "main": "entry.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot"
+  },
+  "author": "anthony.casson@gmail.com",
+  "license": "MIT"
+}
