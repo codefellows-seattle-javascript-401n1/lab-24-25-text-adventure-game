@@ -1,6 +1,9 @@
 # ignore db directorys
 db
 
+# ignore webpack bundle
+build
+
 # Created by https://www.gitignore.io/api/linux,node,osx,vim
 
 ### Linux ###
