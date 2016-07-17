@@ -18,10 +18,11 @@ function MapController() {
   this.room = require('../model/room');
   this.hallway = require('../model/hallway'),
   this.bridge = {
-    entrance: GameController.player.prevLocation,
+    entrance: GameController.player.prevLocation[0],
     exit: this.door,
     over: this.overBridge,
-    under: this.underBridge
+    under: this.underBridge,
+    myst: randomNum(10)
   };
 }
 

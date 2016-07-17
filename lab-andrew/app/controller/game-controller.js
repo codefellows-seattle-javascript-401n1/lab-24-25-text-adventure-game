@@ -18,6 +18,8 @@ function GameController() {
     //Myst is magic
     myst: 0,
     xp: 0,
+    companion: [],
+    item: [],
     currentLocation: Room.roomB
   };
 }
