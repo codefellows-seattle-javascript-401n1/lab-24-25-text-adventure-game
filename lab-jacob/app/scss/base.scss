@@ -1,0 +1,10 @@
+@import "vendor/normalize.css";
+@import "_theme.scss";
+
+body {
+  background-color: $app-background;
+}
+
+h1 {
+  color: $app-headings;
+}
