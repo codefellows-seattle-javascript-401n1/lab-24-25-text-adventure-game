@@ -2,6 +2,7 @@
 
 const angular = require('angular');
 const Monster = require('../model/monster');
+const Item = require('../model/items');
 
 angular.module('adventureGame').controller('GameController', [GameController]);
 
@@ -46,6 +47,7 @@ GameController.prototype.moveDirection = function (direction) {
 GameController.prototype.updateLocation = function(location) {
   this.player.location = location;
   this.stationModule.name = location;
+  this.stationModule.item = null;
 
   if (Math.random() < this.map[location].monsterChance) {
     this.stationModule.monster = new Monster();
@@ -55,7 +57,9 @@ GameController.prototype.updateLocation = function(location) {
   }
 
   if (Math.random() < this.map[location].itemChance) {
-    //item stuff here
+    this.stationModule.item = new Item();
+    this.pickUpItem(this.stationModule.item.name);
+
   }
 
   this.stationModule.monster = null;
@@ -82,7 +86,19 @@ GameController.prototype.attackMonster = function() {
       this.stationModule.monster = null;
       return;
     }
+
+    //TODO -- need to check if the player is dead.
   }
+};
+
+GameController.prototype.pickUpItem = function(item) {
+  if (this.player.items.indexOf(item) === -1) {
+    this.player.items.push(item);
+    this.updateHistory(`picked up ${item}.`);
+    return;
+  }
+
+  this.updateHistory(`cannot pick up ${item}. Already in inventory`);
 };
 
 GameController.prototype.holdLocation = function () {

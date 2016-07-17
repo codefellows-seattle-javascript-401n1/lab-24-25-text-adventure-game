@@ -67,7 +67,7 @@ module.exports = {
   },
   moduleB2: {
     forward: 'moduleB3',
-    backward: 'moduleB3',
+    backward: 'moduleB1',
     left: 'hull',
     right: 'hull',
     monsterChance: 0.3,

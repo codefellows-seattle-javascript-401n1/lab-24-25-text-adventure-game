@@ -34,10 +34,6 @@
 
       <section>
         <h2>STATION MODULE -- {{ gameCtrl.stationModule.name | uppercase}}</h2>
-        <div ng-show="gameCtrl.stationModule.item">
-          <h3>Item</h3> <p>You found a {{gameCtrl.stationModule.item.name}}</p>
-        </div>
-
         <div ng-show="gameCtrl.stationModule.monster">
           <h3>Monster</h3> <pre>
 name: {{ gameCtrl.stationModule.monster.name}}
