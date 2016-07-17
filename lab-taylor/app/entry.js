@@ -5,3 +5,4 @@ require('./scss/base.scss');
 
 const angular = require('angular');
 angular.module('adventureGame', []);
+require('./controllers/game-controller');

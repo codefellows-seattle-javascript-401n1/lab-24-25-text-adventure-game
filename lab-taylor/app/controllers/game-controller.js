@@ -13,7 +13,8 @@ function GameController() {
     hp: 1000,
     damage: 5,
     xp: 0,
-    location: 'moduleA1'
+    location: 'moduleA1',
+    items: []
   };
 
   this.gameForm = {
