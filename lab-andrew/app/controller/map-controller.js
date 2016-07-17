@@ -2,57 +2,50 @@
 const angular = require('angular');
 
 const GameController = require('./game-controller');
-const Troll = require('../model/troll');
-const Companion = require('../model/companion');
-
+const chanceOf = require('../lib/chance-of');
 
 angular.module('trippedApp').controller('MapController', [MapController]);
 
-
 var trap = false;
+var troll = false;
 
 var randomNum = function(times) {
   var newRandomNum = Math.floor(Math.random() * times + 1);
   return newRandomNum;
 };
+
 function MapController() {
+  this.room = 
+  this.hallway = 'hallway',
   this.bridge = {
     entrance: GameController.player.prevLocation,
     exit: this.door,
     over: this.overBridge,
-    under: underBridge()
+    under: this.underBridge
   };
-  this.hallway = {},
-  this.room = {};
 }
 
 MapController.prototype.door = function() {
   let doorOpensTo;
-  let randomNum = Math.floor(Math.random() * 10 + 1);
-  if(randomNum <= 4) doorOpensTo = 'room';
-  if(randomNum >= 5 && randomNum < 8) doorOpensTo = 'hallway';
-  doorOpensTo = 'bridge';
-  return;
+  let newRandomNum = randomNum(10);
+  if(newRandomNum <= 4) doorOpensTo = 'room';
+  if(newRandomNum >= 5 && randomNum < 8) doorOpensTo = 'hallway';
+  doorOpensTo = this.bridge;
+  return doorOpensTo;
 };
 
 MapController.prototype.overBridge = function() {
-  this.chanceOftrap;
+  chanceOf.chanceOftrap;
   if(!trap) {
-    this.chanceOfCompanion;
-  }
-};
-MapController.prototype.chanceOftrap = function() {
-  if (randomNum(10) < 4) {
-    GameController.player.hp -= randomNum(40) + 11;
-    trap = true;
-    return new Troll();
+    return chanceOf.chanceOfCompanion;
   }
   return trap;
 };
-MapController.prototype.chanceOfCompanion = function(){
-  if(randomNum(10) < 4) {
-    GameController.player.xp += randomNum(20);
-    return new Companion();
+MapController.prototype.underBridge = function() {
+  chanceOf.chanceOfTroll;
+  if(!troll) {
+    GameController.player.xp += randomNum(10);
+    return chanceOf.chanceOfItem;
   }
-  return GameController.player.xp += randomNum(10);
+  return troll;
 };
