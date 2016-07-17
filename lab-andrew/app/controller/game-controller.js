@@ -15,6 +15,6 @@ function GameController() {
     hp: 100,
     damage: 5,
     xp: 0,
-    currentLocation: 'roomOne',
+    currentLocation: 'roomB'
   };
 }

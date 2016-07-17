@@ -32,5 +32,6 @@ module.exports = function chanceOfCompanion(){
     GameController.player.xp += randomNum(20);
     return new Companion();
   }
-  return GameController.player.xp += randomNum(10);
+  GameController.player.xp += randomNum(10);
+  return;
 };

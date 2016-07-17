@@ -4,7 +4,7 @@ const angular = require('angular');
 const GameController = require('./game-controller');
 const chanceOf = require('../lib/chance-of');
 
-angular.module('trippedApp').controller('MapController', [MapController]);
+angular.module('trippedApp').controller('MapController', [GameController, MapController]);
 
 var trap = false;
 var troll = false;
@@ -15,8 +15,8 @@ var randomNum = function(times) {
 };
 
 function MapController() {
-  this.room = 
-  this.hallway = 'hallway',
+  this.room = require('../model/room');
+  this.hallway = require('../model/hallway'),
   this.bridge = {
     entrance: GameController.player.prevLocation,
     exit: this.door,
