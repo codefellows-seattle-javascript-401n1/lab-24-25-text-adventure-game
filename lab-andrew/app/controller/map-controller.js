@@ -28,8 +28,8 @@ function MapController() {
 MapController.prototype.door = function() {
   let doorOpensTo;
   let newRandomNum = randomNum(10);
-  if(newRandomNum <= 4) doorOpensTo = 'room';
-  if(newRandomNum >= 5 && randomNum < 8) doorOpensTo = 'hallway';
+  if(newRandomNum <= 4) doorOpensTo = this.room;
+  if(newRandomNum >= 5 && randomNum < 8) doorOpensTo = this.hallway;
   doorOpensTo = this.bridge;
   return doorOpensTo;
 };
