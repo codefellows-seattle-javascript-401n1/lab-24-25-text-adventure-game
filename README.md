@@ -13,19 +13,20 @@
 
 # Directions
 * Create these directories to organize your code: 
- * html
- * scss
- * scss/vendor
-* create a **_theame.scss** partial 
+ * app
+ * app/controllers
+ * app/html
+ * app/scss
+ * app/scss/vendor
+* create a **_theme.scss** partial 
  * add three color variables
 * create a **base.scss** file 
- * import normailze
- * import \_theame
- * write some styles that use the color variables defined in \_theame
+ * import normalize
+ * import \_theme
+ * write some styles that use the color variables defined in \_theme
 * create a **entry.js**
  * require your **index.html** and force webpack to use the `file-loader`
  * require your **base.scss**
- * setup angular and create a controller for adding cowsay logic
 
 ## Game Features
 Create a text based adventure game! For this assignment you'll be creating a text based adventure game.
