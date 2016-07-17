@@ -6,6 +6,8 @@ angular.module('adventureGame').controller('GameController', [GameController]);
 
 function GameController() {
   this.history = ['GOOD LUCK IN THE SPACE STATION -- ALL SYSTEMS DOWN.'];
+
+  this.map = require('../model/map');
   this.player = {
     name: 'Reptar',
     hp: 1000,
