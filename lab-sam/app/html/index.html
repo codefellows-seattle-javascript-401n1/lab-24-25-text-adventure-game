@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="adventureApp">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bundle.css">
+    <script src="bundle.js"></script>
+  </head>
+  <body>
+    <main ng-controller="GameController as gameCtrl">
+      <form novalidate ng-model="playerInfo">
+        
+      </form>
+      <form novalidate name="form">
+        <p name="playerName">{{playerName}}
+        <select ng-model="gameCtrl.directions">
+          <option value="north"> north </option>
+          <option value="south"> south </option>
+          <option value="east"> east </option>
+          <option value="west"> west </option>
+        </select>
+        <input type="button" ng-model="gameCtrl.movement(gameCtrl.directions)" value="Move">
+      </form>
+  </body>
