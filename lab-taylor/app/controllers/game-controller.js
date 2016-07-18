@@ -87,8 +87,17 @@ GameController.prototype.attackMonster = function() {
       return;
     }
 
-    //TODO -- need to check if the player is dead.
+    if (this.amIDead()) {
+      this.updateHistory(' is now dead. The Station wins.');
+      this.player.hp = 0;
+      return;
+    }
   }
+};
+
+GameController.prototype.amIDead = function() {
+  if (this.player.hp <= 0) return true;
+  return false;
 };
 
 GameController.prototype.pickUpItem = function(item) {
@@ -99,6 +108,22 @@ GameController.prototype.pickUpItem = function(item) {
   }
 
   this.updateHistory(`cannot pick up ${item}. Already in inventory`);
+};
+
+GameController.prototype.useItem = function() {
+  if (this.player.items.indexOf(this.stationModule.monster.bribe) !== -1) {
+
+    //is there a better way to remove the item from the array?
+    this.player.items = this.player.items.filter((item) => {
+      return item !== this.stationModule.monster.bribe;
+    });
+
+    this.stationModule.monster = null;
+    this.updateHistory('bribed the moster!');
+    return;
+  }
+
+  this.updateHistory(`doesn't have the correct item. You need a ${this.stationModule.monster.bribe} to bribe the monster`);
 };
 
 GameController.prototype.holdLocation = function () {
