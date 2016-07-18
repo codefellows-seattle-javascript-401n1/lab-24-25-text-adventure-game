@@ -3,6 +3,7 @@ db/
 node_modules
 env.sh
 build/
+.vscode/
 
 ### OSX ###
 .DS_Store
