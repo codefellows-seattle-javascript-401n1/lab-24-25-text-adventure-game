@@ -7,9 +7,10 @@ const Item = require('../model/items');
 angular.module('adventureGame').controller('GameController', [GameController]);
 
 function GameController() {
-  this.history = ['GOOD LUCK IN THE SPACE STATION -- ALL SYSTEMS DOWN.'];
+  this.history = ['STATION REPORT -- ALL SYSTEMS DOWN -- GOOD LUCK'];
 
   this.map = require('../model/map');
+  this.dynamicClass = '';
   this.player = {
     name: 'Reptar',
     hp: 100,
@@ -53,13 +54,13 @@ GameController.prototype.updateLocation = function(location) {
     this.stationModule.monster = new Monster();
     this.player.hp -= this.stationModule.monster.damage;
     this.updateHistory(`ran into ${this.stationModule.monster.name} and lost ${this.stationModule.monster.damage} hp`);
+    if (this.amIDead()) this.dead();
     return;
   }
 
   if (Math.random() < this.map[location].itemChance) {
     this.stationModule.item = new Item();
     this.pickUpItem(this.stationModule.item.name);
-
   }
 
   this.stationModule.monster = null;
@@ -88,8 +89,7 @@ GameController.prototype.attackMonster = function() {
     }
 
     if (this.amIDead()) {
-      this.updateHistory(' is now dead. The Station wins.');
-      this.player.hp = 0;
+      this.dead();
       return;
     }
   }
@@ -98,6 +98,12 @@ GameController.prototype.attackMonster = function() {
 GameController.prototype.amIDead = function() {
   if (this.player.hp <= 0) return true;
   return false;
+};
+
+GameController.prototype.dead = function() {
+  this.updateHistory(' is now dead. The Station wins.');
+  this.player.hp = 0;
+  this.dynamicClass = 'dead';
 };
 
 GameController.prototype.pickUpItem = function(item) {
