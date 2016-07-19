@@ -4,7 +4,7 @@ module.exports = {
   baseCamp: {
     climb:   'sky',
     march:   'baseCampTrail1',
-    retreat: 'You have no where to run',
+    retreat: 'no retreat',
     leap:    'ground',
     deityChance: 0.2
   },
@@ -12,14 +12,14 @@ module.exports = {
   baseCampTrail1 : {
     climb:   'mountainSideSwitchback',
     march:   'baseCampTrail2',
-    retreat: 'baseCampTrail1',
+    retreat: 'baseCamp',
     leap:    'ground',
     deityChance: 0.2
   },
 
   baseCampTrail2: {
     climb:   'mountainSideTrail',
-    march:   'baseCampTrail2',
+    march:   'baseCampTrail3',
     retreat: 'baseCampTrail1',
     leap:    'ground',
     deityChance: 0.2
@@ -27,15 +27,15 @@ module.exports = {
 
   baseCampTrail3: {
     climb:   'mountainSide',
-    march:   'baseCampTrail2',
-    retreat: 'baseCampTrail1',
+    march:   'baseCampSwitchback',
+    retreat: 'baseCampTrail2',
     leap:    'ground',
     deityChance: 0.2
   },
 
   baseCampSwitchback: {
     climb:   'sky',
-    march:   'mounstainSide',
+    march:   'mountainSide',
     retreat: 'baseCampTrail3',
     leap:    'ground',
     deityChance: 0.2

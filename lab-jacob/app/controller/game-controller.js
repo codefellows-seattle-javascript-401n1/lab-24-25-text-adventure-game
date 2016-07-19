@@ -2,70 +2,73 @@
 
 const angular = require('angular');
 
-const Deity = require('../model/deities');
+//const Deity = require('../model/deities');
 
 // angular logic
-angular.modules('tindur').controller('GameController', [GameController]);
+angular.module('tindur').controller('GameController', [GameController]);
 
 function GameController() {
-  this.history = 'CLIMB THE MOUNTAIN, DEFEAT ODIN, CLAIM YOUR GLORY!!!!!';
-  this.moveCount = 0;
-  this.map = require('../model/map');
+  const vm = this;
 
-  this.player = {
-    name: '',
-    hp: '',
-    damage: '',
+  vm.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
+  vm.moveCount = 0;
+  vm.map = require('../model/map');
+  console.log('this.map: ', vm.map);
+  vm.player = {
+    name: 'Worthless peasant',
+    hp: 100,
+    damage: 20,
     location: 'baseCamp'
   };
 
-  this.area = {
-    name: this.player.location
+  vm.area = {
+    name: vm.player.location
+  };
+
+  vm.moveDirection = function(action){
+
+    vm.moveCount++;
+    var oldLocation = vm.area.name;
+    console.log('oldlocation: ', oldLocation);
+    var newLocation = vm.map[oldLocation][action];
+    console.log('newLocation: ', newLocation);
+    if (oldLocation && newLocation !== 'sky' || 'ground' || 'no retreat' || 'The trail has ended'){
+      vm.updateLocation(newLocation);
+      return;
+    }
+
+    vm.holdLocation(action);
+  };
+
+  vm.holdLocation = function(action){
+
+    var noPass = vm.map[vm.player.location][action];
+    if (noPass == 'sky') vm.logTurn('nothing above but sky');
+    if (noPass =='ground') vm.logTurn('you\re already at the base of the mountain');
+    if (noPass == 'no retreat') vm.logTurn('you have nowhere to run');
+    if (noPass == 'The trail has ended') vm.logTurn('The trail has ended');
+  };
+
+  vm.updateLocation = function(location){
+
+    vm.player.location = location;
+    vm.area.name = location;
+    // if(Math.Random() < this.map[location].deityChance){
+    //   this.area.monster = new Deity();
+    //   this.player.hp -= this.area.deity.damage;
+    //   this.logTurn(`is now in ${this.player.location}. A ${this.area.deity.name} attacked and you lost ${this.area.monster.damage} hp.`);
+    //   return;
+    // }
+
+    vm.area.deity = null;
+    vm.logTurn(`is now on ${vm.player.location} which is empty`);
+  };
+
+  vm.attackDeity = function(){
+
+  };
+
+  vm.logTurn = function(message){
+    vm.history.push(`TURN ${vm.moveCount}: ${vm.player.name} ${message}`);
   };
 }
-
-GameController.prototype.moveDirection = function(direction){
-  this.moveCount ++;
-  var oldLocation = this.player.location;
-  var newLocation = this.map[oldLocation][direction];
-  if (newLocation && newLocation == 'sky'){ // if nowhere to climb
-    this.noClimb();
-    return;
-  }
-  if (newLocation && newLocation == 'ground'){ // if nowhere to leap
-    this.noLeap();
-    return;
-  }
-
-  this.updatelocation(newLocation);
-};
-
-GameController.prototype.noClimb = function(){
-  this.logTurn('nothing but sky above');
-};
-
-GameController.prototype.noLeap = function(){
-  this.logTurn('nothing but solid ground below');
-};
-
-GameController.prototype.updateLocation = function(location){
-  this.player.location = location;
-  this.area.name = location;
-  if(Math.Random() < this.map[location].deityChance){
-    this.area.monster = new Deity();
-    this.player.hp -= this.area.deity.damage;
-    this.logTurn(`is now in ${this.player.location}. A ${this.area.deity.name} attacked and you lost ${this.area.monster.damage} hp.`);
-    return;
-  }
-
-  this.area.deity = null;
-  this.logTurn(`is now in ${this.player.location} which is empty`);
-};
-
-GameController.prototype.attackDeity = function(){
-
-};
-
-GameController.prototype.logTurn = function(message){
-  this.history.push(`TURN ${this.moveCount}: ${this.player.name} ${message}`);
-};

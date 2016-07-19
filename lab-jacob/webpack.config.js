@@ -8,7 +8,7 @@ module.exports = {
     path: 'build',
     filename: 'bundle.js'
   },
-  plugins: [new ExtractTextPlugin('bundle.js')],
+  plugins: [new ExtractTextPlugin('bundle.css')],
 
   module: {
     loaders: [
@@ -25,5 +25,18 @@ module.exports = {
         }
       }
     ]
+  },
+
+  devServer: {
+    devtool:            'eval-source-map',
+    contentBase:        'build',
+    historyApiFallback: true,
+    progress:           true,
+    stats:              'errors-only'
+  },
+
+  stats: {
+    reasons:            true,
+    errorDetails:       true
   }
-}; 
+};
