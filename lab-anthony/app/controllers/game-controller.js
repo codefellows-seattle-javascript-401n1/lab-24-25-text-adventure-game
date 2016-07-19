@@ -14,9 +14,12 @@ function MonsterController() {
   this.moveCount = 0;
   this.map = require('../models/map');
 
+  this.gameStart = false;
+  this.gameOver = false;
+
   this.player = {
     name: 'Big Money',
-    hp: 300,
+    hp: 10,
     damage: 10,
     xp: 0,
     location: 'roomA'
@@ -32,6 +35,7 @@ function MonsterController() {
 }
 
 MonsterController.prototype.moveDirection = function(direction) {
+  this.isDead();
   this.moveCount ++;
   var oldLocation = this.player.location;
   var newLocation = this.map[oldLocation][direction];
@@ -50,6 +54,7 @@ MonsterController.prototype.updateLocation = function(location) {
     this.room.monster = new Monster();
     this.player.hp -= this.room.monster.damage;
     this.logTurn(`is now in ${this.player.location}. A ${this.room.monster.name} attacked! You lost ${this.room.monster.damage}.`);
+    this.isDead();
     return;
   }
 
@@ -81,5 +86,23 @@ MonsterController.prototype.hurtMonster = function() {
       return;
     }
     this.logTurn(message + ' you attacked the monster.');
+  }
+  this.isDead();
+};
+
+MonsterController.prototype.gameBegin = function() {
+  this.gameStart = true;
+  this.gameOver = false;
+};
+
+MonsterController.prototype.gameEnd = function() {
+  this.gameOver = true;
+  this.history = ['You have entered the room! Get ready to mash some monsters!'];
+  this.player.hp = 10;
+};
+
+MonsterController.prototype.isDead = function() {
+  if (this.player.hp <= 0) {
+    this.gameEnd();
   }
 };
