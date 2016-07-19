@@ -34,4 +34,12 @@ describe('testing GameController', function() {
     const length = this.crtl.history.length;
     expect(this.crtl.history[length-1]).toBe('MOVE 1: Reptar ran into the hull.');
   });
+
+  it('should know if I am dead', () => {
+    this.crtl.player.hp = 0;
+    expect(this.crtl.amIDead()).toBe(true);
+
+    this.crtl.player.hp = 100;
+    expect(this.crtl.amIDead()).toBe(false);
+  });
 });
