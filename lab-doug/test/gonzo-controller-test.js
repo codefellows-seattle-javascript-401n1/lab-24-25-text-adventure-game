@@ -9,4 +9,7 @@ describe('Testing gonzoController', function(){
       new $controller('GonzoController', {$scope: scope})
     });
   });
+  it('should' () => {
+
+  });
 });

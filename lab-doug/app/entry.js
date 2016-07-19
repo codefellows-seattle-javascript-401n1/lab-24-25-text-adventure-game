@@ -5,3 +5,4 @@ require('./scss/base.scss');
 require('angular');
 angular.module('gonzoApp', []);
 require('./controller/gonzo-controller');
+require('./controller/monster-controller');

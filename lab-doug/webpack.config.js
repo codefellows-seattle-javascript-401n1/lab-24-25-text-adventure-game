@@ -20,8 +20,8 @@ module.exports = {
         test: /\.scss$/,
         /**
          *sass-loader converts sass file to css file
-         *css-loader converts css file to js object and loads into bundle
-         *style-loader gets the js object in the bundle and coverts it and applies it to the DOM
+         *css-loader converts css file to js object and loads into bundle.css
+         *style-loader gets the js object in the bundle.css and coverts it and applies the css to the DOM
          */
         loader: ExtractTextPlugin.extract('style', 'css!sass!')
       },
