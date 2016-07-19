@@ -4,7 +4,7 @@ const angular = require('angular');
 const GameController = require('./game-controller');
 const chanceOf = require('../lib/chance-of');
 
-angular.module('trippedApp').controller('MapController', [GameController, MapController]);
+angular.module('trippedApp').controller('GameController', [GameController]);
 
 var trap = false;
 var troll = false;
@@ -14,7 +14,7 @@ var randomNum = function(times) {
   return newRandomNum;
 };
 
-function MapController() {
+function Map() {
   this.room = require('../model/room');
   this.hallway = require('../model/hallway'),
   this.bridge = {
@@ -26,23 +26,23 @@ function MapController() {
   };
 }
 
-MapController.prototype.door = function() {
+Map.prototype.door = function() {
   let doorOpensTo;
   let newRandomNum = randomNum(10);
-  if(newRandomNum <= 4) doorOpensTo = this.room;
-  if(newRandomNum >= 5 && randomNum < 8) doorOpensTo = this.hallway;
+  if(newRandomNum <= 4) doorOpensTo = this.room[randomNum(4)];
+  if(newRandomNum >= 5 && randomNum < 8) doorOpensTo = this.hallway[randomNum[5]];
   doorOpensTo = this.bridge;
   return doorOpensTo;
 };
 
-MapController.prototype.overBridge = function() {
+Map.prototype.overBridge = function() {
   chanceOf.chanceOftrap;
   if(!trap) {
     return chanceOf.chanceOfCompanion;
   }
   return trap;
 };
-MapController.prototype.underBridge = function() {
+Map.prototype.underBridge = function() {
   chanceOf.chanceOfTroll;
   if(!troll) {
     GameController.player.xp += randomNum(10);

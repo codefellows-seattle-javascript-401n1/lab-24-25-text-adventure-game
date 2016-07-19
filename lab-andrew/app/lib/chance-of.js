@@ -13,24 +13,24 @@ var randomNum = function(times) {
   return newRandomNum;
 };
 module.exports = function chanceOfTroll() {
-  if(randomNum(10) < 4) new Troll();
+  if(randomNum(10) < 4) GameController.room.troll = new Troll();
   return troll;
 };
 module.exports = function chanceOfItem() {
-  if(randomNum(10) < 4) new Item();
+  if(randomNum(10) < 4) GameController.player.item.push(new Item());
 };
 module.exports = function chanceOftrap() {
   if (randomNum(10) < 4) {
     GameController.player.hp -= randomNum(40) + 11;
     trap = true;
-    return new Troll();
+    return GameController.room.troll = new Troll();
   }
   return trap;
 };
 module.exports = function chanceOfCompanion(){
   if(randomNum(10) < 4) {
     GameController.player.xp += randomNum(20);
-    return new Companion();
+    return GameController.player.companion.push(new Companion());
   }
   GameController.player.xp += randomNum(10);
   return;

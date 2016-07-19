@@ -2,8 +2,44 @@
 <html>
   <head ng-app="trippedApp">
     <title>Tripped on a Trolls Toe</title>
+    <link rel="stylesheet" href="bundle.css" style="tex/css">
+    <script src="bundle.js"></script>
   </head>
   <body>
-    <h1>hello world</h1>
+    <main ng-controller+"GameController as gameCtrl">
+      <form novalidate name=gameForm>
+        <select ng-model="gameCtrl.gameForm.direction">
+          <option value="entrance">entrance</option>
+          <option value="exit">exit</option>
+          <option value="north">north</option>
+          <option value="south">south</option>
+        </select>
+        <input type="button" ng-click="gameCtrl.moveDirection(gameCrtl.gameForm.direction)" value="Move">
+        <input type="button" ng-disabled="!gameCrtl.room.troll" ng-click="gameCtrl.attackTroll" value="Atack">
+        <section>
+          <h2>HP: </h2><p>{{gameCtrl.player.hp}}</p>
+          <h2>XP: </h2><p>{{gameCtrl.player.xp}}</p>
+          <h2>Myst: </h2><p>{{gameCtrl.player.myst}}</p>
+          <h2>Location: </h2><p>{{gameCtrl.player.location}}</p>
+        </section>
+        <section>
+          <h2>Room:</h2><p>{{gameCtrl.room.name}}</p>
+          <div ng-show="gameCtrl.room.troll">
+            <h3>Monster: </h3>
+            <pre>
+              name: {{gameCtrl.room.troll.name}}
+              hp: {{gameCtrl.room.troll.hp}}
+            </pre>
+          </div>
+        </section>
+        <section>
+          <h2>Game History: </h2>
+          <ol>
+            <li ng-repeat="move in gameCtrl.history">{{move}}</li>
+          </ol>
+        </section>
+      </form>
+
+    </main>
   </body>
 </html>

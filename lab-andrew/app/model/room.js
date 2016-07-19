@@ -1,24 +1,24 @@
 'use strict';
 
-const MapController = require('../controller/map-controller');
+const Map = require('../controller/map');
 
 module.exports = {
   roomA: {
-    exit: MapController.prevLocation[0]
+    exit: Map.prevLocation[0],
   },
   roomB: {
-    entrance: MapController.prevLocation[0],
-    north: MapController.door
+    entrance: Map.prevLocation[0],
+    north: Map.door,
   },
   roomC: {
-    entrance: MapController.prevLocation[0],
-    north: MapController.door,
-    east: MapController.door
+    entrance: Map.prevLocation[0],
+    north: Map.door,
+    east: Map.door,
   },
   roomD: {
-    entrance: MapController.prevLocation[0],
-    north: MapController.door,
-    east: MapController.door,
-    west: MapController.door
+    entrance: Map.prevLocation[0],
+    north: Map.door,
+    east: Map.door,
+    west: Map.door,
   }
 };
