@@ -17,6 +17,16 @@ ol li {
   color: white;
 }
 
+input[type="button"] {
+  border: 1px $app-blueprime solid;
+  color: $app-bluebaby;
+  background-color: black;
+}
+
+input[type="button"]:active {
+  background-color: $app-bluedried;
+}
+
 .warning {
   color: $app-tomato;
 }
