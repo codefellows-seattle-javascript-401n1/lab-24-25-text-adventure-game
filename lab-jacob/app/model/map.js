@@ -26,7 +26,7 @@ module.exports = {
   },
 
   baseCampTrail3: {
-    climb:   'mountainSide',
+    climb:   'MountainSide',
     march:   'baseCampSwitchback',
     retreat: 'baseCampTrail2',
     leap:    'ground',
@@ -53,7 +53,7 @@ module.exports = {
     climb: 'peak',
     march: 'mountainSideSwitchback',
     retreat: 'mountainSide',
-    leap: 'baseCampTrail2',
+    leap: 'Base Camp Trail 2',
     deityChance: 0.5
   },
 

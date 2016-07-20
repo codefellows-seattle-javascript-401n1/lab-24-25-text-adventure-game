@@ -1,36 +1,31 @@
 'use strict';
 
-const randomItem = require('../lib/randomize');
-const Deity = [Odin, Loki, Freyja, Thor];
+module.exports = [
+  {
+    name: 'Odin',
+    hp: 50,
+    power: 'Smite',
+    damage: 30
+  },
 
-const Odin = {
-  name: 'Odin',
-  hp: 50,
-  power: 'Smite!',
-  damage: 30
-};
+  {
+    name: 'Loki',
+    hp: 30,
+    power: 'Raven Shout',
+    damage: 10
+  },
 
-const Loki = {
-  name: 'Loki',
-  hp: 30,
-  power: 'Raven Shout',
-  damage: 10
-};
+  {
+    name: 'Freyja',
+    hp: 30,
+    power: 'Banish',
+    damage: 10
+  },
 
-const Freyja = {
-  name: 'Freya',
-  hp: 30,
-  power: 'Banish',
-  damage: 10
-};
-
-const Thor = {
-  name: 'Thor',
-  hp: 30,
-  power: 'Thunderous Strike',
-  damage: 10
-};
-
-module.exports = function Deity(){
-
-};
+  {
+    name: 'Thor',
+    hp: 30,
+    power: 'Thunderous Strike',
+    damage: 10
+  }
+];

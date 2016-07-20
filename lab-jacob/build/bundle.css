@@ -420,8 +420,8 @@ textarea {
 body {
   background-color: #000000; }
 
-h1, h2 {
+h1, h2, h3 {
   color: #baffd9; }
 
-li {
+li, p, pre {
   color: #c7efff; }

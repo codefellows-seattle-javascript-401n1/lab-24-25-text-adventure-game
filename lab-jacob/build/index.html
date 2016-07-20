@@ -18,16 +18,29 @@
           <input type="button" ng-click="gameCtrl.moveDirection('leap')" value="leap">
         </section>
 
-        <section id="action" ng-show="gameCtrl.location.deity">
-          
+        <section id="action" ng-show="gameCtrl.area.deity">
+          <h2>Fight!</h2>
+          <input type="button" ng-click="gameCtrl.attackDeity()" value="attack">          
         </section>
       </form>
 
       <section id="playScreen">
-        <h2>What's happening:</h2>
+        <h3>Area:</h3> <p>{{gameCtrl.area.name}}</p>
+        <div ng-show="gameCtrl.area.deity">
+          <h3>A foe has appeared!</h3>
+          <pre>
+            name: {{gameCtrl.area.deity.name}}
+            health: {{gameCtrl.area.deity.hp}}
+          </pre>
+        </div>
         <ol>
           <li ng-repeat="move in gameCtrl.history">{{move}}</li>
         </ol>
+      </section>
+
+      <section id="character">
+        <h2>{{gameCtrl.player.name}} Stats:</h2>
+        <h3>Health:</h3> <p>{{gameCtrl.player.hp}}</p>
       </section>
     </main>
   </body>

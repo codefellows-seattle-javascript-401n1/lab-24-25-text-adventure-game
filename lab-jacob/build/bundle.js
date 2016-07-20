@@ -31568,7 +31568,8 @@
 
 	var angular = __webpack_require__(7);
 
-	//const Deity = require('../model/deities');
+	var deities = __webpack_require__(10);
+	var randomDeity = __webpack_require__(11);
 
 	// angular logic
 	angular.module('tindur').controller('GameController', [GameController]);
@@ -31576,12 +31577,12 @@
 	function GameController() {
 	  var vm = this;
 
-	  vm.history = ['CLIMB THE MOUNTAIN, DEFEAT ODIN, CLAIM YOUR GLORY!!!!!'];
+	  vm.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
 	  vm.moveCount = 0;
-	  vm.map = __webpack_require__(10);
+	  vm.map = __webpack_require__(12);
 	  console.log('this.map: ', vm.map);
 	  vm.player = {
-	    name: 'Worthless peasant',
+	    name: 'Nameless Champion',
 	    hp: 100,
 	    damage: 20,
 	    location: 'baseCamp'
@@ -31592,12 +31593,9 @@
 	  };
 
 	  vm.moveDirection = function (action) {
-
 	    vm.moveCount++;
 	    var oldLocation = vm.area.name;
-	    console.log('oldlocation: ', oldLocation);
 	    var newLocation = vm.map[oldLocation][action];
-	    console.log('newLocation: ', newLocation);
 	    if (oldLocation && newLocation !== 'sky' || 'ground' || 'no retreat' || 'The trail has ended') {
 	      vm.updateLocation(newLocation);
 	      return;
@@ -31607,30 +31605,44 @@
 	  };
 
 	  vm.holdLocation = function (action) {
-
 	    var noPass = vm.map[vm.player.location][action];
 	    if (noPass == 'sky') vm.logTurn('nothing above but sky');
-	    if (noPass == 'ground') vm.logTurn('you\re already at the base of the mountain');
+	    if (noPass == 'ground') vm.logTurn('you\'re already at the base of the mountain');
 	    if (noPass == 'no retreat') vm.logTurn('you have nowhere to run');
 	    if (noPass == 'The trail has ended') vm.logTurn('The trail has ended');
 	  };
 
 	  vm.updateLocation = function (location) {
-
 	    vm.player.location = location;
 	    vm.area.name = location;
-	    // if(Math.Random() < this.map[location].deityChance){
-	    //   this.area.monster = new Deity();
-	    //   this.player.hp -= this.area.deity.damage;
-	    //   this.logTurn(`is now in ${this.player.location}. A ${this.area.deity.name} attacked and you lost ${this.area.monster.damage} hp.`);
-	    //   return;
-	    // }
+	    if (Math.random() < this.map[location].deityChance) {
+	      this.area.deity = randomDeity(deities);
+	      this.player.hp -= this.area.deity.damage;
+	      this.logTurn('Upon approaching the ' + this.player.location + ', ' + this.area.deity.name + ' appears and uses ' + this.area.deity.power + '. You lose ' + this.area.deity.damage + ' hp.');
+	      return;
+	    }
 
 	    vm.area.deity = null;
 	    vm.logTurn('is now on ' + vm.player.location + ' which is empty');
 	  };
 
-	  vm.attackDeity = function () {};
+	  vm.attackDeity = function () {
+	    vm.moveCount++;
+	    if (this.area.deity) {
+	      var message = '';
+	      if (Math.random() > 0.5) {
+	        this.player.hp -= this.area.deity.damage;
+	        message += this.area.deity.name + ' attacks with ' + this.area.deity.power + '! You lose ' + this.area.deity.damage;
+	      }
+	      this.area.deity.hp -= this.player.damage;
+	      if (this.area.deity.hp <= 0) {
+	        this.logTurn('You defeated ' + this.area.deity.name + '! Onward to Glory!');
+	        this.area.deity = null;
+	        return;
+	      }
+	      this.logTurn(message + ('You attack ' + this.area.deity.name + ' for ' + this.player.damage));
+	    }
+	  };
 
 	  vm.logTurn = function (message) {
 	    vm.history.push('TURN ' + vm.moveCount + ': ' + vm.player.name + ' ' + message);
@@ -31639,6 +31651,46 @@
 
 /***/ },
 /* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = [{
+	  name: 'Odin',
+	  hp: 50,
+	  power: 'Smite',
+	  damage: 30
+	}, {
+	  name: 'Loki',
+	  hp: 30,
+	  power: 'Raven Shout',
+	  damage: 10
+	}, {
+	  name: 'Freyja',
+	  hp: 30,
+	  power: 'Banish',
+	  damage: 10
+	}, {
+	  name: 'Thor',
+	  hp: 30,
+	  power: 'Thunderous Strike',
+	  damage: 10
+	}];
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function (array) {
+	  if (array.length === 0) return null;
+	  var index = Math.floor(Math.random() * array.length);
+	  return array[index];
+	};
+
+/***/ },
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31669,7 +31721,7 @@
 	  },
 
 	  baseCampTrail3: {
-	    climb: 'mountainSide',
+	    climb: 'MountainSide',
 	    march: 'baseCampSwitchback',
 	    retreat: 'baseCampTrail2',
 	    leap: 'ground',
@@ -31696,7 +31748,7 @@
 	    climb: 'peak',
 	    march: 'mountainSideSwitchback',
 	    retreat: 'mountainSide',
-	    leap: 'baseCampTrail2',
+	    leap: 'Base Camp Trail 2',
 	    deityChance: 0.5
 	  },
 

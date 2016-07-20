@@ -5,10 +5,10 @@ body {
   background-color: $app-background;
 }
 
-h1, h2 {
+h1, h2, h3 {
   color: $app-headings;
 }
 
-li {
+li, p, pre {
   color: $app-text;
 }
