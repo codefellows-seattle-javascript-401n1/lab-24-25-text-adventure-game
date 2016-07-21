@@ -10,8 +10,8 @@ function GameController(){
   this.moveCount = 0;
   this.map = require('../model/map');
   this.player = {
-    name: 'speedy',
-    hp: 100,
+    name: 'Justin',
+    hp: 10000,
     damage: 10,
     xp: 0,
     location: 'roomA'
@@ -32,12 +32,12 @@ GameController.prototype.moveDirection = function(direction){
     this.updateLocation(newLocation);//move into the location
     return;
   }
-  this.holdLocation();//stay where you are
 };
 
 GameController.prototype.updateLocation = function(location){
   this.player.location = location;
   this.room.name = location;
+
   if(Math.random() < this.map[location].monsterChance){
     this.room.monster = new Monster();
     this.player.hp -= this.room.monster.damange;
@@ -59,15 +59,19 @@ GameController.prototype.logTurn = function(message){
 
 GameController.prototype.attackMonster = function(){
   this.moveCount++;
+
   if(this.room.monster){
     var message = '';
     if(Math.random() >0.5){
-      this.player.hp -=this.room.monster.damage;
+      this.player.hp -= this.room.monster.damage;
       message += `the monster attacked you! Defeated ${this.monster.damage}.`;
     }
+
     this.room.monster.hp -=this.player.damage;
+
     if(this.room.monster.hp<0){
-      this.player.xp += 10000;
+      this.player.xp += 1000;
+      this.player.hp += 1000;// added
       this.logTurn(`you killed the ${this.room.monster.name} and earned 10000xp!`);
       this.room.monster = null;
       return;

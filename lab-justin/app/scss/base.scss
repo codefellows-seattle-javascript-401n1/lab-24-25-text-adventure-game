@@ -1,5 +1,5 @@
-@import "./vendor/normalize.css";
-@import "./_theme.scss";
+@import './vendor/normalize.css';
+@import './_theme.scss';
 
 body {
   background-color: gray;
@@ -8,6 +8,14 @@ body {
   background-image: url('../image/pacMan.png');
   background-blend-mode: darken;
   opacity: 1;
+}
+
+.monster {
+  background-color: $app-sky;
+  font-weight: bolder;
+  font-size: 25px;
+  color: red;
+  width: 0.75;
 }
 
 .gameHistory {

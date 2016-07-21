@@ -7,7 +7,6 @@ let imgFile = require('./image/pacMan.png');
 console.log(imgFile);
 
 const angular = require('angular');
-
 angular.module('gameApp', []);
 
 require('./controller/game-controller.js');
