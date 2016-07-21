@@ -417,11 +417,24 @@ textarea {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
+main {
+  width: 75%;
+  margin: 0 auto; }
+
 body {
   background-color: #000000; }
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
 
 h1, h2, h3 {
   color: #baffd9; }
 
 li, p, pre {
+  list-style-type: none;
   color: #c7efff; }
+
+#character, #movement, #action {
+  display: inline-block; }

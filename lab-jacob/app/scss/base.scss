@@ -1,8 +1,19 @@
 @import "vendor/normalize.css";
 @import "_theme.scss";
 
+main {
+  width: 75%;
+  margin: 0 auto;
+}
+
 body {
   background-color: $app-background;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;;
 }
 
 h1, h2, h3 {
@@ -10,5 +21,10 @@ h1, h2, h3 {
 }
 
 li, p, pre {
+  list-style-type: none;
   color: $app-text;
+}
+
+#character, #movement, #action {
+  display: inline-block;
 }

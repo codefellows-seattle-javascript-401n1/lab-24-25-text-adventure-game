@@ -31575,46 +31575,44 @@
 	angular.module('tindur').controller('GameController', [GameController]);
 
 	function GameController() {
-	  var vm = this;
-
-	  vm.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
-	  vm.moveCount = 0;
-	  vm.map = __webpack_require__(12);
-	  console.log('this.map: ', vm.map);
-	  vm.player = {
+	  this.beginGame = null;
+	  this.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
+	  this.moveCount = 0;
+	  this.map = __webpack_require__(12);
+	  this.player = {
 	    name: 'Nameless Champion',
 	    hp: 100,
 	    damage: 20,
 	    location: 'baseCamp'
 	  };
 
-	  vm.area = {
-	    name: vm.player.location
+	  this.area = {
+	    name: this.player.location
 	  };
 
-	  vm.moveDirection = function (action) {
-	    vm.moveCount++;
-	    var oldLocation = vm.area.name;
-	    var newLocation = vm.map[oldLocation][action];
+	  this.moveDirection = function (action) {
+	    this.moveCount++;
+	    var oldLocation = this.area.name;
+	    var newLocation = this.map[oldLocation][action];
 	    if (oldLocation && newLocation !== 'sky' || 'ground' || 'no retreat' || 'The trail has ended') {
-	      vm.updateLocation(newLocation);
+	      this.updateLocation(newLocation);
 	      return;
 	    }
 
-	    vm.holdLocation(action);
+	    this.holdLocation(action);
 	  };
 
-	  vm.holdLocation = function (action) {
-	    var noPass = vm.map[vm.player.location][action];
-	    if (noPass == 'sky') vm.logTurn('nothing above but sky');
-	    if (noPass == 'ground') vm.logTurn('you\'re already at the base of the mountain');
-	    if (noPass == 'no retreat') vm.logTurn('you have nowhere to run');
-	    if (noPass == 'The trail has ended') vm.logTurn('The trail has ended');
+	  this.holdLocation = function (action) {
+	    var noPass = this.map[this.player.location][action];
+	    if (noPass == 'sky') this.logTurn('nothing above but sky');
+	    if (noPass == 'ground') this.logTurn('you\'re already at the base of the mountain');
+	    if (noPass == 'no retreat') this.logTurn('you have nowhere to run');
+	    if (noPass == 'The trail has ended') this.logTurn('The trail has ended');
 	  };
 
-	  vm.updateLocation = function (location) {
-	    vm.player.location = location;
-	    vm.area.name = location;
+	  this.updateLocation = function (location) {
+	    this.player.location = location;
+	    this.area.name = location;
 	    if (Math.random() < this.map[location].deityChance) {
 	      this.area.deity = randomDeity(deities);
 	      this.player.hp -= this.area.deity.damage;
@@ -31622,12 +31620,12 @@
 	      return;
 	    }
 
-	    vm.area.deity = null;
-	    vm.logTurn('is now on ' + vm.player.location + ' which is empty');
+	    this.area.deity = null;
+	    this.logTurn('is now on ' + this.player.location + ' which is empty');
 	  };
 
-	  vm.attackDeity = function () {
-	    vm.moveCount++;
+	  this.attackDeity = function () {
+	    this.moveCount++;
 	    if (this.area.deity) {
 	      var message = '';
 	      if (Math.random() > 0.5) {
@@ -31644,8 +31642,12 @@
 	    }
 	  };
 
-	  vm.logTurn = function (message) {
-	    vm.history.push('TURN ' + vm.moveCount + ': ' + vm.player.name + ' ' + message);
+	  this.logTurn = function (message) {
+	    this.history.push('TURN ' + this.moveCount + ': ' + this.player.name + ' ' + message);
+	  };
+
+	  this.intro = function () {
+	    this.beginGame = true;
 	  };
 	}
 
