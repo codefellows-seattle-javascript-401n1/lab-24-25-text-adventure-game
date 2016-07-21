@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="hauntedHouse">
+<head>
+  <link rel="stylesheet" href="bundle.scss" />
+  <script src="bundle.js"></script>
+  <title>Dare Ye Enter the Studio Apartment of Horrors?!</title>
+</head>
+<body>
+  <main ng-controller="GameController as gameCtrl">
+    <h1> The Haunted Studio Apartment!! </h1>
+    <form novalidate name="gameForm">
+      <select ng-model="gameCtrl.gameForm.direction">
+        <option value="North"> North </option>
+        <option value="South"> South </option>
+        <option value="East"> East </option>
+        <option value="West"> West </option>
+      </select>
+      <input type="button" ng-click="gameCtrl.moveDirection(gameCtrl.gameForm.direction)" value="Move" />
+      <input type="button" ng-disabled="!gameCtrl.room.monster" ng-click="gameCtrl.attackMonster()" value="Attack" />
+    </form>
+    <section>
+      <h2> {{ gameCtrl.player.name }} </h2>
+      <h3> HP: </h3>
+    </section>
+  </main>
+</body>
+</html>

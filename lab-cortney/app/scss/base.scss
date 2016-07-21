@@ -1,0 +1,15 @@
+@import "vendor/normalize.css";
+@import "_theme.scss";
+
+body {
+  background-color: $yellow;
+  color: $ultramarine;
+}
+
+h1 {
+  color: $darkpink;
+}
+
+h2, h3, h4, h5, h6 {
+  color: $rose;
+}
