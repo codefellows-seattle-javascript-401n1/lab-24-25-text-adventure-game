@@ -8,7 +8,7 @@ require('./scss/base.scss');
 const angular = require('angular');
 
 //app modules
+angular.module('monsterMash', []);
 
 //angular module extensions
-angular.module('monsterMash', []);
 require('./controllers/game-controller.js');

@@ -5,6 +5,7 @@ const angular = require('angular');
 
 //app modules
 const Monster = require('../models/monster.js');
+const Gem = require('../models/gem.js');
 
 //modules logic
 angular.module('monsterMash').controller('MonsterController', [MonsterController]);
@@ -50,6 +51,11 @@ MonsterController.prototype.moveDirection = function(direction) {
 MonsterController.prototype.updateLocation = function(location) {
   this.player.location = location;
   this.room.name = location;
+  if (Math.random() < 0.5) {
+    this.room.gem = new Gem();
+    this.player.hp += this.room.gem.addHp;
+    this.logTurn(`you found a Gem! It boosted your hp by ${this.room.gem.addHp}`);
+  }
   if(Math.random() < this.map[location].monsterOdds) {
     this.room.monster = new Monster();
     this.player.hp -= this.room.monster.damage;
