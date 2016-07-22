@@ -12,16 +12,15 @@ describe('testing the game controller', function(){
   });
 
   it('should have a player', () => {
-    console.log(scope);
-    expect(scope.player.name).toBe('Nameless Champion');
+    expect(scope.gameCtrl.player.name).toBe('Nameless Champion');
   });
 
   it('should have a starting area', () => {
-    expect(scope.area.name).toBe('baseCamp');
+    expect(scope.gameCtrl.area.name).toBe('baseCamp');
   });
 
   it('should log a message', () => {
-    scope.logTurn('here\'s some test text');
-    expect(scope.history[1]).toBe(`TURN ${scope.moveCount}: ${scope.player.name} here\'s some test text`);
+    scope.gameCtrl.logTurn('here\'s some test text');
+    expect(scope.gameCtrl.history[1]).toBe(`TURN ${scope.gameCtrl.moveCount}: ${scope.gameCtrl.player.name} here\'s some test text`);
   });
 });
