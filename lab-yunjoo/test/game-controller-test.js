@@ -11,6 +11,7 @@ describe('testing game-controller', function(){
   });
   it('should have player',()=>{
     expect(this.ctrl.player.name).toBe('amazingYun');
+    expect(this.ctrl.player.class).toBe('TypeError');
     expect(this.ctrl.player.hp).toBe(100);
   });
   it('should move direction',() => {
