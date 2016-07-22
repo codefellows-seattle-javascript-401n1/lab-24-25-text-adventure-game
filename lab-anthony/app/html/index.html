@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="monsterMash">
+  <head>
+    <meta charset="utf-8">
+    <title>MONSTER MASH</title>
+    <link rel="stylesheet" type="text/css" href="bundle.css">
+    <script src="bundle.js"></script>
+  </head>
+  <body ng-controller="MonsterController as monCtr">
+    <main ng-show="!monCtr.gameOver && monCtr.gameStart">
+      <form nonvalidate name="gameForm">
+        <select ng-model="monCtr.gameForm.direction">
+            <option value="east">east</option>
+            <option value="west">west</option>
+          </select>
+          <input type="button" ng-click="monCtr.moveDirection(monCtr.gameForm.direction)" value="Move">
+          <input type="button" ng-disabled="!monCtr.room.monster" ng-click="monCtr.hurtMonster()" value="Hurt Monster">
+      </form>
+      <section>
+        <h2>Stats: </h2>
+        <pre>
+          {{monCtr.player.hp}}
+        </pre>
+      </section>
+      <section>
+        <h2>Game History: </h2>
+        <ol>
+          <li ng-repeat="move in monCtr.history"> {{move}} </li>
+        </ol>
+      </section>
+    </main>
+    <div ng-hide="monCtr.gameStart">
+      <h2>Monster Mash</h2>
+      <input type="button" value="Play!" ng-click="monCtr.gameBegin()">
+    </div>
+    <div ng-show="monCtr.gameOver">
+      <h2>Game over!</h2>
+      <input type="button" value="Play Again!" ng-click="monCtr.gameBegin()">
+    </div>
+  </body>
+</html>
