@@ -419,7 +419,10 @@ textarea {
 }
 body {
   background-color: #E7DF6D;
+  color: #305596; }
+
+h1 {
   color: #962943; }
 
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
   color: #E25476; }
