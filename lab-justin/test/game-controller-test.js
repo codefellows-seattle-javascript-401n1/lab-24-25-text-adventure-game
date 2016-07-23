@@ -1,6 +1,9 @@
+/* global expect */
+
 'use strict';//not running thru webpack no angular required
 
 describe('test controller:  game-controller', function(){
+
   beforeEach(() => {
     angular.mock.module('gameApp');
     angular.mock.inject(($controller) => {
@@ -10,10 +13,17 @@ describe('test controller:  game-controller', function(){
 
   it('1) should give a proper player name', () => {
     expect(this.ctrl.player.name).toBe('Justin');
+
+    this.ctrl.player.name = 'Lucien';
+    expect(this.ctrl.player.name).not.toBe('Justin');
+
   });
 
   it('2) should give a proper location/room#', () => {
     expect(this.ctrl.player.location).toBe('roomA');
+
+    this.ctrl.player.location = 'home';
+    expect(this.ctrl.player.location).toEqual('home');
   });
 
   it('3) should test XP', () => {
@@ -24,6 +34,11 @@ describe('test controller:  game-controller', function(){
   it('4) should test hp', () => {
     expect(this.ctrl.player.hp).not.toBe(undefined);
     expect(this.ctrl.player.hp).toBe(10000);
+  });
+
+  it('5) test moveDirection', () => {
+    this.ctrl.moveDirection('south');
+    expect(this.ctrl.newLocation).toBe('roomC');
   });
 
 });

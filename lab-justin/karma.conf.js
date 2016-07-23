@@ -45,6 +45,12 @@ module.exports = function(config) {
     port: 9876,
 
 
+    browserConsoleLogOptions: {
+      level: 'debug',
+      format: '%b %T: %m',
+      terminal: true
+    },
+
     // enable / disable colors in the output (reporters and logs)
     colors: true,
 

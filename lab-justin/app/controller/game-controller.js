@@ -9,6 +9,9 @@ function GameController(){
   this.history = ['GET, SET, READY n GO!'];
   this.moveCount = 0;
   this.map = require('../model/map');
+  this.oldLocation = '',
+  this.newLocation = '',
+
   this.player = {
     name: 'Justin',
     hp: 10000,
@@ -26,10 +29,10 @@ function GameController(){
 
 GameController.prototype.moveDirection = function(direction){
   this.moveCount++;
-  var oldLocation = this.player.location;
-  var newLocation = this.map[oldLocation][direction];
-  if(newLocation && newLocation !== 'wall'){
-    this.updateLocation(newLocation);//move into the location
+  this.oldLocation = this.player.location;
+  this.newLocation = this.map[this.oldLocation][direction];
+  if(this.newLocation && this.newLocation !== 'wall'){
+    this.updateLocation(this.newLocation);//move into the location
     return;
   }
 };
