@@ -18,7 +18,7 @@
       <h1 class="mainHeading" ng-show="gameCtrl.beginGame">Tindur</h1>
 
       <form novalidate name="controls" ng-show="gameCtrl.beginGame">
- 
+
         <section id="character">
           <h2>{{gameCtrl.player.name}} Stats:</h2>
           <div class="characterStat">
@@ -30,7 +30,7 @@
         </section>
 
         <section id="map">
-          <img src="../asset/image/Deity-Mountain-base-camp.png" alt="map" height="200px">
+          <img ng-src="{{gameCtrl.area.map}}" alt="map" height="200px">
         </section>
 
         <section id="movement" ng-show="!gameCtrl.area.deity">
@@ -43,7 +43,7 @@
 
         <section id="action" ng-show="gameCtrl.area.deity">
           <h2>Fight!</h2>
-          <input type="button" ng-click="gameCtrl.attackDeity()" value="attack">          
+          <input type="button" ng-click="gameCtrl.attackDeity()" value="attack">
         </section>
       </form>
 
@@ -60,7 +60,7 @@
           <li ng-repeat="move in gameCtrl.history">{{move}}</li>
         </ol>
       </section>
-  
+
     </main>
   </body>
 </html>

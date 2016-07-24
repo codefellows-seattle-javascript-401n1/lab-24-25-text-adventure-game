@@ -6,7 +6,8 @@ module.exports = {
     march:   'baseCampTrail1',
     retreat: 'nothing',
     leap:    'nothing',
-    deityChance: 0.2
+    deityChance: 0.2,
+    src: '../asset/image/Deity-Mountain-base-camp.png'
   },
 
   baseCampTrail1 : {
@@ -14,7 +15,8 @@ module.exports = {
     march:   'baseCampTrail2',
     retreat: 'baseCamp',
     leap:    'nothing',
-    deityChance: 0.2
+    deityChance: 0.2,
+    src: '../asset/image/Deity-Mountain-base-camp-trail1.png'
   },
 
   baseCampTrail2: {
@@ -22,7 +24,8 @@ module.exports = {
     march:   'baseCampTrail3',
     retreat: 'baseCampTrail1',
     leap:    'nothing',
-    deityChance: 0.2
+    deityChance: 0.2,
+    src: '../asset/image/Deity-Mountain-base-camp-trail2.png'
   },
 
   baseCampTrail3: {
@@ -30,7 +33,8 @@ module.exports = {
     march:   'baseCampSwitchback',
     retreat: 'baseCampTrail2',
     leap:    'nothing',
-    deityChance: 0.2
+    deityChance: 0.2,
+    src: '../asset/image/Deity-Mountain-base-camp-trail3.png'
   },
 
   baseCampSwitchback: {
@@ -38,7 +42,8 @@ module.exports = {
     march:   'mountainSide',
     retreat: 'baseCampTrail3',
     leap:    'nothing',
-    deityChance: 0.2
+    deityChance: 0.2,
+    src: '../asset/image/Deity-Mountain-base-camp-switch-back.png'
   },
 
   mountainSide: {
@@ -46,7 +51,8 @@ module.exports = {
     march: 'mountainSideTrail',
     retreat: 'baseCampSwitchback',
     leap: 'baseCampTrail3',
-    deityChance: 0.5
+    deityChance: 0.5,
+    src: '../asset/image/Deity-Mountain-mountain-side.png'
   },
 
   mountainSideTrail: {
@@ -54,7 +60,8 @@ module.exports = {
     march: 'mountainSideSwitchback',
     retreat: 'mountainSide',
     leap: 'baseCampTrail2',
-    deityChance: 0.5
+    deityChance: 0.5,
+    src: '../asset/image/Deity-Mountain-mountain-side-trail.png'
   },
 
   mountainSideSwitchback: {
@@ -62,7 +69,8 @@ module.exports = {
     march: 'peak',
     retreat: 'mountainSideTrail',
     leap: 'baseCampTrail1',
-    deityChance: 0.5
+    deityChance: 0.5,
+    src: '../asset/image/Deity-Mountain-mountain-side-switch-back.png'
   },
 
   peak: {
@@ -70,6 +78,7 @@ module.exports = {
     march: 'nothing',
     retreat: 'baseCampSwitchback',
     leap: 'mountainSideTrail',
-    deityChance: 'Odin'
+    deityChance: 'Odin',
+    src: '../asset/image/Deity-Mountain-peak.png'
   }
 };

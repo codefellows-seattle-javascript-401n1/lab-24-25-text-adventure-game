@@ -31576,6 +31576,7 @@
 	angular.module('tindur').controller('GameController', [GameController]);
 
 	function GameController() {
+	  //const src = 'src';
 	  this.beginGame = null;
 	  this.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
 	  this.moveCount = 0;
@@ -31589,7 +31590,8 @@
 	  };
 
 	  this.area = {
-	    name: this.player.location
+	    name: this.player.location,
+	    map: this.map[this.player.location].src //how to grab area name!!
 	  };
 
 	  this.moveDirection = function (action) {
@@ -31718,7 +31720,8 @@
 	    march: 'baseCampTrail1',
 	    retreat: 'nothing',
 	    leap: 'nothing',
-	    deityChance: 0.2
+	    deityChance: 0.2,
+	    src: '../asset/image/Deity-Mountain-base-camp.png'
 	  },
 
 	  baseCampTrail1: {
@@ -31726,7 +31729,8 @@
 	    march: 'baseCampTrail2',
 	    retreat: 'baseCamp',
 	    leap: 'nothing',
-	    deityChance: 0.2
+	    deityChance: 0.2,
+	    src: '../asset/image/Deity-Mountain-base-camp-trail1.png'
 	  },
 
 	  baseCampTrail2: {
@@ -31734,7 +31738,8 @@
 	    march: 'baseCampTrail3',
 	    retreat: 'baseCampTrail1',
 	    leap: 'nothing',
-	    deityChance: 0.2
+	    deityChance: 0.2,
+	    src: '../asset/image/Deity-Mountain-base-camp-trail2.png'
 	  },
 
 	  baseCampTrail3: {
@@ -31742,7 +31747,8 @@
 	    march: 'baseCampSwitchback',
 	    retreat: 'baseCampTrail2',
 	    leap: 'nothing',
-	    deityChance: 0.2
+	    deityChance: 0.2,
+	    src: '../asset/image/Deity-Mountain-base-camp-trail3.png'
 	  },
 
 	  baseCampSwitchback: {
@@ -31750,7 +31756,8 @@
 	    march: 'mountainSide',
 	    retreat: 'baseCampTrail3',
 	    leap: 'nothing',
-	    deityChance: 0.2
+	    deityChance: 0.2,
+	    src: '../asset/image/Deity-Mountain-base-camp-switch-back.png'
 	  },
 
 	  mountainSide: {
@@ -31758,7 +31765,8 @@
 	    march: 'mountainSideTrail',
 	    retreat: 'baseCampSwitchback',
 	    leap: 'baseCampTrail3',
-	    deityChance: 0.5
+	    deityChance: 0.5,
+	    src: '../asset/image/Deity-Mountain-mountain-side.png'
 	  },
 
 	  mountainSideTrail: {
@@ -31766,7 +31774,8 @@
 	    march: 'mountainSideSwitchback',
 	    retreat: 'mountainSide',
 	    leap: 'baseCampTrail2',
-	    deityChance: 0.5
+	    deityChance: 0.5,
+	    src: '../asset/image/Deity-Mountain-mountain-side-trail.png'
 	  },
 
 	  mountainSideSwitchback: {
@@ -31774,7 +31783,8 @@
 	    march: 'peak',
 	    retreat: 'mountainSideTrail',
 	    leap: 'baseCampTrail1',
-	    deityChance: 0.5
+	    deityChance: 0.5,
+	    src: '../asset/image/Deity-Mountain-mountain-side-switch-back.png'
 	  },
 
 	  peak: {
@@ -31782,7 +31792,8 @@
 	    march: 'nothing',
 	    retreat: 'baseCampSwitchback',
 	    leap: 'mountainSideTrail',
-	    deityChance: 'Odin'
+	    deityChance: 'Odin',
+	    src: '../asset/image/Deity-Mountain-peak.png'
 	  }
 	};
 

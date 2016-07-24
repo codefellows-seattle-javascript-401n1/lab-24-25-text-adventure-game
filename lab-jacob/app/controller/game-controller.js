@@ -23,7 +23,8 @@ function GameController() {
   };
 
   this.area = {
-    name: this.player.location
+    name: this.player.location,
+    map: this.map[this.player.location].src //how to grab area name!!
   };
 
   this.moveDirection = function(action){
