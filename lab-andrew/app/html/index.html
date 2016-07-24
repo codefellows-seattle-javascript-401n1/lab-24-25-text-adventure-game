@@ -14,10 +14,15 @@
           <option value="west">west</option>
         </select>
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-click="gameCtrl.moveDirection(gameCtrl.gameForm.direction)" value="move">
+        <select ng-model="gameCtrl.gameForm.direction" ng-show="gameCtrl.room.playerAlive">
+          <option value="over">over</option>
+          <option value="under">under</option>
+        </select>
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.room.isBridge" value="over or under">
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.room.troll" ng-click="gameCtrl.attackTroll()" value="Attack">
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.searched" ng-click="gameCtrl.searchRoom(gameCtrl.player.currentLocation)" value="Search">
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasMyst" ng-click="gameCtrl.castMyst()" value="Cast Myst">
-        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.player.hasItem" ng-click="gameCtrl.throwItem()" value="Throw Item">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasItem" ng-click="gameCtrl.throwItem()" value="Throw Item">
         <section>
           <h2 class="playerEls">{{gameCtrl.player.name}}</h2>
           <h3 class="playerEls">HP: </h3><p class="playerEls">{{gameCtrl.player.hp}}</p>
@@ -29,7 +34,7 @@
           </pre>
         </section>
         <section>
-          <h3>Room:</h3> <p>{{gameCtrl.room.name}}</p>
+          <h3>Room:</h3> <p>{{gameCtrl.player.currentLocation}}</p>
           <div ng-show="gameCtrl.room.troll">
           <h3>Troll: </h3>
           <pre>

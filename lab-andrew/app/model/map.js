@@ -68,8 +68,8 @@ module.exports = {
   seven: {
     north: 'eight',
     south: 'wall',
-    east: 'wall',
-    west: 'six',
+    east: 'six',
+    west: 'wall',
     chanceOfTroll: 0.7,
     chanceOfItem: 0.7,
     chanceOfCompanion: 0.7,
