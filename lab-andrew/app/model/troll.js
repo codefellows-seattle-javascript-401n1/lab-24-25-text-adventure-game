@@ -1,6 +1,6 @@
 'use strict';
 const randomArray = require('../lib/random-array');
-var trollNames = ['Thumper', 'Tiny Toes', 'Yellthron', 'Snot Tongue', 'Toeless Trampler', 'Margret', 'Growling Gorg;le', 'Sit storm'];
+const trollNames = ['Thumper', 'Tiny Toes', 'Yellthron', 'Snot Tongue', 'Toeless Trampler', 'Margret', 'Growling Gorgle', 'Sit storm'];
 module.exports = function Troll(){
   this.name = randomArray(trollNames);
   this.damage = Math.floor(Math.random() * 20 + 1);

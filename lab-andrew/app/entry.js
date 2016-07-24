@@ -6,4 +6,4 @@ require('./scss/base.scss');
 const angular = require('angular');
 
 angular.module('trippedApp', []);
-// require('./controller/game-controller');
+require('./controller/game-controller');

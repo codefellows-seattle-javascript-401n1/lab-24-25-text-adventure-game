@@ -1,29 +1,10 @@
 'use strict';
 
-module.exports.item =  function(){
-  this.dagger = {
-    myst: 1,
-    hp: 4,
-  },
-  this.butterflyNet = {
-    myst: 8,
-    hp: 0,
-  },
-  this.fishingPole = {
-    myst: 1,
-    hp: 1,
-  },
-  this.potion = {
-    myst: 10,
-    hp: 0,
-  },
-  this.coin = {
-    myst: 1,
-    hp: 3,
-  },
-  this.wine = {
-    myst: 5,
-    hp: 0,
-    damage: 2
-  };
+const randomArray = require('../lib/random-array');
+const itemNames = ['dagger', 'butterflyNet', 'fishingPole', 'potion', 'coin', 'wine'];
+
+module.exports = function Item(){
+  this.name = randomArray(itemNames);
+  this.myst = Math.floor(Math.random() * 20 + 1);
+  this.hp = Math.floor(Math.random() * 10 + 1);
 };

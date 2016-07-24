@@ -1,36 +1,42 @@
 <!DOCTYPE html>
-<html>
-  <head ng-app="trippedApp">
-    <title>Tripped on a Trolls Toe</title>
-    <link rel="stylesheet" href="bundle.css" style="tex/css">
+<html ng-app="trippedApp">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bundle.css">
     <script src="bundle.js"></script>
   </head>
   <body>
-    <main ng-controller+"GameController as gameCtrl">
-      <form novalidate name=gameForm>
-        <select ng-model="gameCtrl.gameForm.direction">
-          <option value="entrance">entrance</option>
-          <option value="exit">exit</option>
+    <main ng-controller="GameController as gameCtrl">
+      <form novalidate name="gameForm">
+        <select ng-model="gameCtrl.gameForm.direction" ng-show="gameCtrl.room.playerAlive">
           <option value="north">north</option>
           <option value="south">south</option>
+          <option value="east">east</option>
+          <option value="west">west</option>
         </select>
-        <input type="button" ng-click="gameCtrl.moveDirection(gameCrtl.gameForm.direction)" value="Move">
-        <input type="button" ng-disabled="!gameCrtl.room.troll" ng-click="gameCtrl.attackTroll" value="Atack">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-click="gameCtrl.moveDirection(gameCtrl.gameForm.direction)" value="move">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.room.troll" ng-click="gameCtrl.attackTroll()" value="Attack">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.searched" ng-click="gameCtrl.searchRoom(gameCtrl.player.currentLocation)" value="Search">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasMyst" ng-click="gameCtrl.castMyst()" value="Cast Myst">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.player.hasItem" ng-click="gameCtrl.throwItem()" value="Throw Item">
         <section>
-          <h2>HP: </h2><p>{{gameCtrl.player.hp}}</p>
-          <h2>XP: </h2><p>{{gameCtrl.player.xp}}</p>
-          <h2>Myst: </h2><p>{{gameCtrl.player.myst}}</p>
-          <h2>Location: </h2><p>{{gameCtrl.player.location}}</p>
+          <h2 class="playerEls">{{gameCtrl.player.name}}</h2>
+          <h3 class="playerEls">HP: </h3><p class="playerEls">{{gameCtrl.player.hp}}</p>
+          <h3 class="playerEls">XP: </h3><p class="playerEls">{{gameCtrl.player.xp}}</p>
+          <h3 class="playerEls">MYST: </h3><p class="playerEls">{{gameCtrl.player.myst}}</p>
+          <h3 class="playerEls">Location: </h3><p class="playerEls">{{gameCtrl.player.currentLocation}}</p>
+          <h3 class="playerEls">Items: </h3><pre ng-repeat="item in gameCtrl.player.item">
+          name:  {{item}}
+          </pre>
         </section>
         <section>
-          <h2>Room:</h2><p>{{gameCtrl.room.name}}</p>
+          <h3>Room:</h3> <p>{{gameCtrl.room.name}}</p>
           <div ng-show="gameCtrl.room.troll">
-            <h3>Monster: </h3>
-            <pre>
-              name: {{gameCtrl.room.troll.name}}
-              hp: {{gameCtrl.room.troll.hp}}
-            </pre>
-          </div>
+          <h3>Troll: </h3>
+          <pre>
+            name: {{gamCtrl.room.troll.name}} \
+            hp: {{gameCtrl.room.troll.hp}}
+          </pre>
+        </div>
         </section>
         <section>
           <h2>Game History: </h2>
@@ -38,8 +44,6 @@
             <li ng-repeat="move in gameCtrl.history">{{move}}</li>
           </ol>
         </section>
-      </form>
-
-    </main>
-  </body>
-</html>
+      </main>
+    </body>
+  </html>

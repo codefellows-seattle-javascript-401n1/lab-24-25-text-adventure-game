@@ -52,7 +52,7 @@
 	var angular = __webpack_require__(6);
 
 	angular.module('trippedApp', []);
-	// require('./controller/game-controller');
+	__webpack_require__(8);
 
 /***/ },
 /* 1 */
@@ -31554,6 +31554,290 @@
 	})(window);
 
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var angular = __webpack_require__(6);
+
+	var Troll = __webpack_require__(9);
+	// const Companion = require('../model/companion');
+	var Item = __webpack_require__(11);
+
+	angular.module('trippedApp').controller('GameController', [GameController]);
+
+	function GameController() {
+	  this.history = ['You enter a lonely chamber...'];
+	  this.moveCount = 0;
+	  this.map = __webpack_require__(14);
+	  this.player = {
+	    name: 'The Chosen',
+	    hp: 100,
+	    damage: 5,
+	    myst: 0,
+	    xp: 0,
+	    companion: [],
+	    item: [],
+	    currentLocation: 'entry'
+	  };
+	  this.gameForm = {
+	    direction: 'north'
+	  };
+	  this.room = {
+	    name: this.player.currentLocation,
+	    searched: false,
+	    playerAlive: true,
+	    roomLocation: 'entry'
+	  };
+	}
+	GameController.prototype.moveDirection = function (direction) {
+	  this.moveCount++;
+	  var oldLocation = this.player.currentLocation;
+	  var newLocation = this.map[oldLocation][direction];
+	  if (newLocation) {
+	    if (newLocation !== 'wall') {
+	      this.updateLocation(newLocation);
+	      return;
+	    }
+	    this.holdLocation();
+	  }
+	};
+
+	GameController.prototype.updateLocation = function (location) {
+	  this.player.currentLocation = location;
+	  this.room.roomLocation = location;
+	  this.room.name = location;
+	  this.room.searched = false;
+	  if (this.player.hp < 100) this.player.hp += 2;
+	  if (Math.random() < this.map[location].chanceOfTroll) {
+	    this.room.troll = new Troll();
+	    this.player.hp -= this.room.troll.damage;
+	    this.logTurn('is now in ' + this.room.name + '. a ' + this.room.troll.name + ' attacked. you lost ' + this.room.troll.damage);
+	    if (this.player.hp <= 0) {
+	      this.player.hp = 'dead';
+	      this.room.playerAlive = false;
+	      return this.logTurn(this.room.troll.name + ' has destroeyd you. You pass now into the nothingness.');
+	    }
+	    return;
+	  }
+
+	  this.room.troll = null;
+	  this.logTurn('is now in ' + this.room.name + ', the room is empty');
+	};
+	GameController.prototype.holdLocation = function () {
+	  this.history.push('TURN' + this.moveCount + ': ' + this.player.name + ' hit a wall');
+	};
+	GameController.prototype.logTurn = function (message) {
+	  this.history.push('Turn: ' + this.moveCount + ': ' + this.player.name + ':' + message);
+	};
+
+	GameController.prototype.attackTroll = function () {
+	  this.moveCount++;
+	  if (this.room.troll) {
+	    var message = '';
+	    if (Math.random() > 0.5) {
+	      this.player.hp -= this.room.troll.damage;
+	      if (this.player.hp <= 0) {
+	        this.player.hp = 'dead';
+	        this.room.playerAlive = false;
+	        return message += this.room.troll.name + ' has destroeyd you. You pass now into the nothingness.';
+	      }
+	      message += 'the troll hurt you!, you lost ' + this.room.troll.damage + '.';
+	    }
+	    this.room.troll.hp -= this.player.damage;
+	    if (this.room.troll.hp < 0) {
+	      this.player.xp += 20;
+	      this.logTurn('you killed ' + this.room.troll.name + ' and gained 20 xp');
+	      this.room.troll = null;
+	      return;
+	    }
+	    this.logTurn(message + ' you attacked the troll');
+	  }
+	};
+	GameController.prototype.searchRoom = function (location) {
+	  this.room.searched = true;
+	  // console.log('item 2', new Item);
+	  if (this.map[location].chanceOfItem) {
+	    this.player.item.push(2);
+	    this.logTurn(this.player.name + ' has found a ' + this.player.item[0]);
+	  }
+	};
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var randomArray = __webpack_require__(10);
+	var trollNames = ['Thumper', 'Tiny Toes', 'Yellthron', 'Snot Tongue', 'Toeless Trampler', 'Margret', 'Growling Gorgle', 'Sit storm'];
+	module.exports = function Troll() {
+	  this.name = randomArray(trollNames);
+	  this.damage = Math.floor(Math.random() * 20 + 1);
+	  this.hp = Math.floor(Math.random() * 20) + 11;
+	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function (array) {
+	  if (array.length === 0) return null;
+	  var index = Math.floor(Math.random() * array.length);
+	  return array[index];
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var randomArray = __webpack_require__(10);
+	var itemNames = __webpack_require__(12)('dagger', 'butterflyNet', 'fishingPole', 'potion', 'coin', 'wine');
+
+	module.exports = function Item() {
+	  this.name = randomArray(itemNames);
+	  this.myst = Math.floor(Math.random() * 20 + 1);
+	  this.hp = Math.floor(Math.random() * 10) + 11;
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./companion": 13,
+		"./companion.js": 13,
+		"./item": 11,
+		"./item.js": 11,
+		"./map": 14,
+		"./map.js": 14,
+		"./troll": 9,
+		"./troll.js": 9
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 12;
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var randomArray = __webpack_require__(10);
+	var companionNames = ['Splice', 'Charger', 'Bugs Bain', 'Derpy', 'Felbert', 'Dugwiggin', 'Flippy Tooth', 'Snatch Grab', 'Gladwing'];
+	module.exports = function Companion() {
+	  this.name = randomArray(companionNames);
+	  this.myst = Math.floor(Math.random() * 30 + 1);
+	  this.hp = Math.floor(Math.random() * 5 + 1);
+	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  entry: {
+	    north: 'wall',
+	    south: 'wall',
+	    east: 'one',
+	    west: 'wall',
+	    chanceOfTroll: 0.0,
+	    chanceOfItem: 0.9,
+	    chanceOfCompanion: 0.0
+	  },
+	  one: {
+	    north: 'wall',
+	    south: 'wall',
+	    east: 'two',
+	    west: 'entry',
+	    chanceOfTroll: 0.2,
+	    chanceOfItem: 0.7,
+	    chanceOfCompanion: 0.5
+	  },
+	  two: {
+	    north: 'wall',
+	    south: 'wall',
+	    east: 'three',
+	    west: 'two',
+	    chanceOfTroll: 0.5,
+	    chanceOfItem: 0.3,
+	    chanceOfCompanion: 0.0
+	  },
+	  three: {
+	    north: 'wall',
+	    south: 'four',
+	    east: 'wall',
+	    west: 'two',
+	    chanceOfTroll: 0.6,
+	    chanceOfItem: 0.4,
+	    chanceOfCompanion: 0.1
+	  },
+	  four: {
+	    north: 'three',
+	    south: 'five',
+	    east: 'wall',
+	    west: 'wall',
+	    chanceOfTroll: 0.6,
+	    chanceOfItem: 0.5,
+	    chanceOfCompanion: 0.7
+	  },
+	  five: {
+	    north: 'four',
+	    south: 'wall',
+	    east: 'wall',
+	    west: 'six',
+	    chanceOfTroll: 0.7,
+	    chanceOfItem: 0.7,
+	    chanceOfCompanion: 0.1
+	  },
+	  six: {
+	    north: 'wall',
+	    south: 'wall',
+	    east: 'five',
+	    west: 'seven',
+	    chanceOfTroll: 0.5,
+	    chanceOfItem: 0.4,
+	    chanceOfCompanion: 0.1
+	  },
+	  seven: {
+	    north: 'eight',
+	    south: 'wall',
+	    east: 'wall',
+	    west: 'six',
+	    chanceOfTroll: 0.7,
+	    chanceOfItem: 0.7,
+	    chanceOfCompanion: 0.7
+	  },
+	  eight: {
+	    north: 'wall',
+	    south: 'seven',
+	    east: 'wall',
+	    west: 'wall',
+	    chanceOfTroll: 0.8,
+	    chanceOfItem: 0.8,
+	    chanceOfCompanion: 0.8
+	  }
+	};
 
 /***/ }
 /******/ ]);
