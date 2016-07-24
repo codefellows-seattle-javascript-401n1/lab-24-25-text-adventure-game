@@ -27,13 +27,15 @@ function GameController() {
     currentLocation: 'entry'
   };
   this.gameForm = {
-    direction: 'north'
+    direction: 'north',
+    bridgeDirection: 'over'
   };
   this.room = {
     name: this.player.currentLocation,
     searched: false,
     playerAlive: true,
-    roomLocation: 'entry'
+    roomLocation: 'entry',
+    bridgeCrossed: true,
   };
 }
 GameController.prototype.moveDirection = function(direction){
@@ -42,6 +44,10 @@ GameController.prototype.moveDirection = function(direction){
   var newLocation = this.map[oldLocation][direction];
   if(newLocation) {
     if (newLocation !== 'wall') {
+      if(newLocation === 'four' || newLocation === 'seven') {
+        this.room.bridgeCrossed = false;
+        this.logTurn('you come to stone bridge with a slow myst rolling over the top and a soft rumble from below');
+      }
       this.trapDoor(newLocation);
       this.updateLocation(newLocation);
       return;
@@ -61,7 +67,7 @@ GameController.prototype.updateLocation = function(location){
     if(this.player.hp <= 0) {
       this.player.hp = 'dead';
       this.room.playerAlive = false;
-      return this.logTurn(`${this.room.troll.name} has destroeyd you. You pass now into the nothingness.`);
+      return this.logTurn(`${this.room.troll.name} has destroyed you. You pass now into the nothingness.`);
     }
     return;
   }
@@ -78,8 +84,8 @@ GameController.prototype.logTurn = function(message) {
 
 GameController.prototype.attackTroll = function(){
   this.moveCount++;
+  let message = '';
   if (this.room.troll){
-    var message = '';
     if (Math.random() > 0.5 ) {this.player.hp -= this.room.troll.damage;
       if(this.player.hp <= 0) {
         this.player.hp = 'dead';
@@ -91,7 +97,11 @@ GameController.prototype.attackTroll = function(){
     this.room.troll.hp -= this.player.damage;
     if (this.room.troll.hp < 0){
       this.player.xp += 20;
-      this.logTurn(`you killed ${this.room.troll.name} and gained 20 xp`);
+      if(Math.random() < 5) {
+        this.player.item.push(new Item);
+        message = `you find ${this.player.item[0].name} amongest the bones and feel the power within it.`;
+      }
+      this.logTurn(`you killed ${this.room.troll.name} and gained 20 xp. ${message}`);
       this.room.troll = null;
       return;
     }
@@ -103,7 +113,6 @@ GameController.prototype.searchRoom = function(location) {
   this.room.item = new Item();
   this.room.searched = true;
   this.trapDoor(location);
-  console.log('room item', this.room.item.name);
   if(location === 'eight') this.ladder();
   if (Math.random() < this.map[location].chanceOfItem) {
     this.player.hasItem = true;
@@ -205,13 +214,32 @@ GameController.prototype.ladder = function() {
   }
   this.logTurn(' you find shards and splinters and wonder what was here, and where is it now.');
 };
-GameController.prototype.overBridge = function(location) {
-  if(Math.random < this.map[location].chanceOfTroll){
-    this.chanceOfTroll();
-    return this.logTurn(`There was a trap set on the bridge! You have fallen and now face ${this.room.troll.name}!`);
+GameController.prototype.upOrDown = function(location) {
+  this.gameForm.bridgeDirection = location;
+  if(location === 'over') {
+    this.room.bridgeCrossed = true;
+    let overDestiny = Math.random();
+    if(overDestiny < 0.5){
+      this.chanceOfTroll();
+      return this.logTurn(`There was a trap set on the bridge! You have fallen and now face ${this.room.troll.name}!`);
+    }
+    if(Math.random() < 0.7) {
+      this.player.companion.push(new Companion());
+      this.logTurn(`you find a small creature named ${this.player.companion[0].name} that will now join your quest!`);
+    }
+    return this.logTurn('You make you\'re way across the top of the bridge hearing a babeling brook below you.');
   }
-  if(Math.random() < this.map[location].chanceOfCompanion) {
-    this.player.companion.push(new Companion());
-    this.logTurn(`you find a small creature named ${this.player.companion[0].name} that will now join your quest!`);
+  if (location === 'under') {
+    this.room.bridgeCrossed = true;
+    if(Math.random() < 0.5) {
+      this.room.troll = new Troll();
+      this.room.troll.hp -= 5;
+      return this.logTurn('You sneak up on a sleeping Troll. Slowly he slumbers with souring snores.');
+    }
+    if(Math.random() < 7) {
+      this.player.item.push(new Item());
+      return this.logTurn(`You find the find the lair of a slobbering Troll and take ${this.player.item[0].name} as a prize`);
+    }
+    return this.logTurn('you trudge through the remains of souls lost long before...');
   }
 };

@@ -14,11 +14,13 @@
           <option value="west">west</option>
         </select>
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-click="gameCtrl.moveDirection(gameCtrl.gameForm.direction)" value="move">
-        <select ng-model="gameCtrl.gameForm.direction" ng-show="gameCtrl.room.playerAlive">
+
+        <select ng-model="gameCtrl.gameForm.bridgeDirection" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.bridgeCrossed">
           <option value="over">over</option>
           <option value="under">under</option>
         </select>
-        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.room.isBridge" value="over or under">
+        <input type="button" ng-click="gameCtrl.upOrDown(gameCtrl.gameForm.bridgeDirection)" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.bridgeCrossed" value="over or under">
+
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.room.troll" ng-click="gameCtrl.attackTroll()" value="Attack">
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.searched" ng-click="gameCtrl.searchRoom(gameCtrl.player.currentLocation)" value="Search">
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasMyst" ng-click="gameCtrl.castMyst()" value="Cast Myst">
@@ -32,6 +34,7 @@
           <h3 class="playerEls">Items: </h3><pre ng-repeat="item in gameCtrl.player.item">
           name:  {{item}}
           </pre>
+          <h3 class="playerEls">Companions: </h3><pre ng-repeat="buds in gameCtrl.player.companion">name: {{buds}}</pre>
         </section>
         <section>
           <h3>Room:</h3> <p>{{gameCtrl.player.currentLocation}}</p>
