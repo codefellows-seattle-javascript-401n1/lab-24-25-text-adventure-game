@@ -2,10 +2,10 @@
 
 module.exports = {
   baseCamp: {
-    climb:   'sky',
+    climb:   'nothing',
     march:   'baseCampTrail1',
-    retreat: 'no retreat',
-    leap:    'ground',
+    retreat: 'nothing',
+    leap:    'nothing',
     deityChance: 0.2
   },
 
@@ -13,7 +13,7 @@ module.exports = {
     climb:   'mountainSideSwitchback',
     march:   'baseCampTrail2',
     retreat: 'baseCamp',
-    leap:    'ground',
+    leap:    'nothing',
     deityChance: 0.2
   },
 
@@ -21,7 +21,7 @@ module.exports = {
     climb:   'mountainSideTrail',
     march:   'baseCampTrail3',
     retreat: 'baseCampTrail1',
-    leap:    'ground',
+    leap:    'nothing',
     deityChance: 0.2
   },
 
@@ -29,20 +29,20 @@ module.exports = {
     climb:   'MountainSide',
     march:   'baseCampSwitchback',
     retreat: 'baseCampTrail2',
-    leap:    'ground',
+    leap:    'nothing',
     deityChance: 0.2
   },
 
   baseCampSwitchback: {
-    climb:   'sky',
+    climb:   'nothing',
     march:   'mountainSide',
     retreat: 'baseCampTrail3',
-    leap:    'ground',
+    leap:    'nothing',
     deityChance: 0.2
   },
 
   mountainSide: {
-    climb: 'sky',
+    climb: 'nothing',
     march: 'mountainSideTrail',
     retreat: 'baseCampSwitchback',
     leap: 'baseCampTrail3',
@@ -53,12 +53,12 @@ module.exports = {
     climb: 'peak',
     march: 'mountainSideSwitchback',
     retreat: 'mountainSide',
-    leap: 'Base Camp Trail 2',
+    leap: 'baseCampTrail2',
     deityChance: 0.5
   },
 
   mountainSideSwitchback: {
-    climb: 'sky',
+    climb: 'nothing',
     march: 'peak',
     retreat: 'mountainSideTrail',
     leap: 'baseCampTrail1',
@@ -66,8 +66,8 @@ module.exports = {
   },
 
   peak: {
-    climb: 'sky',
-    march: 'The trail has ended',
+    climb: 'nothing',
+    march: 'nothing',
     retreat: 'baseCampSwitchback',
     leap: 'mountainSideTrail',
     deityChance: 'Odin'

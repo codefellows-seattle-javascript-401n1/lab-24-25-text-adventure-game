@@ -4,6 +4,7 @@ const angular = require('angular');
 
 const deities = require('../model/deities');
 const randomDeity = require('../lib/randomize.js');
+const removeDeity = require('../lib/remove-array-item');
 
 // angular logic
 angular.module('tindur').controller('GameController', [GameController]);
@@ -17,6 +18,7 @@ function GameController() {
     name: 'Nameless Champion',
     hp: 100,
     damage: 20,
+    glory: 0,
     location: 'baseCamp'
   };
 
@@ -26,9 +28,9 @@ function GameController() {
 
   this.moveDirection = function(action){
     this.moveCount++;
-    var oldLocation = this.area.name;
+    var oldLocation = this.player.location;
     var newLocation = this.map[oldLocation][action];
-    if (oldLocation && newLocation !== 'sky' || 'ground' || 'no retreat' || 'The trail has ended'){
+    if (newLocation && newLocation !== 'nothing'){
       this.updateLocation(newLocation);
       return;
     }
@@ -36,12 +38,8 @@ function GameController() {
     this.holdLocation(action);
   };
 
-  this.holdLocation = function(action){
-    var noPass = this.map[this.player.location][action];
-    if (noPass == 'sky') this.logTurn('nothing above but sky');
-    if (noPass =='ground') this.logTurn('you\'re already at the base of the mountain');
-    if (noPass == 'no retreat') this.logTurn('you have nowhere to run');
-    if (noPass == 'The trail has ended') this.logTurn('The trail has ended');
+  this.holdLocation = function(){
+    this.logTurn('There\'s nowehere to go that direction!');
   };
 
   this.updateLocation = function(location){
@@ -69,7 +67,9 @@ function GameController() {
       this.area.deity.hp -= this.player.damage;
       if (this.area.deity.hp <= 0){
         this.logTurn(`You defeated ${this.area.deity.name}! Onward to Glory!`);
+        removeDeity(deities, deities[this.area.deity.index]);
         this.area.deity = null;
+        this.player.glory ++;
         return;
       }
       this.logTurn(message + `You attack ${this.area.deity.name} for ${this.player.damage}`);
@@ -77,7 +77,7 @@ function GameController() {
   };
 
   this.logTurn = function(message){
-    this.history.push(`TURN ${this.moveCount}: ${this.player.name} ${message}`);
+    this.history.push(`TURN ${this.moveCount}: ${this.player.name} - ${message}`);
   };
 
   this.intro = function(){

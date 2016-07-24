@@ -31570,6 +31570,7 @@
 
 	var deities = __webpack_require__(10);
 	var randomDeity = __webpack_require__(11);
+	var removeDeity = __webpack_require__(12);
 
 	// angular logic
 	angular.module('tindur').controller('GameController', [GameController]);
@@ -31578,11 +31579,12 @@
 	  this.beginGame = null;
 	  this.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
 	  this.moveCount = 0;
-	  this.map = __webpack_require__(12);
+	  this.map = __webpack_require__(13);
 	  this.player = {
 	    name: 'Nameless Champion',
 	    hp: 100,
 	    damage: 20,
+	    glory: 0,
 	    location: 'baseCamp'
 	  };
 
@@ -31592,9 +31594,9 @@
 
 	  this.moveDirection = function (action) {
 	    this.moveCount++;
-	    var oldLocation = this.area.name;
+	    var oldLocation = this.player.location;
 	    var newLocation = this.map[oldLocation][action];
-	    if (oldLocation && newLocation !== 'sky' || 'ground' || 'no retreat' || 'The trail has ended') {
+	    if (newLocation && newLocation !== 'nothing') {
 	      this.updateLocation(newLocation);
 	      return;
 	    }
@@ -31602,12 +31604,8 @@
 	    this.holdLocation(action);
 	  };
 
-	  this.holdLocation = function (action) {
-	    var noPass = this.map[this.player.location][action];
-	    if (noPass == 'sky') this.logTurn('nothing above but sky');
-	    if (noPass == 'ground') this.logTurn('you\'re already at the base of the mountain');
-	    if (noPass == 'no retreat') this.logTurn('you have nowhere to run');
-	    if (noPass == 'The trail has ended') this.logTurn('The trail has ended');
+	  this.holdLocation = function () {
+	    this.logTurn('There\'s nowehere to go that direction!');
 	  };
 
 	  this.updateLocation = function (location) {
@@ -31635,7 +31633,9 @@
 	      this.area.deity.hp -= this.player.damage;
 	      if (this.area.deity.hp <= 0) {
 	        this.logTurn('You defeated ' + this.area.deity.name + '! Onward to Glory!');
+	        removeDeity(deities, deities[this.area.deity.index]);
 	        this.area.deity = null;
+	        this.player.glory++;
 	        return;
 	      }
 	      this.logTurn(message + ('You attack ' + this.area.deity.name + ' for ' + this.player.damage));
@@ -31643,7 +31643,7 @@
 	  };
 
 	  this.logTurn = function (message) {
-	    this.history.push('TURN ' + this.moveCount + ': ' + this.player.name + ' ' + message);
+	    this.history.push('TURN ' + this.moveCount + ': ' + this.player.name + ' - ' + message);
 	  };
 
 	  this.intro = function () {
@@ -31661,22 +31661,26 @@
 	  name: 'Odin',
 	  hp: 50,
 	  power: 'Smite',
-	  damage: 30
+	  damage: 30,
+	  index: 1
 	}, {
 	  name: 'Loki',
 	  hp: 30,
 	  power: 'Raven Shout',
-	  damage: 10
+	  damage: 10,
+	  index: 1
 	}, {
 	  name: 'Freyja',
 	  hp: 30,
 	  power: 'Banish',
-	  damage: 10
+	  damage: 10,
+	  index: 2
 	}, {
 	  name: 'Thor',
 	  hp: 30,
 	  power: 'Thunderous Strike',
-	  damage: 10
+	  damage: 10,
+	  index: 3
 	}];
 
 /***/ },
@@ -31697,12 +31701,23 @@
 
 	'use strict';
 
+	module.exports = function (array, value) {
+	  var index = array.indexOf(value);
+	  if (index > -1) array.splice(index, 1);
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+
 	module.exports = {
 	  baseCamp: {
-	    climb: 'sky',
+	    climb: 'nothing',
 	    march: 'baseCampTrail1',
-	    retreat: 'no retreat',
-	    leap: 'ground',
+	    retreat: 'nothing',
+	    leap: 'nothing',
 	    deityChance: 0.2
 	  },
 
@@ -31710,7 +31725,7 @@
 	    climb: 'mountainSideSwitchback',
 	    march: 'baseCampTrail2',
 	    retreat: 'baseCamp',
-	    leap: 'ground',
+	    leap: 'nothing',
 	    deityChance: 0.2
 	  },
 
@@ -31718,7 +31733,7 @@
 	    climb: 'mountainSideTrail',
 	    march: 'baseCampTrail3',
 	    retreat: 'baseCampTrail1',
-	    leap: 'ground',
+	    leap: 'nothing',
 	    deityChance: 0.2
 	  },
 
@@ -31726,20 +31741,20 @@
 	    climb: 'MountainSide',
 	    march: 'baseCampSwitchback',
 	    retreat: 'baseCampTrail2',
-	    leap: 'ground',
+	    leap: 'nothing',
 	    deityChance: 0.2
 	  },
 
 	  baseCampSwitchback: {
-	    climb: 'sky',
+	    climb: 'nothing',
 	    march: 'mountainSide',
 	    retreat: 'baseCampTrail3',
-	    leap: 'ground',
+	    leap: 'nothing',
 	    deityChance: 0.2
 	  },
 
 	  mountainSide: {
-	    climb: 'sky',
+	    climb: 'nothing',
 	    march: 'mountainSideTrail',
 	    retreat: 'baseCampSwitchback',
 	    leap: 'baseCampTrail3',
@@ -31750,12 +31765,12 @@
 	    climb: 'peak',
 	    march: 'mountainSideSwitchback',
 	    retreat: 'mountainSide',
-	    leap: 'Base Camp Trail 2',
+	    leap: 'baseCampTrail2',
 	    deityChance: 0.5
 	  },
 
 	  mountainSideSwitchback: {
-	    climb: 'sky',
+	    climb: 'nothing',
 	    march: 'peak',
 	    retreat: 'mountainSideTrail',
 	    leap: 'baseCampTrail1',
@@ -31763,8 +31778,8 @@
 	  },
 
 	  peak: {
-	    climb: 'sky',
-	    march: 'The trail has ended',
+	    climb: 'nothing',
+	    march: 'nothing',
 	    retreat: 'baseCampSwitchback',
 	    leap: 'mountainSideTrail',
 	    deityChance: 'Odin'

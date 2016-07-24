@@ -23,6 +23,10 @@ module.exports = {
         query: {
           presets: ['es2015']
         }
+      },
+      {
+        test: /\.(jpg|gif|png)$/,
+        loader: 'file?name=img/[name]-[hash].[ext]'
       }
     ]
   },

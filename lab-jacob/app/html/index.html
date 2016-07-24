@@ -11,22 +11,34 @@
 
       <section id="intro" ng-show="!gameCtrl.beginGame">
         <h1>Tindur!</h1>
-        <p>climb your way to the top of the mountain and fight deities to claim your Glory!!</p>
+        <p>Climb your way to the top of the mountain and fight deities to claim your Glory!!</p>
         <input type="button" ng-click="gameCtrl.intro()" value="Begin!">
       </section>
 
-      <form novalidate name="controls" ng-show="gameCtrl.beginGame"> 
+      <h1 class="mainHeading" ng-show="gameCtrl.beginGame">Tindur</h1>
+
+      <form novalidate name="controls" ng-show="gameCtrl.beginGame">
+ 
         <section id="character">
           <h2>{{gameCtrl.player.name}} Stats:</h2>
-          <h3>Health:</h3> <p>{{gameCtrl.player.hp}}</p>
+          <div class="characterStat">
+            <h3>Health:</h3> <p>{{gameCtrl.player.hp}}</p>
+          </div>
+          <div class="characterStat">
+            <h3>Glory:</h3> <p>{{gameCtrl.player.glory}}</p>
+          </div>
+        </section>
+
+        <section id="map">
+          <img src="../asset/image/Deity-Mountain-base-camp.png" alt="map" height="200px">
         </section>
 
         <section id="movement" ng-show="!gameCtrl.area.deity">
           <h3>Move</h3>
-          <input type="button" ng-click="gameCtrl.moveDirection('climb')" value="Climb">
-          <input type="button" ng-click="gameCtrl.moveDirection('march')" value="March">
-          <input type="button" ng-click="gameCtrl.moveDirection('retreat')" value="Retreat">
-          <input type="button" ng-click="gameCtrl.moveDirection('leap')" value="leap">
+          <input type="button" ng-click="gameCtrl.moveDirection('climb')" value="Climb upwards">
+          <input type="button" ng-click="gameCtrl.moveDirection('march')" value="March on">
+          <input type="button" ng-click="gameCtrl.moveDirection('retreat')" value="Retreat backwards">
+          <input type="button" ng-click="gameCtrl.moveDirection('leap')" value="leap down">
         </section>
 
         <section id="action" ng-show="gameCtrl.area.deity">
