@@ -3,8 +3,8 @@
 const angular = require('angular');
 
 const deities = require('../model/deities');
+const Odin = require('../model/odin');
 const randomDeity = require('../lib/randomize.js');
-const removeDeity = require('../lib/remove-array-item');
 
 // angular logic
 angular.module('tindur').controller('GameController', [GameController]);
@@ -24,7 +24,7 @@ function GameController() {
 
   this.area = {
     name: this.player.location,
-    map: this.map[this.player.location].src //how to grab area name!!
+    map: this.map[this.player.location].src
   };
 
   this.moveDirection = function(action){
@@ -51,6 +51,11 @@ function GameController() {
       this.player.hp -= this.area.deity.damage;
       this.logTurn(`Upon approaching the ${this.player.location}, ${this.area.deity.name} appears and uses ${this.area.deity.power}. You lose ${this.area.deity.damage} hp.`);
       return;
+    } else if (this.map[location].deityChance == 'Odin') {
+      this.area.deity = Odin;
+      this.player.hp -= this.area.deity.damage;
+      this.logTurn(`You have reached the mountain's peak! ${this.area.deity.name} appears and uses ${this.area.deity.power}. You lose ${this.area.deity.damage} hp`);
+      return;
     }
 
     this.area.deity = null;
@@ -63,14 +68,14 @@ function GameController() {
       var message = '';
       if (Math.random() > 0.5){
         this.player.hp -= this.area.deity.damage;
-        message += `${this.area.deity.name} attacks with ${this.area.deity.power}! You lose ${this.area.deity.damage}`;
+        message += ` ${this.area.deity.name} attacks with ${this.area.deity.power}! You lose ${this.area.deity.damage} `;
       }
       this.area.deity.hp -= this.player.damage;
       if (this.area.deity.hp <= 0){
         this.logTurn(`You defeated ${this.area.deity.name}! Onward to Glory!`);
-        removeDeity(deities, deities[this.area.deity.index]);
+        deities.splice(this.area.deity.index, 1);
         this.area.deity = null;
-        this.player.glory ++;
+        this.player.glory++;
         return;
       }
       this.logTurn(message + `You attack ${this.area.deity.name} for ${this.player.damage}`);

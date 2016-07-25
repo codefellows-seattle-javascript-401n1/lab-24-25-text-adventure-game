@@ -447,7 +447,8 @@ img {
   margin: 0;
   margin-bottom: 5%;
   width: 100%;
-  text-align: center; }
+  text-align: center;
+  border-bottom: thin solid #baffd9; }
 
 .characterStat {
   display: flex;

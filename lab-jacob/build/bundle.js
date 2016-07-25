@@ -31569,14 +31569,14 @@
 	var angular = __webpack_require__(7);
 
 	var deities = __webpack_require__(10);
-	var randomDeity = __webpack_require__(11);
-	var removeDeity = __webpack_require__(12);
+	var Odin = __webpack_require__(11);
+	var randomDeity = __webpack_require__(12);
+	//const removeDeity = require('../lib/remove-array-item');
 
 	// angular logic
 	angular.module('tindur').controller('GameController', [GameController]);
 
 	function GameController() {
-	  //const src = 'src';
 	  this.beginGame = null;
 	  this.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
 	  this.moveCount = 0;
@@ -31591,7 +31591,7 @@
 
 	  this.area = {
 	    name: this.player.location,
-	    map: this.map[this.player.location].src //how to grab area name!!
+	    map: this.map[this.player.location].src
 	  };
 
 	  this.moveDirection = function (action) {
@@ -31618,6 +31618,11 @@
 	      this.player.hp -= this.area.deity.damage;
 	      this.logTurn('Upon approaching the ' + this.player.location + ', ' + this.area.deity.name + ' appears and uses ' + this.area.deity.power + '. You lose ' + this.area.deity.damage + ' hp.');
 	      return;
+	    } else if (this.map[location].deityChance == 'Odin') {
+	      this.area.deity = Odin;
+	      this.player.hp -= this.area.deity.damage;
+	      this.logTurn('You have reached the mountain\'s peak! ' + this.area.deity.name + ' appears and uses ' + this.area.deity.power + '. You lose ' + this.area.deity.damage + ' hp');
+	      return;
 	    }
 
 	    this.area.deity = null;
@@ -31630,12 +31635,13 @@
 	      var message = '';
 	      if (Math.random() > 0.5) {
 	        this.player.hp -= this.area.deity.damage;
-	        message += this.area.deity.name + ' attacks with ' + this.area.deity.power + '! You lose ' + this.area.deity.damage;
+	        message += ' ' + this.area.deity.name + ' attacks with ' + this.area.deity.power + '! You lose ' + this.area.deity.damage + ' ';
 	      }
 	      this.area.deity.hp -= this.player.damage;
 	      if (this.area.deity.hp <= 0) {
 	        this.logTurn('You defeated ' + this.area.deity.name + '! Onward to Glory!');
-	        removeDeity(deities, deities[this.area.deity.index]);
+	        deities.splice(this.area.deity.index, 1);
+	        //removeDeity(deities, deities[this.area.deity.index]);
 	        this.area.deity = null;
 	        this.player.glory++;
 	        return;
@@ -31660,29 +31666,23 @@
 	'use strict';
 
 	module.exports = [{
-	  name: 'Odin',
-	  hp: 50,
-	  power: 'Smite',
-	  damage: 30,
-	  index: 1
-	}, {
 	  name: 'Loki',
 	  hp: 30,
 	  power: 'Raven Shout',
 	  damage: 10,
-	  index: 1
+	  index: 0
 	}, {
 	  name: 'Freyja',
 	  hp: 30,
 	  power: 'Banish',
 	  damage: 10,
-	  index: 2
+	  index: 1
 	}, {
 	  name: 'Thor',
 	  hp: 30,
 	  power: 'Thunderous Strike',
 	  damage: 10,
-	  index: 3
+	  index: 2
 	}];
 
 /***/ },
@@ -31691,10 +31691,11 @@
 
 	'use strict';
 
-	module.exports = function (array) {
-	  if (array.length === 0) return null;
-	  var index = Math.floor(Math.random() * array.length);
-	  return array[index];
+	module.exports = {
+	  name: 'Odin',
+	  hp: 50,
+	  power: 'Smite',
+	  damage: 30
 	};
 
 /***/ },
@@ -31703,9 +31704,10 @@
 
 	'use strict';
 
-	module.exports = function (array, value) {
-	  var index = array.indexOf(value);
-	  if (index > -1) array.splice(index, 1);
+	module.exports = function (array) {
+	  if (array.length === 0) return null;
+	  var index = Math.floor(Math.random() * array.length);
+	  return array[index];
 	};
 
 /***/ },
