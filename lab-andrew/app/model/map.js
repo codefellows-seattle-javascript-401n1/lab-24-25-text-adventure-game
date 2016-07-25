@@ -10,6 +10,7 @@ module.exports = {
     chanceOfTroll: 0.0,
     chanceOfItem: 0.9,
     chanceOfCompanion: 0.0,
+    chanceOfCompass: 0.1,
   },
   one: {
     north: 'wall',
@@ -19,6 +20,7 @@ module.exports = {
     chanceOfTroll: 0.2,
     chanceOfItem: 0.7,
     chanceOfCompanion: 0.5,
+    chanceOfCompass: 0.1,
   },
   two: {
     north: 'wall',
@@ -28,6 +30,7 @@ module.exports = {
     chanceOfTroll: 0.5,
     chanceOfItem: 0.3,
     chanceOfCompanion: 0.0,
+    chanceOfCompass: 0.1,
   },
   three: {
     north: 'wall',
@@ -37,6 +40,7 @@ module.exports = {
     chanceOfTroll: 0.6,
     chanceOfItem: 0.4,
     chanceOfCompanion: 0.1,
+    chanceOfCompass: 0.1,
   },
   four: {
     north: 'three',
@@ -46,6 +50,7 @@ module.exports = {
     chanceOfTroll: 0.6,
     chanceOfItem: 0.5,
     chanceOfCompanion: 0.7,
+    chanceOfCompass: 0.1,
   },
   five: {
     north: 'four',
@@ -55,6 +60,7 @@ module.exports = {
     chanceOfTroll: 0.7,
     chanceOfItem: 0.7,
     chanceOfCompanion: 0.1,
+    chanceOfCompass: 0.1,
   },
   six: {
     north: 'wall',
@@ -64,6 +70,7 @@ module.exports = {
     chanceOfTroll: 0.5,
     chanceOfItem: 0.4,
     chanceOfCompanion: 0.1,
+    chanceOfCompass: 0.1,
   },
   seven: {
     north: 'eight',
@@ -73,6 +80,7 @@ module.exports = {
     chanceOfTroll: 0.7,
     chanceOfItem: 0.7,
     chanceOfCompanion: 0.7,
+    chanceOfCompass: 0.8,
   },
   eight: {
     north: 'wall',
@@ -82,5 +90,6 @@ module.exports = {
     chanceOfTroll: 0.8,
     chanceOfItem: 0.8,
     chanceOfCompanion: 0.8,
+    chanceOfCompass: 0.1,
   },
 };

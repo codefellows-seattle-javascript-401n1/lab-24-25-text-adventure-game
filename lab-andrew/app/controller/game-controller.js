@@ -11,7 +11,7 @@ const Companion = require('../model/companion');
 angular.module('trippedApp').controller('GameController', [GameController,]);
 
 function GameController() {
-  this.history = ['You enter a lonely chamber...'];
+  this.history = ['You enter a lonely chamber... You came for the compass. you must find the compass to leave.'];
   this.moveCount = 0;
   this.map = require('../model/map');
   this.player = {
@@ -24,6 +24,8 @@ function GameController() {
     companion: [],
     item: [],
     hasItem: false,
+    hasCompanion: false,
+    hasCompass: false,
     currentLocation: 'entry'
   };
   this.gameForm = {
@@ -99,6 +101,7 @@ GameController.prototype.attackTroll = function(){
       this.player.xp += 20;
       if(Math.random() < 5) {
         this.player.item.push(new Item);
+        this.player.myst += this.player.item[0].myst;
         message = `you find ${this.player.item[0].name} amongest the bones and feel the power within it.`;
       }
       this.logTurn(`you killed ${this.room.troll.name} and gained 20 xp. ${message}`);
@@ -108,11 +111,39 @@ GameController.prototype.attackTroll = function(){
     this.logTurn(message + ' you attacked the troll');
   }
 };
+GameController.prototype.useCompanion = function() {
+  this.moveCount++;
+  if(this.room.troll){
+    this.room.troll.hp -= this.player.companion.damage;
+    console.log('troll room before check', this.room.troll);
+    if(this.room.troll.hp < 0) {
+      console.log('troll room after check', this.room.troll);
+      this.logTurn(`${this.player.companion[0].name} has attacked and killed ${this.room.troll.name}!`);
+      return this.room.troll = null;
+    }
+    this.player.companion[0].hp -= this.room.troll.damage;
+    if(this.player.companion[0].hp <= 0) {
+      this.logTurn(`${this.player.companion[0].name} has parished in an effort to save you. His death angers you and brings you strength.`);
+      this.player.hp += Math.random(Math.floor() * 20);
+      this.player.companion.pop();
+      if(this.player.companion.length === 0) this.player.hasCompanion = false;
+      return;
+    }
+  }
+  this.logTurn(` You send ${this.player.companion[0].name} away. The air grows colder as you consider your choice.`);
+  this.player.companion.pop();
+  if(this.player.companion.length === 0) this.player.hasCompanion = false;
+  return;
+};
 GameController.prototype.searchRoom = function(location) {
   this.moveCount++;
   this.room.item = new Item();
   this.room.searched = true;
   this.trapDoor(location);
+  if(Math.random() < this.map[location].chanceOfCompass) {
+    this.player.hasCompass = true;
+    this.logTurn('The chamber brightens. There is a surge of wind as you rise with the compass. It spins in circles and you think it will explode! it hults to a stop and points to the direction you must go. You must go to the start.');
+  }
   if(location === 'eight') this.ladder();
   if (Math.random() < this.map[location].chanceOfItem) {
     this.player.hasItem = true;
@@ -143,7 +174,6 @@ GameController.prototype.castMyst = function() {
     }
     return this.logTurn(`You cast Myst at ${this.room.troll.name} and he has wavered`);
   }
-  console.log('castedMyst no troll', castedMyst);
   if (this.player.hp === 100) {
     this.player.myst -= castedMyst;
     if(this.player.myst <= 0) {
@@ -152,7 +182,7 @@ GameController.prototype.castMyst = function() {
     }
     return this.logTurn('your strength is sound');
   }
-  this.player.hp += this.player.item[0].hp;
+  this.player.hp += this.player.item[0].myst;
   this.player.myst -= this.player.item[0].myst;
   if(this.player.myst <= 0) {
     this.player.myst = 0;
@@ -224,6 +254,7 @@ GameController.prototype.upOrDown = function(location) {
       return this.logTurn(`There was a trap set on the bridge! You have fallen and now face ${this.room.troll.name}!`);
     }
     if(Math.random() < 0.7) {
+      this.player.hasCompanion = true;
       this.player.companion.push(new Companion());
       this.logTurn(`you find a small creature named ${this.player.companion[0].name} that will now join your quest!`);
     }
@@ -242,4 +273,19 @@ GameController.prototype.upOrDown = function(location) {
     }
     return this.logTurn('you trudge through the remains of souls lost long before...');
   }
+};
+GameController.prototype.restartGame = function() {
+  this.gameCount = 0;
+  this.player.hp = 100;
+  this.player.item = [];
+  this.player.companion = [];
+  this.player.hasCompass = false;
+  this.player.hasItem = false;
+  this.player.hasCompanion = false;
+  this.player.currentLocation = 'entry';
+  this.room.playerAlive = true;
+  this.room.roomLocation = 'entry';
+  this.room.bridgeCrossed = true;
+  this.room.troll = null;
+  this.history = ['You enter a lonely chamber... You came for the compass. you must find the compass to leave.'];
 };

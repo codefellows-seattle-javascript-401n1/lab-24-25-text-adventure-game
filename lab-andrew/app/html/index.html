@@ -7,6 +7,8 @@
   <body>
     <main ng-controller="GameController as gameCtrl">
       <form novalidate name="gameForm">
+        <h1>Tripped on a Trolls Toe</h1>
+        <h2 ng-show="gameCtrl.player.hasCompass">You have made it out alive. now the true adventure begins</h1>
         <select ng-model="gameCtrl.gameForm.direction" ng-show="gameCtrl.room.playerAlive">
           <option value="north">north</option>
           <option value="south">south</option>
@@ -15,6 +17,7 @@
         </select>
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-click="gameCtrl.moveDirection(gameCtrl.gameForm.direction)" value="move">
 
+        <input type="button" ng-show="!gameCtrl.room.playerAlive" ng-click="gameCtrl.restartGame()" value="Restart">
         <select ng-model="gameCtrl.gameForm.bridgeDirection" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.bridgeCrossed">
           <option value="over">over</option>
           <option value="under">under</option>
@@ -25,6 +28,7 @@
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.searched" ng-click="gameCtrl.searchRoom(gameCtrl.player.currentLocation)" value="Search">
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasMyst" ng-click="gameCtrl.castMyst()" value="Cast Myst">
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasItem" ng-click="gameCtrl.throwItem()" value="Throw Item">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasCompanion" ng-click="gameCtrl.useCompanion()" value="True Friend">
         <section>
           <h2 class="playerEls">{{gameCtrl.player.name}}</h2>
           <h3 class="playerEls">HP: </h3><p class="playerEls">{{gameCtrl.player.hp}}</p>
