@@ -31571,13 +31571,13 @@
 	var deities = __webpack_require__(10);
 	var Odin = __webpack_require__(11);
 	var randomDeity = __webpack_require__(12);
-	//const removeDeity = require('../lib/remove-array-item');
 
 	// angular logic
 	angular.module('tindur').controller('GameController', [GameController]);
 
 	function GameController() {
 	  this.beginGame = null;
+	  this.endGame = null;
 	  this.history = ['You awaken at the base of a snowy mountain. Atop is Odin, God of war! Defeat him and claim your glory!!!'];
 	  this.moveCount = 0;
 	  this.map = __webpack_require__(13);
@@ -31637,11 +31637,18 @@
 	        this.player.hp -= this.area.deity.damage;
 	        message += ' ' + this.area.deity.name + ' attacks with ' + this.area.deity.power + '! You lose ' + this.area.deity.damage + ' ';
 	      }
+	      if (this.player.hp <= 0) {
+	        this.gameOver();
+	        return;
+	      }
 	      this.area.deity.hp -= this.player.damage;
+	      if (Odin.hp <= 0) {
+	        this.winGame();
+	        return;
+	      }
 	      if (this.area.deity.hp <= 0) {
 	        this.logTurn('You defeated ' + this.area.deity.name + '! Onward to Glory!');
 	        deities.splice(this.area.deity.index, 1);
-	        //removeDeity(deities, deities[this.area.deity.index]);
 	        this.area.deity = null;
 	        this.player.glory++;
 	        return;
@@ -31656,6 +31663,16 @@
 
 	  this.intro = function () {
 	    this.beginGame = true;
+	  };
+
+	  this.gameOver = function () {
+	    this.logTurn('You\'re health is gone! You have perished on the mountain....');
+	    this.endGame = true;
+	  };
+
+	  this.winGame = function () {
+	    this.logTurn('Odin is slain and the mountain has been conquered! You now rule the Tindur!!');
+	    this.endGame = true;
 	  };
 	}
 

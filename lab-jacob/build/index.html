@@ -33,7 +33,7 @@
           <img ng-src="{{gameCtrl.area.map}}" alt="map" height="200px">
         </section>
 
-        <section id="movement" ng-show="!gameCtrl.area.deity">
+        <section id="movement" ng-show="!gameCtrl.area.deity" ng-disabled="gameCtrl.endGame">
           <h3>Move</h3>
           <input type="button" ng-click="gameCtrl.moveDirection('climb')" value="Climb upwards">
           <input type="button" ng-click="gameCtrl.moveDirection('march')" value="March on">
@@ -41,7 +41,7 @@
           <input type="button" ng-click="gameCtrl.moveDirection('leap')" value="leap down">
         </section>
 
-        <section id="action" ng-show="gameCtrl.area.deity">
+        <section id="action" ng-show="gameCtrl.area.deity" ng-disabled="gameCtrl.endGame">
           <h2>Fight!</h2>
           <input type="button" ng-click="gameCtrl.attackDeity()" value="attack">
         </section>
