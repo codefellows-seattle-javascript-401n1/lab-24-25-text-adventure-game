@@ -83,17 +83,21 @@ GameController.prototype.holdLocation = function(){
 GameController.prototype.logTurn = function(message) {
   this.history.push(`PLAY: ${this.moveCount}: ${this.player.name}:${message}`);
 };
-
+GameController.prototype.checkAlive = function(hp) {
+  let message = '';
+  if(hp <= 0) {
+    this.player.hp = 'dead';
+    this.room.playerAlive = false;
+    return message += `${this.room.troll.name} has destroeyd you. You pass now into the nothingness.`;
+  }
+  return message;
+};
 GameController.prototype.attackTroll = function(){
   this.moveCount++;
   let message = '';
   if (this.room.troll){
     if (Math.random() > 0.5 ) {this.player.hp -= this.room.troll.damage;
-      if(this.player.hp <= 0) {
-        this.player.hp = 'dead';
-        this.room.playerAlive = false;
-        return message += `${this.room.troll.name} has destroeyd you. You pass now into the nothingness.`;
-      }
+      this.checkAlive(this.player.hp);
       message += `the troll hurt you!, you lost ${this.room.troll.damage}.`;
     }
     this.room.troll.hp -= this.player.damage;

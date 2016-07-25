@@ -1,8 +1,14 @@
 @import "vendor/normalize";
-
+@import "_theme.scss";
 body {
-  background-color: #314a5b;
+  background-color: $app_darkBlue;
 }
 .playerEls {
   display: inline-block;
+}
+h2 {
+  color: $app_darkRed;
+}
+h3 {
+  color: $app_darkRed
 }

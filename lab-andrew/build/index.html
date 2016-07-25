@@ -7,6 +7,8 @@
   <body>
     <main ng-controller="GameController as gameCtrl">
       <form novalidate name="gameForm">
+        <h1>Tripped on a Trolls Toe</h1>
+        <h2 ng-show="gameCtrl.player.hasCompass">You have made it out alive. now the true adventure begins</h1>
         <select ng-model="gameCtrl.gameForm.direction" ng-show="gameCtrl.room.playerAlive">
           <option value="north">north</option>
           <option value="south">south</option>
@@ -14,16 +16,32 @@
           <option value="west">west</option>
         </select>
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-click="gameCtrl.moveDirection(gameCtrl.gameForm.direction)" value="move">
+
+        <input type="button" ng-show="!gameCtrl.room.playerAlive" ng-click="gameCtrl.restartGame()" value="Restart">
+        <select ng-model="gameCtrl.gameForm.bridgeDirection" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.bridgeCrossed">
+          <option value="over">over</option>
+          <option value="under">under</option>
+        </select>
+        <input type="button" ng-click="gameCtrl.upOrDown(gameCtrl.gameForm.bridgeDirection)" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.bridgeCrossed" value="over or under">
+
         <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.room.troll" ng-click="gameCtrl.attackTroll()" value="Attack">
-        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.searched" ng-click="gameCtrl.searchRoom(gameCtrl.room.roomLocation)" value="Search">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="gameCtrl.room.searched" ng-click="gameCtrl.searchRoom(gameCtrl.player.currentLocation)" value="Search">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasMyst" ng-click="gameCtrl.castMyst()" value="Cast Myst">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasItem" ng-click="gameCtrl.throwItem()" value="Throw Item">
+        <input type="button" ng-show="gameCtrl.room.playerAlive" ng-disabled="!gameCtrl.player.hasCompanion" ng-click="gameCtrl.useCompanion()" value="True Friend">
         <section>
-          <h2>{{gameCtrl.player.name}}</h2>
-          <h3>HP: </h3><p>{{gameCtrl.player.hp}}</p>
-          <h3>XP: </h3><p>{{gameCtrl.player.xp}}</p>
-          <h3>Location: </h3><p>{{gameCtrl.player.currentLocation}}</p>
+          <h2 class="playerEls">{{gameCtrl.player.name}}</h2>
+          <h3 class="playerEls">HP: </h3><p class="playerEls">{{gameCtrl.player.hp}}</p>
+          <h3 class="playerEls">XP: </h3><p class="playerEls">{{gameCtrl.player.xp}}</p>
+          <h3 class="playerEls">MYST: </h3><p class="playerEls">{{gameCtrl.player.myst}}</p>
+          <h3 class="playerEls">Location: </h3><p class="playerEls">{{gameCtrl.player.currentLocation}}</p>
+          <h3 class="playerEls">Items: </h3><pre ng-repeat="item in gameCtrl.player.item">
+          name:  {{item}}
+          </pre>
+          <h3 class="playerEls">Companions: </h3><pre ng-repeat="buds in gameCtrl.player.companion">name: {{buds}}</pre>
         </section>
         <section>
-          <h1>Room:</h1> <p>{{gameCtrl.room.name}}</p>
+          <h3>Room:</h3> <p>{{gameCtrl.player.currentLocation}}</p>
           <div ng-show="gameCtrl.room.troll">
           <h3>Troll: </h3>
           <pre>

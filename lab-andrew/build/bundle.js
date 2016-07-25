@@ -49,10 +49,10 @@
 	__webpack_require__(1);
 	__webpack_require__(2);
 
-	var angular = __webpack_require__(6);
+	var angular = __webpack_require__(5);
 
 	angular.module('trippedApp', []);
-	__webpack_require__(8);
+	__webpack_require__(7);
 
 /***/ },
 /* 1 */
@@ -62,23 +62,293 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// removed by extract-text-webpack-plugin
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!!./base.scss\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!!./base.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!!./base.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
 /* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(7);
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(6);
 	module.exports = angular;
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**
@@ -31556,41 +31826,47 @@
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var angular = __webpack_require__(6);
+	var angular = __webpack_require__(5);
 
-	var Troll = __webpack_require__(9);
-	// const Companion = require('../model/companion');
-	var Item = __webpack_require__(11);
+	var Troll = __webpack_require__(8);
+	var Item = __webpack_require__(10);
+	var Companion = __webpack_require__(11);
 
 	angular.module('trippedApp').controller('GameController', [GameController]);
 
 	function GameController() {
-	  this.history = ['You enter a lonely chamber...'];
+	  this.history = ['You enter a lonely chamber... You came for the compass. you must find the compass to leave.'];
 	  this.moveCount = 0;
-	  this.map = __webpack_require__(14);
+	  this.map = __webpack_require__(12);
 	  this.player = {
 	    name: 'The Chosen',
 	    hp: 100,
 	    damage: 5,
 	    myst: 0,
+	    hasMyst: false,
 	    xp: 0,
 	    companion: [],
 	    item: [],
+	    hasItem: false,
+	    hasCompanion: false,
+	    hasCompass: false,
 	    currentLocation: 'entry'
 	  };
 	  this.gameForm = {
-	    direction: 'north'
+	    direction: 'north',
+	    bridgeDirection: 'over'
 	  };
 	  this.room = {
 	    name: this.player.currentLocation,
 	    searched: false,
 	    playerAlive: true,
-	    roomLocation: 'entry'
+	    roomLocation: 'entry',
+	    bridgeCrossed: true
 	  };
 	}
 	GameController.prototype.moveDirection = function (direction) {
@@ -31599,6 +31875,11 @@
 	  var newLocation = this.map[oldLocation][direction];
 	  if (newLocation) {
 	    if (newLocation !== 'wall') {
+	      if (newLocation === 'four' || newLocation === 'seven') {
+	        this.room.bridgeCrossed = false;
+	        this.logTurn('you come to stone bridge with a slow myst rolling over the top and a soft rumble from below');
+	      }
+	      this.trapDoor(newLocation);
 	      this.updateLocation(newLocation);
 	      return;
 	    }
@@ -31613,75 +31894,252 @@
 	  this.room.searched = false;
 	  if (this.player.hp < 100) this.player.hp += 2;
 	  if (Math.random() < this.map[location].chanceOfTroll) {
-	    this.room.troll = new Troll();
-	    this.player.hp -= this.room.troll.damage;
-	    this.logTurn('is now in ' + this.room.name + '. a ' + this.room.troll.name + ' attacked. you lost ' + this.room.troll.damage);
+	    this.chanceOfTroll();
 	    if (this.player.hp <= 0) {
 	      this.player.hp = 'dead';
 	      this.room.playerAlive = false;
-	      return this.logTurn(this.room.troll.name + ' has destroeyd you. You pass now into the nothingness.');
+	      return this.logTurn(this.room.troll.name + ' has destroyed you. You pass now into the nothingness.');
 	    }
 	    return;
 	  }
 
 	  this.room.troll = null;
-	  this.logTurn('is now in ' + this.room.name + ', the room is empty');
+	  this.logTurn(' is now in ' + this.room.name + ', the room is empty');
 	};
 	GameController.prototype.holdLocation = function () {
 	  this.history.push('TURN' + this.moveCount + ': ' + this.player.name + ' hit a wall');
 	};
 	GameController.prototype.logTurn = function (message) {
-	  this.history.push('Turn: ' + this.moveCount + ': ' + this.player.name + ':' + message);
+	  this.history.push('PLAY: ' + this.moveCount + ': ' + this.player.name + ':' + message);
 	};
-
+	GameController.prototype.checkAlive = function (hp) {
+	  var message = '';
+	  if (hp <= 0) {
+	    this.player.hp = 'dead';
+	    this.room.playerAlive = false;
+	    return message += this.room.troll.name + ' has destroeyd you. You pass now into the nothingness.';
+	  }
+	  return message;
+	};
 	GameController.prototype.attackTroll = function () {
 	  this.moveCount++;
+	  var message = '';
 	  if (this.room.troll) {
-	    var message = '';
 	    if (Math.random() > 0.5) {
 	      this.player.hp -= this.room.troll.damage;
-	      if (this.player.hp <= 0) {
-	        this.player.hp = 'dead';
-	        this.room.playerAlive = false;
-	        return message += this.room.troll.name + ' has destroeyd you. You pass now into the nothingness.';
-	      }
+	      this.checkAlive(this.player.hp);
 	      message += 'the troll hurt you!, you lost ' + this.room.troll.damage + '.';
 	    }
 	    this.room.troll.hp -= this.player.damage;
 	    if (this.room.troll.hp < 0) {
 	      this.player.xp += 20;
-	      this.logTurn('you killed ' + this.room.troll.name + ' and gained 20 xp');
+	      if (Math.random() < 5) {
+	        this.player.item.push(new Item());
+	        this.player.myst += this.player.item[0].myst;
+	        message = 'you find ' + this.player.item[0].name + ' amongest the bones and feel the power within it.';
+	      }
+	      this.logTurn('you killed ' + this.room.troll.name + ' and gained 20 xp. ' + message);
 	      this.room.troll = null;
 	      return;
 	    }
 	    this.logTurn(message + ' you attacked the troll');
 	  }
 	};
-	GameController.prototype.searchRoom = function (location) {
-	  this.room.searched = true;
-	  // console.log('item 2', new Item);
-	  if (this.map[location].chanceOfItem) {
-	    this.player.item.push(2);
-	    this.logTurn(this.player.name + ' has found a ' + this.player.item[0]);
+	GameController.prototype.useCompanion = function () {
+	  this.moveCount++;
+	  if (this.room.troll) {
+	    this.room.troll.hp -= this.player.companion.damage;
+	    console.log('troll room before check', this.room.troll);
+	    if (this.room.troll.hp < 0) {
+	      console.log('troll room after check', this.room.troll);
+	      this.logTurn(this.player.companion[0].name + ' has attacked and killed ' + this.room.troll.name + '!');
+	      return this.room.troll = null;
+	    }
+	    this.player.companion[0].hp -= this.room.troll.damage;
+	    if (this.player.companion[0].hp <= 0) {
+	      this.logTurn(this.player.companion[0].name + ' has parished in an effort to save you. His death angers you and brings you strength.');
+	      this.player.hp += Math.random(Math.floor() * 20);
+	      this.player.companion.pop();
+	      if (this.player.companion.length === 0) this.player.hasCompanion = false;
+	      return;
+	    }
 	  }
+	  this.logTurn(' You send ' + this.player.companion[0].name + ' away. The air grows colder as you consider your choice.');
+	  this.player.companion.pop();
+	  if (this.player.companion.length === 0) this.player.hasCompanion = false;
+	  return;
+	};
+	GameController.prototype.searchRoom = function (location) {
+	  this.moveCount++;
+	  this.room.item = new Item();
+	  this.room.searched = true;
+	  this.trapDoor(location);
+	  if (Math.random() < this.map[location].chanceOfCompass) {
+	    this.player.hasCompass = true;
+	    this.logTurn('The chamber brightens. There is a surge of wind as you rise with the compass. It spins in circles and you think it will explode! it hults to a stop and points to the direction you must go. You must go to the start.');
+	  }
+	  if (location === 'eight') this.ladder();
+	  if (Math.random() < this.map[location].chanceOfItem) {
+	    this.player.hasItem = true;
+	    this.player.item.push(this.room.item);
+	    this.player.myst += this.room.item.myst;
+	    this.player.hasMyst = true;
+	    return this.logTurn('you have found ' + this.player.item[0].name);
+	  }
+	  this.logTurn('you search and find nothing');
+	};
+	GameController.prototype.castMyst = function () {
+	  this.moveCount++;
+	  var castedMyst = Math.random();
+	  if (castedMyst <= 0.5) castedMyst = this.player.item[0].myst || 5;
+	  if (castedMyst) castedMyst = this.player.item[0].hp;
+	  if (this.room.troll && (castedMyst = this.player.item[0].myst)) {
+	    this.room.troll.hp -= castedMyst;
+	    this.player.myst -= castedMyst;
+	    if (this.player.myst <= 0) {
+	      this.player.myst = 0;
+	      this.player.hasMyst = false;
+	    }
+	    if (this.room.troll.hp <= 0) {
+	      this.player.xp += 20;
+	      this.logTurn('You have Cast Myst at ' + this.room.troll.name + ' and the beast now thinks he is a rock. You may now move on');
+	      this.room.troll = null;
+	      return;
+	    }
+	    return this.logTurn('You cast Myst at ' + this.room.troll.name + ' and he has wavered');
+	  }
+	  if (this.player.hp === 100) {
+	    this.player.myst -= castedMyst;
+	    if (this.player.myst <= 0) {
+	      this.player.myst = 0;
+	      this.player.hasMyst = false;
+	    }
+	    return this.logTurn('your strength is sound');
+	  }
+	  this.player.hp += this.player.item[0].myst;
+	  this.player.myst -= this.player.item[0].myst;
+	  if (this.player.myst <= 0) {
+	    this.player.myst = 0;
+	    this.player.hasMyst = false;
+	  }
+	  return this.logTurn('you feel the Myst stregthen you');
+	};
+	GameController.prototype.throwItem = function () {
+	  this.moveCount++;
+	  if (this.room.troll) {
+	    this.logTurn('you have thrown ' + this.player.item[0].name + ' at ' + this.room.troll.name + '!');
+	    this.room.troll -= Math.random(Math.floor() * 10 + 1);
+	    this.player.myst -= this.player.item[0].myst;
+	    if (this.player.myst === 0) this.player.hasMyst = false;
+	    this.player.item.pop();
+	    return;
+	  }
+	  this.logTurn('you have thrown the ' + this.player.item[0].name + ' into the darkness');
+	  this.player.myst -= this.player.item[0].myst;
+	  if (this.player.myst === 0) this.player.hasMyst = false;
+	  this.player.item.pop();
+	  if (this.room.troll.hp <= 0) {
+	    this.logTurn('you killed ' + this.room.troll.name);
+	    this.room.troll = null;
+	  }
+	  if (this.player.item.length === 0) this.player.hasItem = false;
+	  return;
+	};
+	GameController.prototype.chanceOfTroll = function () {
+	  this.room.troll = new Troll();
+	  this.player.hp -= this.room.troll.damage;
+	  this.logTurn(this.room.troll.name + ' has attacked and you lost ' + this.room.troll.damage + '!');
+	  return;
+	};
+
+	GameController.prototype.trapDoor = function (location) {
+	  if (location === 'two') {
+	    if (Math.random() < 0.3) {
+	      this.player.currentLocation = 'eight';
+	      this.player.hp -= 10;
+	      this.logTurn('you have fallen through a trap door!');
+	      if (Math.random() < this.map[location].chanceOfTroll) {
+	        this.chanceOfTroll();
+	        return;
+	      }
+	      this.player.currentLocation = 'eight';
+	      return this.logTurn('the dust clears and you find yourself in a cold dark chamber.');
+	    }
+	    return this.logTurn('you pause... the air is thick and full of mystery');
+	  }
+	};
+	GameController.prototype.ladder = function () {
+	  if (Math.random() < 0.5) {
+	    this.player.currentLocation = 'two';
+	    this.logTurn('you find a ladder and climb');
+	    if (Math.random() < this.map['two'].chanceOfTroll) {
+	      this.chanceOfTroll();
+	    }
+	  }
+	  this.logTurn(' you find shards and splinters and wonder what was here, and where is it now.');
+	};
+	GameController.prototype.upOrDown = function (location) {
+	  this.gameForm.bridgeDirection = location;
+	  if (location === 'over') {
+	    this.room.bridgeCrossed = true;
+	    var overDestiny = Math.random();
+	    if (overDestiny < 0.5) {
+	      this.chanceOfTroll();
+	      return this.logTurn('There was a trap set on the bridge! You have fallen and now face ' + this.room.troll.name + '!');
+	    }
+	    if (Math.random() < 0.7) {
+	      this.player.hasCompanion = true;
+	      this.player.companion.push(new Companion());
+	      this.logTurn('you find a small creature named ' + this.player.companion[0].name + ' that will now join your quest!');
+	    }
+	    return this.logTurn('You make you\'re way across the top of the bridge hearing a babeling brook below you.');
+	  }
+	  if (location === 'under') {
+	    this.room.bridgeCrossed = true;
+	    if (Math.random() < 0.5) {
+	      this.room.troll = new Troll();
+	      this.room.troll.hp -= 5;
+	      return this.logTurn('You sneak up on a sleeping Troll. Slowly he slumbers with souring snores.');
+	    }
+	    if (Math.random() < 7) {
+	      this.player.item.push(new Item());
+	      return this.logTurn('You find the find the lair of a slobbering Troll and take ' + this.player.item[0].name + ' as a prize');
+	    }
+	    return this.logTurn('you trudge through the remains of souls lost long before...');
+	  }
+	};
+	GameController.prototype.restartGame = function () {
+	  this.gameCount = 0;
+	  this.player.hp = 100;
+	  this.player.item = [];
+	  this.player.companion = [];
+	  this.player.hasCompass = false;
+	  this.player.hasItem = false;
+	  this.player.hasCompanion = false;
+	  this.player.currentLocation = 'entry';
+	  this.room.playerAlive = true;
+	  this.room.roomLocation = 'entry';
+	  this.room.bridgeCrossed = true;
+	  this.room.troll = null;
+	  this.history = ['You enter a lonely chamber... You came for the compass. you must find the compass to leave.'];
 	};
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var randomArray = __webpack_require__(10);
+	var randomArray = __webpack_require__(9);
 	var trollNames = ['Thumper', 'Tiny Toes', 'Yellthron', 'Snot Tongue', 'Toeless Trampler', 'Margret', 'Growling Gorgle', 'Sit storm'];
 	module.exports = function Troll() {
 	  this.name = randomArray(trollNames);
-	  this.damage = Math.floor(Math.random() * 20 + 1);
+	  this.damage = Math.floor(Math.random() * 50 + 1);
 	  this.hp = Math.floor(Math.random() * 20) + 11;
 	};
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31693,64 +32151,36 @@
 	};
 
 /***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var randomArray = __webpack_require__(9);
+	var itemNames = ['dagger', 'butterflyNet', 'fishingPole', 'potion', 'coin', 'wine'];
+
+	module.exports = function Item() {
+	  this.name = randomArray(itemNames);
+	  this.myst = Math.floor(Math.random() * 20 + 1);
+	  this.hp = Math.floor(Math.random() * 10 + 1);
+	};
+
+/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var randomArray = __webpack_require__(10);
-	var itemNames = __webpack_require__(12)('dagger', 'butterflyNet', 'fishingPole', 'potion', 'coin', 'wine');
-
-	module.exports = function Item() {
-	  this.name = randomArray(itemNames);
-	  this.myst = Math.floor(Math.random() * 20 + 1);
-	  this.hp = Math.floor(Math.random() * 10) + 11;
-	};
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var map = {
-		"./companion": 13,
-		"./companion.js": 13,
-		"./item": 11,
-		"./item.js": 11,
-		"./map": 14,
-		"./map.js": 14,
-		"./troll": 9,
-		"./troll.js": 9
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 12;
-
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var randomArray = __webpack_require__(10);
+	var randomArray = __webpack_require__(9);
 	var companionNames = ['Splice', 'Charger', 'Bugs Bain', 'Derpy', 'Felbert', 'Dugwiggin', 'Flippy Tooth', 'Snatch Grab', 'Gladwing'];
 	module.exports = function Companion() {
 	  this.name = randomArray(companionNames);
-	  this.myst = Math.floor(Math.random() * 30 + 1);
+	  this.damage = Math.floor(Math.random() * 30 + 1);
 	  this.hp = Math.floor(Math.random() * 5 + 1);
 	};
 
 /***/ },
-/* 14 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31763,7 +32193,8 @@
 	    west: 'wall',
 	    chanceOfTroll: 0.0,
 	    chanceOfItem: 0.9,
-	    chanceOfCompanion: 0.0
+	    chanceOfCompanion: 0.0,
+	    chanceOfCompass: 0.1
 	  },
 	  one: {
 	    north: 'wall',
@@ -31772,7 +32203,8 @@
 	    west: 'entry',
 	    chanceOfTroll: 0.2,
 	    chanceOfItem: 0.7,
-	    chanceOfCompanion: 0.5
+	    chanceOfCompanion: 0.5,
+	    chanceOfCompass: 0.1
 	  },
 	  two: {
 	    north: 'wall',
@@ -31781,7 +32213,8 @@
 	    west: 'two',
 	    chanceOfTroll: 0.5,
 	    chanceOfItem: 0.3,
-	    chanceOfCompanion: 0.0
+	    chanceOfCompanion: 0.0,
+	    chanceOfCompass: 0.1
 	  },
 	  three: {
 	    north: 'wall',
@@ -31790,7 +32223,8 @@
 	    west: 'two',
 	    chanceOfTroll: 0.6,
 	    chanceOfItem: 0.4,
-	    chanceOfCompanion: 0.1
+	    chanceOfCompanion: 0.1,
+	    chanceOfCompass: 0.1
 	  },
 	  four: {
 	    north: 'three',
@@ -31799,7 +32233,8 @@
 	    west: 'wall',
 	    chanceOfTroll: 0.6,
 	    chanceOfItem: 0.5,
-	    chanceOfCompanion: 0.7
+	    chanceOfCompanion: 0.7,
+	    chanceOfCompass: 0.1
 	  },
 	  five: {
 	    north: 'four',
@@ -31808,7 +32243,8 @@
 	    west: 'six',
 	    chanceOfTroll: 0.7,
 	    chanceOfItem: 0.7,
-	    chanceOfCompanion: 0.1
+	    chanceOfCompanion: 0.1,
+	    chanceOfCompass: 0.1
 	  },
 	  six: {
 	    north: 'wall',
@@ -31817,16 +32253,18 @@
 	    west: 'seven',
 	    chanceOfTroll: 0.5,
 	    chanceOfItem: 0.4,
-	    chanceOfCompanion: 0.1
+	    chanceOfCompanion: 0.1,
+	    chanceOfCompass: 0.1
 	  },
 	  seven: {
 	    north: 'eight',
 	    south: 'wall',
-	    east: 'wall',
-	    west: 'six',
+	    east: 'six',
+	    west: 'wall',
 	    chanceOfTroll: 0.7,
 	    chanceOfItem: 0.7,
-	    chanceOfCompanion: 0.7
+	    chanceOfCompanion: 0.7,
+	    chanceOfCompass: 0.8
 	  },
 	  eight: {
 	    north: 'wall',
@@ -31835,7 +32273,8 @@
 	    west: 'wall',
 	    chanceOfTroll: 0.8,
 	    chanceOfItem: 0.8,
-	    chanceOfCompanion: 0.8
+	    chanceOfCompanion: 0.8,
+	    chanceOfCompass: 0.1
 	  }
 	};
 
