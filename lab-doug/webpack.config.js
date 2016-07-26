@@ -20,8 +20,8 @@ module.exports = {
         test: /\.scss$/,
         /**
          *sass-loader converts sass file to css file
-         *css-loader converts css file to js object and loads into bundle.css
-         *style-loader gets the js object in the bundle.css and coverts it and applies the css to the DOM
+         *css-loader converts css file to js object
+         *style-loader gets the js object and coverts it so it can be applied to the DOM. By default, the style-loader appends <style> elements to the end of the <head> tag of the page.
          */
         loader: ExtractTextPlugin.extract('style', 'css!sass!')
       },
@@ -38,7 +38,7 @@ module.exports = {
   plugins: [
 
     /**
-     * This plugin supports the scss loader above.  Bundle.css is the output of this operation
+     * This plugin supports the scss loader above.  This takes the output of the style-loader and creates the Bundle.css file.
      */
     new ExtractTextPlugin('bundle.css')
   ]
