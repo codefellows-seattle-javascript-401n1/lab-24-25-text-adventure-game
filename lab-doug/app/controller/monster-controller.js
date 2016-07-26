@@ -6,6 +6,7 @@ angular.module('gonzoApp').controller('MonsterController',[MonsterController]);
 
 function MonsterController(){
   this.monster = {
+    name: '',
     weakness: 'common-sense',
     painPoints: 10,
     lifeSpan: 25,
@@ -13,6 +14,6 @@ function MonsterController(){
   };
 }
 
-MonsterController.prototype.reduceLifeSpan = function(reducedYears){
-  this.monster.lifeSpan -= reducedYears;
+MonsterController.prototype.reduceLifeSpan = function(yearsReduced){
+  this.monster.lifeSpan -= yearsReduced;
 };

@@ -7,8 +7,33 @@
     <script src="bundle.js"></script>
   </head>
   <body>
-    <main>
-      hello
+    <main ng-controller="GonzoController as gonzoCtrl">
+      <form novalidate name="gameForm">
+        <!-- the "select" tag indicates a pulldown list. The ng-model implements 2 way data binding between the value shown in the pull down field and the gameForm.direction, even before clicking the input button -->
+        <select ng-model="gonzoCtrl.gameForm.direction">
+          <!-- the "value" attribute defines what is "sent"-->
+          <option value="north">north</option>
+          <option value="east">east</option>
+          <option value="south">south</option>
+          <option value="west">west</option>
+        </select>
+        <!-- ng-click takes action on the input when the button is clicked. -->
+        <input type="button" value="move" ng-click="gonzoCtrl.moveDirection(gonzoCtrl.gameForm.direction)">
+      </form>
+      <section>
+        <h2>{{gonzoCtrl.player.name}}</h2>
+        <h3>HP: </h3> <p>{{gonzoCtrl.player.hp}}</p>
+        <h3>Current Location: </h3> <p>{{gonzoCtrl.player.location}}</p>
+      </section>
+      <section>
+        <h2>Room: </h2> <p>{{gonzoCtrl.player.location}}</p>
+      </section>
+      <section>
+        <h2>History:</h2>
+        <ol>
+          <li ng-repeat="move in gonzoCtrl.history">{{move}}</li>
+        </ol>
+      </section>
     </main>
   </body>
 </html>
