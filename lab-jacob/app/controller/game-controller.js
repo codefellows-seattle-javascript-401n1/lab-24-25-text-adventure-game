@@ -46,7 +46,7 @@ function GameController() {
 
   this.updateLocation = function(location){
     this.player.location = location;
-    this.area.map = this.map[this.player.location].src;
+    this.area.map = this.map[location].src;
     this.area.name = location;
     if(Math.random() < this.map[location].deityChance){
       this.area.deity = randomDeity(deities);
@@ -56,6 +56,7 @@ function GameController() {
     } else if (this.map[location].deityChance == 'Odin') {
       this.area.deity = Odin;
       this.player.hp -= this.area.deity.damage;
+      console.log('damage dealt');
       this.logTurn(`You have reached the mountain's peak! ${this.area.deity.name} appears and uses ${this.area.deity.power}. You lose ${this.area.deity.damage} hp`);
       return;
     }
@@ -82,7 +83,7 @@ function GameController() {
         return;
       }
       if (this.area.deity.hp <= 0){
-        this.logTurn(`You defeated ${this.area.deity.name}! Onward to Glory!`);
+        this.logTurn(`${message} You defeated ${this.area.deity.name}! Onward to Glory!`);
         deities.splice(this.area.deity.index, 1);
         this.area.deity = null;
         this.player.glory++;
