@@ -46,6 +46,7 @@ function GameController() {
 
   this.updateLocation = function(location){
     this.player.location = location;
+    this.area.map = this.map[this.player.location].src;
     this.area.name = location;
     if(Math.random() < this.map[location].deityChance){
       this.area.deity = randomDeity(deities);

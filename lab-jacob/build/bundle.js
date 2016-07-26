@@ -31612,6 +31612,7 @@
 
 	  this.updateLocation = function (location) {
 	    this.player.location = location;
+	    this.area.map = this.map[this.player.location].src;
 	    this.area.name = location;
 	    if (Math.random() < this.map[location].deityChance) {
 	      this.area.deity = randomDeity(deities);
@@ -31729,7 +31730,7 @@
 
 /***/ },
 /* 13 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -31740,7 +31741,7 @@
 	    retreat: 'nothing',
 	    leap: 'nothing',
 	    deityChance: 0.2,
-	    src: '../asset/image/Deity-Mountain-base-camp.png'
+	    src: __webpack_require__(14)
 	  },
 
 	  baseCampTrail1: {
@@ -31749,7 +31750,7 @@
 	    retreat: 'baseCamp',
 	    leap: 'nothing',
 	    deityChance: 0.2,
-	    src: '../asset/image/Deity-Mountain-base-camp-trail1.png'
+	    src: __webpack_require__(15)
 	  },
 
 	  baseCampTrail2: {
@@ -31758,7 +31759,7 @@
 	    retreat: 'baseCampTrail1',
 	    leap: 'nothing',
 	    deityChance: 0.2,
-	    src: '../asset/image/Deity-Mountain-base-camp-trail2.png'
+	    src: __webpack_require__(16)
 	  },
 
 	  baseCampTrail3: {
@@ -31767,7 +31768,7 @@
 	    retreat: 'baseCampTrail2',
 	    leap: 'nothing',
 	    deityChance: 0.2,
-	    src: '../asset/image/Deity-Mountain-base-camp-trail3.png'
+	    src: __webpack_require__(17)
 	  },
 
 	  baseCampSwitchback: {
@@ -31776,7 +31777,7 @@
 	    retreat: 'baseCampTrail3',
 	    leap: 'nothing',
 	    deityChance: 0.2,
-	    src: '../asset/image/Deity-Mountain-base-camp-switch-back.png'
+	    src: __webpack_require__(18)
 	  },
 
 	  mountainSide: {
@@ -31785,7 +31786,7 @@
 	    retreat: 'baseCampSwitchback',
 	    leap: 'baseCampTrail3',
 	    deityChance: 0.5,
-	    src: '../asset/image/Deity-Mountain-mountain-side.png'
+	    src: __webpack_require__(19)
 	  },
 
 	  mountainSideTrail: {
@@ -31794,7 +31795,7 @@
 	    retreat: 'mountainSide',
 	    leap: 'baseCampTrail2',
 	    deityChance: 0.5,
-	    src: '../asset/image/Deity-Mountain-mountain-side-trail.png'
+	    src: __webpack_require__(20)
 	  },
 
 	  mountainSideSwitchback: {
@@ -31803,7 +31804,7 @@
 	    retreat: 'mountainSideTrail',
 	    leap: 'baseCampTrail1',
 	    deityChance: 0.5,
-	    src: '../asset/image/Deity-Mountain-mountain-side-switch-back.png'
+	    src: __webpack_require__(21)
 	  },
 
 	  peak: {
@@ -31812,9 +31813,63 @@
 	    retreat: 'baseCampSwitchback',
 	    leap: 'mountainSideTrail',
 	    deityChance: 'Odin',
-	    src: '../asset/image/Deity-Mountain-peak.png'
+	    src: __webpack_require__(22)
 	  }
 	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-base-camp-d06d540cfb100d2695f34051387fa36a.png";
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-base-camp-trail1-41cce4396dcf55bcd25ae2026efd7fc4.png";
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-base-camp-trail2-1a851940d3c9450b4be94f1fe7d697bf.png";
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-base-camp-trail3-fd7aa1f619844dc27d07636d2b227fdd.png";
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-base-camp-switch-back-d70d24ce0704468ff29616874a03d607.png";
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-mountain-side-70c5af1550f09f6e18d32a90a69d9795.png";
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-mountain-side-trail-43d59956c82eb46bbae6c8fe27053d2a.png";
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-mountain-side-switch-back-a74ed75cfaba69c0d37578bff5840293.png";
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-peak-87f86ca8fe1aa1e838874273302a96ad.png";
 
 /***/ }
 /******/ ]);
