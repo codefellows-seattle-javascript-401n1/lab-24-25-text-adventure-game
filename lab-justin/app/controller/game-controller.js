@@ -11,7 +11,7 @@ function GameController(){
   this.map = require('../model/map');
   this.oldLocation = '',
   this.newLocation = '',
-
+  this.holdLocation = '',
   this.player = {
     name: 'Justin',
     hp: 10000,

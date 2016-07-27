@@ -13,7 +13,6 @@ describe('test controller:  game-controller', function(){
 
   it('1) should give a proper player name', () => {
     expect(this.ctrl.player.name).toBe('Justin');
-
     this.ctrl.player.name = 'Lucien';
     expect(this.ctrl.player.name).not.toBe('Justin');
 
@@ -21,7 +20,6 @@ describe('test controller:  game-controller', function(){
 
   it('2) should give a proper location/room#', () => {
     expect(this.ctrl.player.location).toBe('roomA');
-
     this.ctrl.player.location = 'home';
     expect(this.ctrl.player.location).toEqual('home');
   });
@@ -39,6 +37,12 @@ describe('test controller:  game-controller', function(){
   it('5) test moveDirection', () => {
     this.ctrl.moveDirection('south');
     expect(this.ctrl.newLocation).toBe('roomC');
+  });
+
+  it('6) test holdLocation', () => {
+    expect(this.ctrl.holdLocation).not.toBe(undefined);
+    this.ctrl.holdLocation = 'home';
+    expect(this.ctrl.holdLocation).toBe('home');
   });
 
 });
