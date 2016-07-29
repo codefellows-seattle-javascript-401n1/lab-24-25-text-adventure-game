@@ -9,9 +9,11 @@ const Monster = require('../model/monster.js');
 angular.module('demoApp').controller('GameController', [GameController]);
 
 function GameController(){
-  this.history = 'WELCOME TO FINDING A JOB!';
+  this.history = ['WELCOME TO FINDING A JOB!'];
   this.moveCount = 0;
   this.map = require('../model/map.js');
+  this.oldLocation = '';
+  this.newLocation = '';
 
   this.player = {
     name: 'K-Weezy',
@@ -31,16 +33,12 @@ function GameController(){
 }
 
 GameController.prototype.moveDirection = function(direction){
-
-
   this.moveCount++;
-  var oldLocation = this.player.location;
-  console.log('oldLocation', oldLocation);
-  console.log('newLocation', this.map);
-  var newLocation = this.map[oldLocation][direction];
-  if (newLocation && newLocation !== 'wall'){
-    console.log('location??', newLocation);
-    this.updateLocation(newLocation);
+  this.oldLocation = this.player.location;
+  this.newLocation = this.map[this.oldLocation][direction];
+  if (this.newLocation && this.newLocation !== 'wall'){
+    console.log('location??', this.newLocation);
+    this.updateLocation(this.newLocation);
     return;
   }
   // stay were you are
@@ -48,7 +46,6 @@ GameController.prototype.moveDirection = function(direction){
 };
 
 GameController.prototype.updateLocation = function(location){
-  console.log('updateLocation', location);
   this.player.location = location;
   this.room.name = location;
   if (Math.random() < this.map[location].monsterChance){

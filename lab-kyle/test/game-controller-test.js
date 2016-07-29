@@ -9,7 +9,7 @@ describe('testing GameController', function(){
     });
   });
   it('should state the first history', () =>{
-    expect(this.ctrl.history).toBe('WELCOME TO FINDING A JOB!');
+    expect(this.ctrl.history[0]).toBe('WELCOME TO FINDING A JOB!');
   });
   it('should return the room youre in', () =>{
     expect(this.ctrl.room.name).toBe('microsoft');
@@ -20,5 +20,10 @@ describe('testing GameController', function(){
   });
   it('should return the players name', () =>{
     expect(this.ctrl.player.hp).toBe(100);
+  });
+  it('should move direction',() => {
+    this.ctrl.moveDirection('south');
+    expect(this.ctrl.newLocation).toBe('facebook');
+    expect(this.ctrl.oldLocation).toBe('microsoft');
   });
 });
