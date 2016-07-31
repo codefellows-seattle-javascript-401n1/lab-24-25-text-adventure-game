@@ -30,6 +30,9 @@ describe('testing the game controller', function(){
   });
 
   it('should be able to kill deities', function(){
-    scope.removeDeity(scope.deities, )
-  })
+    const deity = {name: 'test', hp: 10, power: 'testing', damage: 0, index: 0};
+    scope.gameCtrl.area.deity = deity;
+    scope.gameCtrl.attackDeity();
+    expect(scope.gameCtrl.area.deity).toBe(null);
+  });
 });
