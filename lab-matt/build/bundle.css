@@ -1,0 +1,20 @@
+body {
+  color: #E4D7D6;
+  text-shadow: -1px 0 black, 0 1px yellow, 1px 0 green, 0 -1px blue; }
+
+ol li {
+  font-size: 20px; }
+
+img {
+  background-color: #00ff39;
+  border-radius: 10px; }
+
+html {
+  background: url("http://3.bp.blogspot.com/-oM9J5Hvdnm4/T8Yij5qcQOI/AAAAAAAAPvI/ACcGdkxuGTo/s1600/1201_set_int_lunar_prison_cellblock_100813_v06b_cs.jpeg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
+ol {
+  list-style-type: none; }

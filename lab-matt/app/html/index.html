@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app='adventureApp'>
+  <head>
+    <meta charset="utf-8">
+    <title>SPACE... ADVENTURE... SCIENCE</title>
+    <link rel="stylesheet" type= "text/css" href="bundle.css">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src = 'bundle.js'></script>
+  </head>
+  <body>
+      <main ng-controller="GameController as GC">
+        <form novalidate name="gameForm">
+          <select ng-model="GC.gameForm.direction">
+            <option value="North">North</option>
+            <option value="South">South</option>
+            <option value="East">East</option>
+            <option value="West">West</option>
+
+          </select>
+          <input type="button" ng-disabled="GC.room.monster" ng-click="GC.moveDirection(GC.gameForm.direction)" value="Move">
+          <input type="button" ng-disabled="!GC.room.monster" ng-click="GC.attackMonster()" value="Attack">
+        </form>
+        <section ng-show="GC.player.spaceSuit > 0">
+          <h2>Player Name: {{GC.player.name}}</h2>
+          <h3>Suit Damange: {{GC.player.spaceSuit}}</h3>
+          <h3>Experience Points: {{GC.player.xp}}</h3>
+          <h3>Location: {{GC.player.location}}</h3>
+        </section>
+        <section ng-show="GC.player.spaceSuit > 0">
+          <div ng-show="GC.room.monster">
+            <h3>Monster</h3>
+            <pre>
+              <div class="monPic"></div>
+              Name: {{GC.room.monster.monsterName}}
+              hp: {{GC.room.monster.monsterHP}}
+            </pre>
+          </div>
+        </section>
+        <section ng-show="GC.player.spaceSuit > 0">
+          <h2> Game Histroy:</h2>
+          <ol>
+            <li ng-repeat="move in GC.history track by $index"> {{move}}</li>
+          </ol>
+        </section>
+        <section ng-show="GC.player.spaceSuit <= 0">
+          <h1>YOU DIED</h1>
+          <input type="button" name="name" ng-click="GC.reset()" value="Reset!">
+        </section>
+
+      </main>
+
+  </body>
+</html>

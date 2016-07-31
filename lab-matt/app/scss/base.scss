@@ -1,0 +1,36 @@
+@import "_theme.scss";
+
+body {
+  // background-color: $app-blue;
+
+
+  // //Image pulled from Gray--Day (http://gray--day.deviantart.com/)
+  // background-image: url("http://3.bp.blogspot.com/-oM9J5Hvdnm4/T8Yij5qcQOI/AAAAAAAAPvI/ACcGdkxuGTo/s1600/1201_set_int_lunar_prison_cellblock_100813_v06b_cs.jpeg");
+  // // background-size: 100%;
+  color: $app-white;
+  text-shadow: -1px 0 black, 0 1px yellow, 1px 0 green, 0 -1px blue;
+
+}
+
+ol li {
+  font-size: 20px;
+}
+
+img {
+  background-color: $app-green;
+  border-radius: 10px;
+
+}
+
+html {
+  //Image pulled from http://filmsketchr.blogspot.com/2012_05_01_archive.html?m=1
+  background: url("http://3.bp.blogspot.com/-oM9J5Hvdnm4/T8Yij5qcQOI/AAAAAAAAPvI/ACcGdkxuGTo/s1600/1201_set_int_lunar_prison_cellblock_100813_v06b_cs.jpeg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+ol {
+    list-style-type: none;
+}
