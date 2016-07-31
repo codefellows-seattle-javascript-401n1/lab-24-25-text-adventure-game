@@ -1,0 +1,40 @@
+@import "vendor/normalize.css";
+@import "_theme.scss";
+
+body {
+  background-color: $app-blacktique;
+}
+
+h1, h2 {
+  color: $app-blueprime;
+}
+
+pre, p {
+  color: white;
+}
+
+ol li {
+  color: white;
+}
+
+input[type="button"] {
+  border: 1px $app-blueprime solid;
+  color: $app-bluebaby;
+  background-color: black;
+}
+
+input[type="button"]:active {
+  background-color: $app-bluedried;
+}
+
+section {
+  margin: 10px;
+  padding: 5px;
+  max-width: 400px;
+  height: auto;
+  background-color: $app-bluetique;
+}
+
+.warning {
+  color: $app-tomato;
+}
