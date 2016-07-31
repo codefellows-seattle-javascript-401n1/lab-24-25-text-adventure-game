@@ -2,125 +2,129 @@
 
 module.exports = {
   Foyer: {
-    exits: {
-      south: hallA
-    },
+    north: 'wall',
+    east: 'wall',
+    south: 'hallA',
+    west: 'wall',
     foes: [],
+    description: '',
     things: []
   },
   hallA: {
-    exits: {
-      north: foyer,
-      east: roomC,
-      south: hallB,
-      west: roomA
-    },
+    north: 'Foyer',
+    east: 'roomC',
+    south: 'hallB',
+    west: 'roomA',
     foes: [],
+    description: 'The Hall is dark but for the torch in your hand. the stone floor looks like it has not been cleaned in centuries and the thick filth shows recent use. The hall continues South and turns left and there are doors to the East and West, North leads back to the Foyer',
     things: []
   },
   hallB: {
-    exits: {
-      north: wall,
-      east: hallC,
-      south: roomD,
-      west: hallA
-    },
+    north: 'hallA',
+    east: 'hallC',
+    south: 'roomD',
+    west: 'wall',
     foes: [],
+    description: 'The hall is longer than the last, about halfway down there is a jumble of rock and earth from an old caving that has been cleaned up just enough for one to pass. The hall looks to continue East past the cave in there is a sturdy wooden door to the South, the beginning of the Hall is to the North',
     things: []
   },
   hallC: {
-    exits: {
-      north: roomE,
-      east: hallB,
-      south: roomF,
-      west: hallD
-    },
+    north: 'roomE',
+    east: 'hallB',
+    south: 'roomF',
+    west: 'hallD',
     foes: [],
+    description: 'The hall continues to the West where it turns right. There are doors to the North and South, the hall goes back to the enterance past the rock fall to the East',
     things: []
   },
   hallD: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'hallC',
+    east: 'roomG',
+    south: 'barraks',
+    west: 'roomH',
     foes: [],
+    description: 'This Hall has two sputtering torches flanking a large rusted door at the end Hall to the South. There are two wooden doors one to the West and the other on the East',
     things: []
   },
   roomA: {
-    exits: [],
+    north: 'wall',
+    east: 'hallA',
+    south: 'roomB',
+    west: 'wall',
     foes: [],
+    description: 'Behind the door is a large room filled with drifts of broken furniture and moldy trash, the dust and cobwebs imply that the room has not been touched in decades. However you do spot a doorway leading to a deeper room to the South',
     things: []
   },
   roomB: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'roomA',
+    east: 'wall',
+    south: 'wall',
+    west: 'wall',
     foes: [],
+    description: 'This room is almost completely collapsed and has no exits but the doorway you entered from',
     things: []
   },
   roomC: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'wall',
+    east: 'wall',
+    south: 'hallB',
+    west: 'hallA',
     foes: [],
+    description: 'The room looks like it was a study long ago, but before you can take in the rotting desk or collapsed bookshelves a shambling corpse raises from the corner and lurches towards you',
     things: []
   },
   roomD: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'hallB',
+    east: 'wall',
+    south: 'wall',
+    west: 'wall',
     foes: [],
+    description: '',
     things: []
   },
   roomE: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'wall',
+    east: 'wall',
+    south: 'hallC',
+    west: 'wall',
     foes: [],
+    description: '',
     things: []
   },
   roomF: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'hallC',
+    east: 'wall',
+    south: 'wall',
+    west: 'wall',
     foes: [],
+    description: '',
     things: []
   },
   roomG: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'wall',
+    east: 'wall',
+    south: 'wall',
+    west: 'hallD',
     foes: [],
+    description: '',
     things: []
   },
   roomH: {
-    exits: {
-      north: hallC,
-      east: roomG,
-      south: barraks,
-      west: roomH
-    },
+    north: 'wall',
+    east: 'hallD',
+    south: 'wall',
+    west: 'wall',
     foes: [],
+    description: '',
     things: []
   },
+  barraks: {
+    north: 'hallD',
+    east: 'wall',
+    south: 'wall',
+    west: 'wall',
+    foes: [],
+    description: '',
+    things: []
+  }
 }
