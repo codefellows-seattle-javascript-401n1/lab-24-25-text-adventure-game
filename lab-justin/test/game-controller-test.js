@@ -45,4 +45,9 @@ describe('test controller:  game-controller', function(){
     expect(this.ctrl.holdLocation).toBe('home');
   });
 
+  it('7) test attackMonster', () => {
+    expect(this.ctrl.moveCount).not.toBe(undefined);
+    this.ctrl.moveCount = 100;
+    expect(this.ctrl.moveCount).toBe(100);
+  });
 });

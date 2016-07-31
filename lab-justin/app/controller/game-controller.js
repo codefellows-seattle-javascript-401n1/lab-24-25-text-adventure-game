@@ -12,6 +12,7 @@ function GameController(){
   this.oldLocation = '',
   this.newLocation = '',
   this.holdLocation = '',
+  this.moveCount = '',
   this.player = {
     name: 'Justin',
     hp: 10000,
