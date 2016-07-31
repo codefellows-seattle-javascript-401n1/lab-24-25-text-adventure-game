@@ -40,19 +40,12 @@ GameController.prototype.movement = function(direction){
   this.holdLocation();
   };
 
-  GameController.prototype.updateLocation = function(location){
+GameController.prototype.updateLocation = function(location){
   this.player.location = location;
   this.room.name = location;
-  // if (this.map[location].foes){
-  //   this.room.monster = new Monster();
-  //   this.player.hp -= this.room.monster.dammage;
-  //   this.logTurn(`is now in ${this.player.location}. a ${this.room.monster.name} attacked. you lost ${this.room.monster.dammage}`)
-  //   return;
-  // }
-
-  // this.room.monster = null;
   this.logTurn(`and found ${this.player.location}. ${this.player.location.description}`);
 };
+
 GameController.prototype.holdLocation = function(){
   this.logTurn(`and hit a wall.`);
 };
