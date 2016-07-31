@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="adventureGame">
+  <head>
+    <meta charset="utf-8">
+    <title>__adventure-game__</title>
+    <link rel="stylesheet" href="bundle.css">
+    <script type="text/javascript" src="bundle.js"></script>
+  </head>
+  <body ng-controller="GameController as gameCtrl" ng-class="gameCtrl.dynamicClass">
+    <h1>Lost In Space</h1>
+    <main >
+      <form novalidate name="gameForm">
+        <label>Select a Direction</label>
+        <select ng-model="gameCtrl.gameForm.direction">
+          <option value="forward"> Forward </option>
+          <option value="backward"> Backward </option>
+          <option value="left"> left </option>
+          <option value="right"> right </option>
+        </select>
+
+        <input type="button" value="MOVE" ng-click="gameCtrl.moveDirection(gameCtrl.gameForm.direction)">
+        <input type="button" value="ATTACK" ng-disabled="!gameCtrl.stationModule.monster" ng-click="gameCtrl.attackMonster()">
+        <!-- how to do advanced comparison expressions -->
+        <input type="button" value="USE ITEM" ng-click="gameCtrl.useItem()" ng-disabled="!gameCtrl.stationModule.monster">
+      </form>
+
+      <section>
+        <h2>{{ gameCtrl.player.name | uppercase}}</h2>
+        <h3>HP: {{ gameCtrl.player.hp}} </h3>
+        <h3>XP: {{ gameCtrl.player.xp}} </h3>
+        <h3>Location: {{gameCtrl.player.location}}</h3>
+        <!-- only show if there are items in the array -->
+        <h3>Items: {{ gameCtrl.player.items}} </h3>
+      </section>
+
+      <section>
+        <h2>STATION MODULE -- {{ gameCtrl.stationModule.name | uppercase}}</h2>
+        <div ng-show="gameCtrl.stationModule.monster">
+          <h3>Monster</h3> <pre>
+name: {{ gameCtrl.stationModule.monster.name}}
+hp: {{ gameCtrl.stationModule.monster.hp }}
+bribe: {{ gameCtrl.stationModule.monster.bribe}}
+          </pre>
+        </div>
+      </section>
+      <section>
+        <h2>GAME HISTORY</h2>
+        <ol>
+          <li ng-repeat="move in gameCtrl.history"> {{ move }} </li>
+        </ol>
+      </section>
+    </main>
+  </body>
+</html>

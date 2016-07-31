@@ -1,0 +1,25 @@
+@import "vendor/normalize.css";
+@import "_theme.scss";
+
+body {
+  background-color: #ffffff;
+  color: $app_grey;
+}
+
+h1 {
+  color: $app_grey;
+  text-align: center;
+}
+
+h2 {
+  color: $app_grey;
+}
+
+h3 {
+  color: $app_drityMagenta;
+}
+
+.dead {
+  background-color: #ff0000;
+  color: #fffff;
+}
