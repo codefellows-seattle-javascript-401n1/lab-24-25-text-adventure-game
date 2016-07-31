@@ -77,7 +77,7 @@ function GameController() {
         this.gameOver();
         return;
       }
-      this.area.deity.hp -= this.player.damage;
+      this.area.deity.hp -= (this.player.damage + (this.player.glory * 5));
       if (Odin.hp <= 0) {
         this.winGame();
         return;
@@ -89,7 +89,7 @@ function GameController() {
         this.player.glory++;
         return;
       }
-      this.logTurn(message + `You attack ${this.area.deity.name} for ${this.player.damage}`);
+      this.logTurn(message + `You attack ${this.area.deity.name} for ${this.player.damage + (this.player.glory * 5)}`);
     }
   };
 
