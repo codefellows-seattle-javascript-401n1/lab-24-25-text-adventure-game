@@ -1,6 +1,7 @@
 // Karma configuration
-// Generated on Sun Jul 17 2016 12:07:12 GMT-0700 (PDT)
-let webpackConfig = require('./webpack.config.js');
+// Generated on Tue Jul 26 2016 19:07:28 GMT-0700 (PDT)
+const webpackConfig = require('./webpack.config');
+webpackConfig.entry = {};
 module.exports = function(config) {
   config.set({
 
@@ -15,9 +16,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'app/entry/js',
-      'test/*-test.js',
-      'node_modules/angular-mocks/angular-mocks.js'
+      'app/entry.js',
+      './node_modules/angular-mocks/angular-mocks.js',
+      'test/*-test.js'
     ],
 
 
@@ -31,7 +32,7 @@ module.exports = function(config) {
     webpack: webpackConfig,
     preprocessors: {
       'app/entry.js': ['webpack'],
-      'test/*-test.js': ['babel']
+      'test/*-test.js':['babel']
     },
 
 
@@ -44,6 +45,11 @@ module.exports = function(config) {
     // web server port
     port: 9876,
 
+    browserConsoleLogOptions: {
+      level: 'debug',
+      format: '%b %T: %m',
+      terminal: true
+    },
 
     // enable / disable colors in the output (reporters and logs)
     colors: true,
@@ -65,7 +71,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous

@@ -1,3 +1,5 @@
+/* global angular expect */
+
 'use strict';
 
 describe('testing GameController', function(){
@@ -8,13 +10,17 @@ describe('testing GameController', function(){
     });
   });
 
-  it('should contain a monster', () => {
-    expect(this.crtl.monster.name).toBe(monsterNames);
+  it('should contain a player', () => {
+    expect(this.Ctrl.player.name).toBe('Ash-Ron');
+  });
+  it('should show location RoomA', () => {
+    expect(this.Ctrl.player.location).toBe('RoomA');
+  });
+  it('should have a player hp of 100', ()=>{
+    expect(this.Ctrl.player.hp).toBe(100);
   });
 
-  // it('should reduce hp by 7', () => {
-  //   this.crtl.takeDamage(7);
-  //   expect(this.crtl.monster.hp).toBe(80);
-  // });
-
+  // it('should move to a different room', (done)=>{
+  //   expect(this.Ctrl.)
+  // })
 });
