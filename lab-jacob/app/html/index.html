@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="tindur">
+  <head>
+  <title>Tindur</title>
+  <link rel="stylesheet" type="text/css" href="bundle.css">
+  <script src="bundle.js"></script>
+  </head>
+
+  <body>
+    <main ng-controller="GameController as gameCtrl">
+
+      <section id="intro" ng-show="!gameCtrl.beginGame">
+        <h1>Tindur!</h1>
+        <p>Climb your way to the top of the mountain and fight deities to claim your Glory!!</p>
+        <input type="button" ng-click="gameCtrl.intro()" value="Begin!">
+      </section>
+
+      <h1 class="mainHeading" ng-show="gameCtrl.beginGame">Tindur</h1>
+
+      <form novalidate name="controls" ng-show="gameCtrl.beginGame">
+
+        <section id="character">
+          <h2>{{gameCtrl.player.name}} Stats:</h2>
+          <div class="characterStat">
+            <h3>Health:</h3> <p>{{gameCtrl.player.hp}}</p>
+          </div>
+          <div class="characterStat">
+            <h3>Glory:</h3> <p>{{gameCtrl.player.glory}}</p>
+          </div>
+        </section>
+
+        <section id="map">
+          <img ng-src="{{gameCtrl.area.map}}" alt="map" height="200px">
+        </section>
+
+        <section id="movement" ng-show="!gameCtrl.area.deity && !gameCtrl.endGame">
+          <h3>Move</h3>
+          <input type="button" ng-click="gameCtrl.moveDirection('climb')" value="Climb upwards">
+          <input type="button" ng-click="gameCtrl.moveDirection('march')" value="March on">
+          <input type="button" ng-click="gameCtrl.moveDirection('retreat')" value="Retreat backwards">
+          <input type="button" ng-click="gameCtrl.moveDirection('leap')" value="leap down">
+        </section>
+
+        <section id="action" ng-show="gameCtrl.area.deity && !gameCtrl.endGame">
+          <h2>Fight!</h2>
+          <input type="button" ng-click="gameCtrl.attackDeity()" value="attack">
+        </section>
+      </form>
+
+      <section id="playScreen" ng-show="gameCtrl.beginGame">
+        <h3>Area: {{gameCtrl.area.name}} </h3>
+        <div ng-show="gameCtrl.area.deity">
+          <h3>A foe has appeared!</h3>
+          <pre>
+            name: {{gameCtrl.area.deity.name}}
+            health: {{gameCtrl.area.deity.hp}}
+          </pre>
+        </div>
+        <ol>
+          <li ng-repeat="move in gameCtrl.history">{{move}}</li>
+        </ol>
+      </section>
+
+    </main>
+  </body>
+</html>
