@@ -71,7 +71,7 @@ function GameController() {
       var message = '';
       if (Math.random() > 0.5){
         this.player.hp -= this.area.deity.damage;
-        message += ` ${this.area.deity.name} attacks with ${this.area.deity.power}! You lose ${this.area.deity.damage} `;
+        message += ` ${this.area.deity.name} attacks with ${this.area.deity.power}! You lose ${this.area.deity.damage} hp.`;
       }
       if (this.player.hp <= 0) {
         this.gameOver();
@@ -89,7 +89,7 @@ function GameController() {
         this.player.glory++;
         return;
       }
-      this.logTurn(message + `You attack ${this.area.deity.name} for ${this.player.damage + (this.player.glory * 5)}`);
+      this.logTurn(message + ` You attack ${this.area.deity.name} for ${this.player.damage + (this.player.glory * 5)}`);
     }
   };
 

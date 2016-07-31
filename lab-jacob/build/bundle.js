@@ -31637,13 +31637,13 @@
 	      var message = '';
 	      if (Math.random() > 0.5) {
 	        this.player.hp -= this.area.deity.damage;
-	        message += ' ' + this.area.deity.name + ' attacks with ' + this.area.deity.power + '! You lose ' + this.area.deity.damage + ' ';
+	        message += ' ' + this.area.deity.name + ' attacks with ' + this.area.deity.power + '! You lose ' + this.area.deity.damage + ' hp.';
 	      }
 	      if (this.player.hp <= 0) {
 	        this.gameOver();
 	        return;
 	      }
-	      this.area.deity.hp -= this.player.damage;
+	      this.area.deity.hp -= this.player.damage + this.player.glory * 5;
 	      if (Odin.hp <= 0) {
 	        this.winGame();
 	        return;
@@ -31655,7 +31655,7 @@
 	        this.player.glory++;
 	        return;
 	      }
-	      this.logTurn(message + ('You attack ' + this.area.deity.name + ' for ' + this.player.damage));
+	      this.logTurn(message + (' You attack ' + this.area.deity.name + ' for ' + (this.player.damage + this.player.glory * 5)));
 	    }
 	  };
 
@@ -31852,7 +31852,7 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "img/Deity-Mountain-mountain-side-70c5af1550f09f6e18d32a90a69d9795.png";
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-mountain-side-a74ed75cfaba69c0d37578bff5840293.png";
 
 /***/ },
 /* 20 */
@@ -31864,7 +31864,7 @@
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "img/Deity-Mountain-mountain-side-switch-back-a74ed75cfaba69c0d37578bff5840293.png";
+	module.exports = __webpack_require__.p + "img/Deity-Mountain-mountain-side-switch-back-70c5af1550f09f6e18d32a90a69d9795.png";
 
 /***/ },
 /* 22 */
