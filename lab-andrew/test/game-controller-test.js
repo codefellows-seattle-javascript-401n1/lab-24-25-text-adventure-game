@@ -21,10 +21,10 @@ describe('tests on GameController', function() {
   it('should not move', () => {
     this.ctrl.holdLocation();
     const length = this.ctrl.history.length;
-    expect(this.ctrl.history[length - 1]).toBe('TURN1: The Chosen hit a wall');
+    expect(this.ctrl.history[length - 1]).toBe('TURN0: The Chosen hit a wall');
   });
   it('should see if i am dead', () => {
-    this.ctrl.playe.hp = 0;
+    this.ctrl.player.hp = -2;
     this.ctrl.checkAlive();
     expect(this.ctrl.room.playerAlive).toBe(false);
   });

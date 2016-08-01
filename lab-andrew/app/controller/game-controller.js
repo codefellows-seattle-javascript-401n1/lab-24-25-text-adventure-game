@@ -83,12 +83,12 @@ GameController.prototype.holdLocation = function(){
 GameController.prototype.logTurn = function(message) {
   this.history.push(`PLAY: ${this.moveCount}: ${this.player.name}:${message}`);
 };
-GameController.prototype.checkAlive = function(hp) {
+GameController.prototype.checkAlive = function() {
   let message = '';
-  if(hp <= 0) {
+  if(this.player.hp <= 0) {
     this.player.hp = 'dead';
     this.room.playerAlive = false;
-    return message += `${this.room.troll.name} has destroeyd you. You pass now into the nothingness.`;
+    return message += 'you have fallen. You now pass now into the nothingness.';
   }
   return message;
 };
