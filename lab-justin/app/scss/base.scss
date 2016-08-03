@@ -1,0 +1,32 @@
+@import './vendor/normalize.css';
+@import './_theme.scss';
+
+body {
+  background-color: gray;
+  font-family: monospace;
+  font-size: 14;
+  background-image: url('../image/pacMan.png');
+  background-blend-mode: darken;
+  opacity: 1;
+}
+
+.monster {
+  background-color: $app-sky;
+  font-weight: bolder;
+  font-size: 25px;
+  color: red;
+  width: 0.75;
+}
+
+.gameHistory {
+  background-color: $app-pink;
+  color: $app-mint;
+  font-style: italic;
+  width: 75%;
+  position: relative;
+  align-items: center;
+}
+
+.genSection {
+  color: $app-orange;
+}

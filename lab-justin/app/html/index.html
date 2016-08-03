@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html ng-app='gameApp'>
+  <head>
+    <link rel='stylesheet' type='text/css' href='bundle.css'/>
+    <script src='bundle.js'></script>
+  </head>
+
+  <body>
+    <main ng-controller='GameController as gameCtrl'>
+      <img ng-src='../image/pacMan.png' alt="" />
+
+      <form novalidate name='gameForm'>
+        <select ng-model='gameCtrl.gameForm.direction'>
+          <option value='north'> north </option>
+          <option value='south'> south </option>
+          <option value='east'> east </option>
+          <option value='west'> west </option>
+        </select>
+        <input type='button' ng-click='gameCtrl.moveDirection(gameCtrl.gameForm.direction)' value='move'>
+        <input type='button' ng-disabled='!gameCtrl.room.monster' ng-click='gameCtrl.attackMonster()' value='attack'>
+      </form>
+
+      <section class='genSection'>
+        <h2> Player: {{gameCtrl.player.name}} </h2>
+        <h2> HP: {{gameCtrl.player.hp}} </h2>
+        <h2> XP: {{gameCtrl.player.xp}} </h2>
+        <h2> Location: {{gameCtrl.player.location}} </h2>
+      </section>
+      <section>
+        <h2> Room: {{gameCtrl.room.name}}  </h2>
+        <div ng-show='gameCtrl.room.monster' class='monster'>
+          <h3> Monster: </h3>
+          <pre>
+            name:{{gameCtrl.room.monster.name}}
+            hp: {{gameCtrl.room.monster.hp}}
+          </pre>
+        </div>
+        </section>
+        <div class='gameHistory'>
+          <section>
+            <h2> Game History: </h2>
+            <ol>
+              <li ng-repeat='move in gameCtrl.history'>{{move}}</li>
+            </ol>
+          </section>
+        </div>
+      </main>
+  </body>
+</html>
