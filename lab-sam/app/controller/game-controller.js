@@ -2,8 +2,6 @@
 
 const angular = require('angular');
 
-// const riddle = require(../)
-
 angular.module('adventureApp').controller('GameController', [GameController]);
 
 function GameController(){
@@ -25,7 +23,7 @@ function GameController(){
 this.direction = {
     direction: 'south'
   };
-
+this.combat = false;
 
 }
 
@@ -53,3 +51,12 @@ GameController.prototype.holdLocation = function(){
 GameController.prototype.logTurn = function(message){
   this.history.unshift(`TURN ${this.moveCount}: ${this.player.name} went ${this.direction} ${message}`);
 };
+GameController.prototype.fight = function(){
+  if (this.player.location.foes){
+    this.combat = true;
+    if (this.player.location.foes.hp > 1){
+      this.combat = false;
+    }
+  }
+
+}
