@@ -6,27 +6,31 @@ module.exports = {
     north: 'wall',
     south: 'roomC',
     east: 'roomB',
-    west: 'wall'
+    west: 'wall',
+    monsterChance: 0.2
   },
 
   roomB: {
     north: 'wall',
     south: 'roomD',
     east: 'wall',
-    west: 'roomA'
+    west: 'roomA',
+    monsterChance: 0.5
   },
 
   roomC: {
     north: 'roomA',
     south: 'wall',
     east: 'roomD',
-    west: 'wall'
+    west: 'wall',
+    monsterChance: 0.3
   },
 
   roomD: {
     north: 'roomB',
     south: 'wall',
     east: 'wall',
-    west: 'roomC'
+    west: 'roomC',
+    monsterChance: 0.5
   }
 };

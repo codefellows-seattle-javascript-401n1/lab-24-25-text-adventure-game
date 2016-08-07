@@ -4,7 +4,6 @@
 const angular = require('angular');
 
 //app modules
-
 const Monster = require('../model/monster.js');
 
 
@@ -13,12 +12,12 @@ angular.module('warApp').controller('GameController', [GameController]);
 
 //object constructor to represent the model//
 function GameController() {
-  this.history =  ['Welcome to the POLITIKAL'];
+  this.history =  ['Welcome to the POLITIKS'];
   this.moveCount = 0;
   this.map = require('../model/map');
 
   this.player = {
-    name: 'voter',
+    name: 'responsible voter',
     hp: 1000,
     damage: 10,
     xp: 0,
@@ -70,6 +69,7 @@ GameController.prototype.logTurn = function(message) {
 };
 
 GameController.prototype.attackMonster = function () {
+  console.log('attack monster');
   this.moveCount++;
   if(this.room.monster) {
     var message = '';
@@ -79,11 +79,11 @@ GameController.prototype.attackMonster = function () {
     }
     this.room.monster.hp -= this.player.damage;
     if(this.room.monster.hp < 0) {
-      this.player.xp += 100;
-      this.logTurn(`you defeated ${this.room.monster.name}, made merica whole again, and gained 300 xp`);
+      this.player.xp += 1000;
+      this.logTurn(`defeated ${this.room.monster.name}, made merica whole again, and gained 300 xp`);
       this.room.monster = null;
       return;
     }
-    this.logTurn(message + ' you hit Trump with common sense');
+    this.logTurn(message + ' attacked using common sense, honesty, and itegrity');
   }
 };
