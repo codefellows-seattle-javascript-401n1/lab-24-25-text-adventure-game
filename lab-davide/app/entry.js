@@ -8,7 +8,7 @@ require('./scss/base.scss');
 //npm modules//
 const angular = require('angular');
 //app modules//
-angular.module('warApp', []);
+angular.module('politiksApp', []);
 
 //angular module extensions//
 require('./controller/game-controller.js');

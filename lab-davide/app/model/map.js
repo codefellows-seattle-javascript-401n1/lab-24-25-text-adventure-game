@@ -1,6 +1,7 @@
 'use strict';
 
 //use default map view for lab, customize later//
+//monsterChance is a probalbility of a trump monster being inside a room//
 module.exports = {
   roomA: {
     north: 'wall',

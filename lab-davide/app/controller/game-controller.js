@@ -8,7 +8,7 @@ const Monster = require('../model/monster.js');
 
 
 
-angular.module('warApp').controller('GameController', [GameController]);
+angular.module('politiksApp').controller('GameController', [GameController]);
 
 //object constructor to represent the model//
 function GameController() {

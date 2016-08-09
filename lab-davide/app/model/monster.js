@@ -1,7 +1,7 @@
 'use strict';
 
 const randomArrayItem = require('../lib/random-array-item');
-const monsterNames = ['donald trump', 'trump the stump', 'ass eyes', 'dump trump'];
+const monsterNames = ['donald frump', 'horse bitch', 'ass eyes', 'dump trump'];
 
 module.exports = function Monster () {
   this.name = randomArrayItem(monsterNames);
