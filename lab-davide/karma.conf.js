@@ -31,7 +31,7 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    webpack: webpackConfig, 
+    webpack: webpackConfig,
     preprocessors: {
       'app/entry.js': ['webpack'],
       'test/*test.js': ['babel']
@@ -64,6 +64,11 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
+    browserConsoleLogOptions: {
+      level: 'debug',
+      format: '%b %T: %m',
+      terminal: true
+    },
 
 
     // Continuous Integration mode
@@ -73,5 +78,6 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
+
   });
 };

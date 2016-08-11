@@ -22,7 +22,7 @@ describe('testing game controller', function() {
 
   it('should move the location of player east', () => {
     this.ctrl.moveDirection('east');
-    expect(this.ctrl.player.currentLocation).toBe('roomA');
+    expect(this.ctrl.player.location).toBe('roomB');
   });
 
   it('should display the first history', () => {
