@@ -50,6 +50,7 @@ GameController.prototype.updateLocation = function(location){
   this.room.name = location;
   if (Math.random() < this.map[location].monsterChance){
     this.room.monster = new Monster();
+    console.log(this.room.monster);
     this.player.hp -= this.room.monster.dammage;
     this.logTurn(`is now in ${this.player.location}. a ${this.room.monster.name} attacked. you lost ${this.room.monster.dammage}`);
     return;
