@@ -12,9 +12,11 @@
         <h3> XP: {{ gameCtrl.player.xp }} </h3>
         <h3> Location: {{ gameCtrl.player.location }} </h3>
       </section>
-      <section ng-show="gameCtrl.combat"></section>
-      <h2> {{ gameCtrl.monster.name }} </h2>
-      <h3> HP: {{ gameCtrl.monster.hp }} </h3>
+      <section class="combat" ng-show="gameCtrl.combat">
+        <h2> {{ gameCtrl.room.foes.name }}, Currently: {{ gameCtrl.room.foes.status }} </h2>
+        <h3> HP: {{ gameCtrl.room.foes.hp }} </h3>
+        <button type="button" ng-click="gameCtrl.playerAttack()" value="Attack">Attack</button>
+      </section>
       <form novalidate name="form">
         <p name="gameCtrl.room.name">{{gameCtrl.room.description}}
         <select ng-model="gameCtrl.direction">

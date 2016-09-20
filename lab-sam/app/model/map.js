@@ -6,7 +6,7 @@ module.exports = {
     east: 'wall',
     south: 'hallA',
     west: 'wall',
-    foes: [],
+    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
     description: '',
     things: []
   },
@@ -15,7 +15,7 @@ module.exports = {
     east: 'roomC',
     south: 'hallB',
     west: 'roomA',
-    foes: [],
+    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
     description: 'The Hall is dark but for the torch in your hand. the stone floor looks like it has not been cleaned in centuries and the thick filth shows recent use. The hall continues South and turns left and there are doors to the East and West, North leads back to the Foyer',
     things: []
   },
@@ -69,7 +69,7 @@ module.exports = {
     east: 'wall',
     south: 'hallB',
     west: 'hallA',
-    foes: [],
+    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
     description: 'The room looks like it was a study long ago, but before you can take in the rotting desk or collapsed bookshelves a shambling corpse raises from the corner and lurches towards you',
     things: []
   },
