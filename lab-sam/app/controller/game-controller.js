@@ -10,11 +10,12 @@ function GameController(){
     hp: 100,
     damage: 4,
     xp: 0,
-    location: 'Foyer'
+    location: 'Foyer',
+    weapon: 'a flimsy torch'
   };
 
   this.history = [];
-  this.moveCount = 1;
+  this.moveCount = 0;
   this.map = require('../model/map');
   this.room = this.map[this.player.location];
 
@@ -22,7 +23,7 @@ function GameController(){
     direction: 'south'
   };
   this.combat = true;
-  this.loot = false;
+  this.lootable = false;
 
 }
 
@@ -50,12 +51,14 @@ GameController.prototype.updateLocation = function(location){
     this.player.hp -= this.room.foes.attack;
     this.logTurn(`and found ${this.player.location} and was attacked by a ${this.room.foes.name}`);
   }
-  if (!this.room.foes){
+  else if (this.room.things && !this.room.foes){
+    this.lootable = true;
     this.combat = false;
-    this.logTurn(`and found ${this.player.location}. ${this.player.location.description}`);
+    this.logTurn(`and found ${this.player.location}. There is something you can Loot here.`);
   }
-  if (this.room.things){
-    this.loot = true;
+  else {
+    this.combat = false;
+    this.logTurn(`and found ${this.player.location}. There doesn't appear to be anyone here.`);
   }
 };
 
@@ -72,18 +75,20 @@ GameController.prototype.logFight = function(message){
 };
 
 GameController.prototype.loot = function(){
-  if (this.room.things){
-    this.player.damage += 5;
-  }
+  this.player.damage += 5;
+  this.player.weapon = this.room.things;
+  this.history.unshift(`TURN ${this.moveCount}: ${this.player.name} had found a ${this.room.things}, you feel a bit safer with a weapon in your hands`);
+  this.lootable = false;
 };
 
 GameController.prototype.playerAttack = function(){
   this.moveCount++;
   this.room.foes.hp -= this.player.damage + (Math.floor(Math.random() * (8 - 1 +1)) + 1);
-  if (this.room.foes.hp > 1){
+  console.log('Enemy HP', this.room.foes.hp);
+  if (this.room.foes.hp < 1){
+    console.log('LESS THAN 1');
     this.combat = false;
     this.logFight('and Killed it!');
-    return;
   }  else{
     this.player.hp -= this.room.foes.attack;
     this.logFight('but it still stands and attacks back!');

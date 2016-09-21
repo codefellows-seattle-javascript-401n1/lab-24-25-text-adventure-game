@@ -10,6 +10,7 @@
         <h2> {{ gameCtrl.player.name }} </h2>
         <h3> HP: {{ gameCtrl.player.hp }} </h3>
         <h3> XP: {{ gameCtrl.player.xp }} </h3>
+        <h3> Weilding {{gameCtrl.player.weapon}} </h3>
         <h3> {{gameCtrl.room.description}} </h3>
       </section>
       <form novalidate name="form">
@@ -21,7 +22,7 @@
         </select>
         <input type="button" ng-click="gameCtrl.movement(gameCtrl.direction)" value="Move">
         <button type="button" ng-show="gameCtrl.combat" ng-click="gameCtrl.playerAttack()" value="Attack">Attack</button>
-        <button type="button" ng-show="gameCtrl.loot" ng-click="gameCtrl.loot()" value="loot">Loot</button>
+        <button type="button" ng-show="gameCtrl.lootable" ng-click="gameCtrl.loot()" value="loot">Loot</button>
       </form>
       <section>
         <section class="combat" ng-show="gameCtrl.combat">
