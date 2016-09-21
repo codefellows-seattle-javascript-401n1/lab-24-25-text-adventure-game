@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="adventureApp">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bundle.css">
+    <script src="bundle.js"></script>
+  </head>
+  <body>
+    <main ng-controller="GameController as gameCtrl">
+      <section>
+        <h2> {{ gameCtrl.player.name }} </h2>
+        <h3> HP: {{ gameCtrl.player.hp }} </h3>
+        <h3> XP: {{ gameCtrl.player.xp }} </h3>
+        <h3> Weilding {{gameCtrl.player.weapon}} </h3>
+        <h3> {{gameCtrl.room.description}} </h3>
+        <h3 ng-show="gameCtrl.combat"> {{ gameCtrl.room.foes.status }}</h3>
+      </section>
+      <form novalidate name="form">
+        <select ng-model="gameCtrl.direction">
+          <option value="north"> North </option>
+          <option value="south"> South </option>
+          <option value="east"> East </option>
+          <option value="west"> West </option>
+        </select>
+        <input type="button" ng-click="gameCtrl.movement(gameCtrl.direction)" value="Move">
+        <button type="button" ng-show="gameCtrl.combat" ng-click="gameCtrl.playerAttack()" value="Attack">Attack</button>
+        <button type="button" ng-show="gameCtrl.lootable" ng-click="gameCtrl.loot()" value="loot">Loot</button>
+      </form>
+      <section>
+        <section class="combat" ng-show="gameCtrl.combat">
+          <h2> {{ gameCtrl.room.foes.name }}</h2>
+          <h3> HP: {{ gameCtrl.room.foes.hp }} </h3>
+        </section>
+        <h2> Game History: </h2>
+        <ul>
+          <li ng-repeat="move in gameCtrl.history"> {{ move }} </li>
+        </ul>
+      </section>
+    </main>
+  </body>

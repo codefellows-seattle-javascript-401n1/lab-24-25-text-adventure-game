@@ -1,0 +1,9 @@
+
+@import "vendor/normalize.css";
+@import "_theme.scss";
+
+body {
+  background-color: $app-background;
+  font-family: fantasy;
+  color: $app-default;
+}

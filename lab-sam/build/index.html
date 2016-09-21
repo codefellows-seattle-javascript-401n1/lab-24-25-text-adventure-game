@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html ng-app="adventureApp">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bundle.css">
+    <script src="bundle.js"></script>
+  </head>
+  <body>
+    <main ng-controller="GameController as gameCtrl">
+      <form novalidate name="form">
+        <select ng-model="gameCtrl.directions">
+          <option ng-repeat="exits in gameCtrl.room.exits">
+        </select>
+        <input type="button" ng-model="gameCtrl.movement(gameCtrl.directions)" value="Move">
+  </body>
