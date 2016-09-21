@@ -12,6 +12,7 @@
         <h3> XP: {{ gameCtrl.player.xp }} </h3>
         <h3> Weilding {{gameCtrl.player.weapon}} </h3>
         <h3> {{gameCtrl.room.description}} </h3>
+        <h3 ng-show="gameCtrl.combat"> {{ gameCtrl.room.foes.status }}</h3>
       </section>
       <form novalidate name="form">
         <select ng-model="gameCtrl.direction">

@@ -89,7 +89,10 @@ GameController.prototype.playerAttack = function(){
     console.log('LESS THAN 1');
     this.combat = false;
     this.logFight('and Killed it!');
-  }  else{
+  }  else if (this.player.hp < 50 ){
+    this.player.hp -= this.room.foes.attack;
+    this.logFight(`but it still stands and attacks back!, ${this.player.name} is not looking good`);
+  } else{
     this.player.hp -= this.room.foes.attack;
     this.logFight('but it still stands and attacks back!');
   }

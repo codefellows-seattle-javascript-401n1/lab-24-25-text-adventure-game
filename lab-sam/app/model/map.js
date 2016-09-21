@@ -13,7 +13,7 @@ module.exports = {
     east: 'roomC',
     south: 'hallB',
     west: 'roomA',
-    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
+    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'A rotten Corpse lurches to its feet as you enter the room, dead eyes fix on you '},
     description: 'The Hall is dark but for the torch in your hand. the stone floor looks like it has not been cleaned in centuries and but the thick filth shows recent passage. The hall continues South and turns left and there are doors to the East and West, North leads back to the Foyer'
   },
   hallB: {
@@ -25,10 +25,10 @@ module.exports = {
   },
   hallC: {
     north: 'roomE',
-    east: 'hallB',
+    east: 'hallD',
     south: 'roomF',
-    west: 'hallD',
-    description: 'The hall continues to the West where it turns right. There are doors to the North and South, the hall goes back to the enterance past the rock fall to the East'
+    west: 'hallB',
+    description: 'The hall continues to the East where it turns right. There are doors to the North and South, the hall goes back to the enterance past the rock fall to the West where you came from'
   },
   hallD: {
     north: 'hallC',
@@ -50,7 +50,6 @@ module.exports = {
     east: 'wall',
     south: 'wall',
     west: 'wall',
-    foes: [],
     description: 'This room is almost completely collapsed and has no exits but the doorway you entered from'
   },
   roomC: {
@@ -58,7 +57,7 @@ module.exports = {
     east: 'wall',
     south: 'hallB',
     west: 'hallA',
-    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
+    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'A rotten Corpse lurches to its feet as you enter the room, dead eyes fix on you '},
     description: 'The room looks like it was a study long ago, before you is a rotting desk backed by long collapsed bookshelves their contents long since turned to dust'
   },
   roomD: {
@@ -66,7 +65,6 @@ module.exports = {
     east: 'wall',
     south: 'wall',
     west: 'wall',
-    foes: [],
     description: 'This room is empty, bare stone walls and a dust covered floor are all you can make out by the dim torch light'
   },
   roomE: {
@@ -74,7 +72,6 @@ module.exports = {
     east: 'wall',
     south: 'hallC',
     west: 'wall',
-    foes: [],
     description: 'The room before you holds the first sign of life you have seen since opening the doorway. The space looks like an improvised storage room, relatively new boxes and crates line the walls and are stacked 3 or 4 deep. Most of the boxes look empty, some have beem broken down and the wood planks stacked in a corner, some contain basic food, others tools, one even holds weapons.',
     things: 'longsword'
   },
@@ -83,7 +80,7 @@ module.exports = {
     east: 'wall',
     south: 'wall',
     west: 'wall',
-    foes: {name: 'Giant Spider', hp: 30, attack: 5, status: 'Hostal'},
+    foes: {name: 'Giant Spider', hp: 30, attack: 5, status: 'A massive spider skitters out from a hidden corner, Eight black eyes focuse on you as the beast charges'},
     description: 'This room is large and from the rotting remains of three long table you suspect it was once a dinning hall. The tipped and broken tables are covered in what looks like thick cobwebs, That same stuff coats several of the walls as well.'
   },
   barraks: {
@@ -91,7 +88,7 @@ module.exports = {
     east: 'wall',
     south: 'wall',
     west: 'wall',
-    foes: [],
+    foes: {name: 'Cultist', hp: 50, attack: 12, status: 'A hooded figure Kneeling before the alter halts His quiet chanting and turns to you a wicked dagger in hand. "You should not have come here", he yells as he darts forward dagger held high'},
     description: 'The large Rusted door gives way to a well lite room larger than any other you have seen thus far. centered in the far wall looks to be some kind or alter or shrine of black stone piled high with lit candles surrounding a massive animal skull of some kind'
   }
 };

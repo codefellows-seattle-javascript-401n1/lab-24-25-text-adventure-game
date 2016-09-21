@@ -1,10 +1,9 @@
 
 @import "vendor/normalize.css";
+@import "_theme.scss";
 
 body {
-  background-color: #344f00;
-
-  .combat{
-    border: solid, black;
-  }
+  background-color: $app-background;
+  font-family: fantasy;
+  color: $app-default;
 }
