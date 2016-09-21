@@ -8,13 +8,13 @@ function GameController(){
   this.player = {
     name: 'Nosy Ned',
     hp: 100,
-    damage: 10,
+    damage: 4,
     xp: 0,
     location: 'Foyer'
   };
 
-  this.history = [`The road having been washed away a sudden storm you are forced to find shelter in a  cave just beyond the swollen river banks. Just beyond the cave entrance ${this.player.name} finds a grand stone doorway, the intricately carved face worn smooth by time and weather. Overcome by curiosity you light a torch and push the giant stone door. With a small grinding sound the door swings open far easier than you anticipated revealing a large foyer partially collapsed to the left, the bare stone floor scattered with dirt and leaves. The only exit to the South`];
-  this.moveCount = 0;
+  this.history = [];
+  this.moveCount = 1;
   this.map = require('../model/map');
   this.room = this.map[this.player.location];
 
@@ -22,6 +22,7 @@ function GameController(){
     direction: 'south'
   };
   this.combat = true;
+  this.loot = false;
 
 }
 
@@ -46,11 +47,16 @@ GameController.prototype.updateLocation = function(location){
   this.room = this.map[this.player.location];
   if (this.room.foes){
     this.combat = true;
+    this.player.hp -= this.room.foes.attack;
+    this.logTurn(`and found ${this.player.location} and was attacked by a ${this.room.foes.name}`);
   }
   if (!this.room.foes){
     this.combat = false;
+    this.logTurn(`and found ${this.player.location}. ${this.player.location.description}`);
   }
-  this.logTurn(`and found ${this.player.location}. ${this.player.location.description}`);
+  if (this.room.things){
+    this.loot = true;
+  }
 };
 
 GameController.prototype.holdLocation = function(){
@@ -65,10 +71,21 @@ GameController.prototype.logFight = function(message){
   this.history.unshift(`TURN ${this.moveCount}: ${this.player.name} attacked the ${this.room.foes.name} ${message}`);
 };
 
+GameController.prototype.loot = function(){
+  if (this.room.things){
+    this.player.damage += 5;
+  }
+};
+
 GameController.prototype.playerAttack = function(){
-  this.room.foes.hp -= Math.floor(Math.random() * (this.player.damage - 1 +1)) + 1;
+  this.moveCount++;
+  this.room.foes.hp -= this.player.damage + (Math.floor(Math.random() * (8 - 1 +1)) + 1);
   if (this.room.foes.hp > 1){
     this.combat = false;
     this.logFight('and Killed it!');
+    return;
+  }  else{
+    this.player.hp -= this.room.foes.attack;
+    this.logFight('but it still stands and attacks back!');
   }
 };

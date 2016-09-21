@@ -6,8 +6,7 @@ module.exports = {
     east: 'wall',
     south: 'hallA',
     west: 'wall',
-    foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
-    description: '',
+    description: 'The road having been washed away a sudden storm you are forced to find shelter in a  cave just beyond the swollen river banks. Just beyond the cave entrance you finds a grand stone doorway, the intricately carved face worn smooth by time and weather. Overcome by curiosity you light a torch and push the giant stone door. With a small grinding sound the door swings open far easier than you anticipated revealing a large foyer partially collapsed to the left, the bare stone floor scattered with dirt and leaves. The only exit to the South',
     things: []
   },
   hallA: {
@@ -16,7 +15,7 @@ module.exports = {
     south: 'hallB',
     west: 'roomA',
     foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
-    description: 'The Hall is dark but for the torch in your hand. the stone floor looks like it has not been cleaned in centuries and the thick filth shows recent use. The hall continues South and turns left and there are doors to the East and West, North leads back to the Foyer',
+    description: 'The Hall is dark but for the torch in your hand. the stone floor looks like it has not been cleaned in centuries and but the thick filth shows recent passage. The hall continues South and turns left and there are doors to the East and West, North leads back to the Foyer',
     things: []
   },
   hallB: {
@@ -24,36 +23,29 @@ module.exports = {
     east: 'hallC',
     south: 'roomD',
     west: 'wall',
-    foes: [],
-    description: 'The hall is longer than the last, about halfway down there is a jumble of rock and earth from an old caving that has been cleaned up just enough for one to pass. The hall looks to continue East past the cave in there is a sturdy wooden door to the South, the beginning of the Hall is to the North',
-    things: []
+    description: 'The hall is longer than the last, about halfway down there is a jumble of rock and earth from an old cave in that has been cleaned up just enough for one person to squeeze past. The hall looks to continue East past the cave in there is a sturdy wooden door to the South, the beginning of the Hall is to the North'
   },
   hallC: {
     north: 'roomE',
     east: 'hallB',
     south: 'roomF',
     west: 'hallD',
-    foes: [],
-    description: 'The hall continues to the West where it turns right. There are doors to the North and South, the hall goes back to the enterance past the rock fall to the East',
-    things: []
+    description: 'The hall continues to the West where it turns right. There are doors to the North and South, the hall goes back to the enterance past the rock fall to the East'
   },
   hallD: {
     north: 'hallC',
-    east: 'roomG',
+    east: 'wall',
     south: 'barraks',
-    west: 'roomH',
-    foes: [],
-    description: 'This Hall has two sputtering torches flanking a large rusted door at the end Hall to the South. There are two wooden doors one to the West and the other on the East',
-    things: []
+    west: 'wall',
+    description: 'This Hall has two sputtering torches flanking a large rusted door at the end Hall to the South. There are no other doors'
   },
   roomA: {
     north: 'wall',
     east: 'hallA',
     south: 'roomB',
     west: 'wall',
-    foes: [],
     description: 'Behind the door is a large room filled with drifts of broken furniture and moldy trash, the dust and cobwebs imply that the room has not been touched in decades. However you do spot a doorway leading to a deeper room to the South',
-    things: []
+    things: ['Wooden club']
   },
   roomB: {
     north: 'roomA',
@@ -70,7 +62,7 @@ module.exports = {
     south: 'hallB',
     west: 'hallA',
     foes: {name: 'Zombie', hp: 10, attack: 2, status: 'Hostal'},
-    description: 'The room looks like it was a study long ago, but before you can take in the rotting desk or collapsed bookshelves a shambling corpse raises from the corner and lurches towards you',
+    description: 'The room looks like it was a study long ago, before you is a rotting desk backed by long collapsed bookshelves, their contents long since turned to dust',
     things: []
   },
   roomD: {
@@ -79,7 +71,7 @@ module.exports = {
     south: 'wall',
     west: 'wall',
     foes: [],
-    description: '',
+    description: 'This room is empty, bare stone walls and a dust covered floor are all you can make out by the dim torch light',
     things: []
   },
   roomE: {
@@ -88,35 +80,18 @@ module.exports = {
     south: 'hallC',
     west: 'wall',
     foes: [],
-    description: '',
-    things: []
+    description: 'The room before you holds the first sign of life you have seen since opening the doorway. The space looks like an improvised storage room, relatively new boxes and crates line the walls and are stacked 3 or 4 deep. Most of the boxes look empty, some have beem broken down and the wood planks stacked in a corner, some contain basic food, others tools, one even holds weapons.',
+    things: ['longsword']
   },
   roomF: {
     north: 'hallC',
     east: 'wall',
     south: 'wall',
     west: 'wall',
-    foes: [],
-    description: '',
+    foes: {name: 'Giant Spider', hp: 30, attack: 5, status: 'Hostal'},
+    description: 'This room is large and from the rotting remains of three long table you suspect it was once a dinning hall. The tipped and broken tables are covered in what looks like thick cobwebs, That same stuff coats several of the walls as well.',
     things: []
-  },
-  roomG: {
-    north: 'wall',
-    east: 'wall',
-    south: 'wall',
-    west: 'hallD',
-    foes: [],
-    description: '',
-    things: []
-  },
-  roomH: {
-    north: 'wall',
-    east: 'hallD',
-    south: 'wall',
-    west: 'wall',
-    foes: [],
-    description: '',
-    things: []
+
   },
   barraks: {
     north: 'hallD',
@@ -124,7 +99,7 @@ module.exports = {
     south: 'wall',
     west: 'wall',
     foes: [],
-    description: '',
+    description: 'The large Rusted door gives way to a well lite room larger than any other you have seen thus far. centered in the far wall looks to be some kind or alter or shrine of black stone piled high with lit candles surrounding a massive animal skull of some kind',
     things: []
   }
-}
+};
